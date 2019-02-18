@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5"
@@ -11,7 +12,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js src/**/*.jsx",
+    "lint:fix": "npm run lint -- --fix",
+    "commit": "npx git-cz"
+  },
+  "hooks": {
+    "pre-commit": "npm run lint",
+    "pre-push": "npm run lint"
   },
   "eslintConfig": {
     "extends": "react-app"
