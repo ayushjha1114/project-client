@@ -1,0 +1,53 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import style from './style';
+
+const propTypes = {
+  error: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object),
+  defaultText: PropTypes.string,
+};
+
+// default values for props:
+const defaultProps = {
+  error: '',
+  options: [],
+  defaultText: 'Select',
+};
+
+class SelectField extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const {
+      error,
+      defaultText,
+      options,
+      ...rest
+    } = this.props;
+    // const option = (options) ? options : defaultText;
+    return (
+      <>
+        <div>
+          <select {...rest} style={{ ...style.base }}>
+            <option value={defaultText}>{defaultText}</option>
+            {
+              options.map(item => (
+                <option value={item.label}>{item.label}</option>
+              ))
+            }
+          </select>
+        </div>
+      </>
+    );
+  }
+}
+SelectField.propTypes = propTypes;
+SelectField.defaultProps = defaultProps;
+
+export default SelectField;
