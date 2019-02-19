@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,22 +17,104 @@
   </head>
   <body>
     <div class="main-container main-container--shadow ">
-      <div class="upper-container container--margin-bottom">
-        <div class="item container--bold container--padding">Checkout</div>
-        <div class="item2 container--padding">
+      <div class="upper-container co-container--margin-bottom">
+        <div class="item co-container--bold co-container--padding">Checkout</div>
+        <div class="item2 co-container--padding">
           <ul class="item2 ">
-            <li>Shipping </li>
+            <li>Shipping</li>
             <li><b>Payment Method </b></li>
-            <li> Confirmation </li>
+            <li>Confirmation</li>
           </ul>
         </div>
-        <div class="item container-padding container--align">
+        <div class="item co-container--align">
           <i class="fa fa-window-close" aria-hidden="true"></i>
         </div>
       </div>
-      <div class="lower-container container--margin-top">
-        <div class="item2 container--padding">Payment Block</div>
-        <div class="item container--background container--padding">Cart Block</div>
+      <div class="lower-container co-container--margin-top">
+        <div class=" co-container--padding">
+          <p class="alpha">Wallet</p>
+          <hr>
+            <div class="wallet">
+              <div class="wallet-text">
+                <img class="wallet-img wallet-img--padding" src="./image/cards/discover.png" alt="discover">
+                <p>Ending with 8899</p>
+              </div>
+              <div class="wallet-text--font wallet-text--active">
+                <img class="wallet-img-master " src="./image/cards/mastercard.png" alt="mastercard">
+                <p>Ending with 8899</p>
+              </div>
+              <div class="wallet-text--font wallet-img--padding">
+                <img class="wallet-img" src="./image/cards/visa.png" alt="visa">
+                <p>Ending with 8899</p>
+              </div>
+          </div>
+          <br>
+          <p class="beta">New Card</p>
+          <hr>
+          <div class="newCard">
+            <input type="text" placeholder="Name on card">
+            <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX">
+            <div class="newCard-inner">
+                <input class="newCard-inner--margin" type="text" placeholder="MM/YY">
+                <input type="text" placeholder="CVV">
+            </div>
+         
+            <button class="co-button">CONTINUE</button>
+          </div>
+        </div>
+        <div class="co-cart co-container--background co-container--padding">
+            <div class="cart-upper">
+              <div class="product-mobile">
+                  <img class="cart-upper-img" src="./image/products/mobile-holder.jpg" alt="mobile-holder" height="60px" >
+                   <div class="text">
+                      <p class="img-holder"><b>Mobile Holder</b>  <span>&#36; 10.00</span></p>
+                    <p class="img-item2">Black</p>
+                    <p class="img-item3">Quantity: 1</p>
+                   </div>
+              </div>
+              <div>
+                <hr>
+              </div>
+              <div class="product-mobile">
+                  <img class="cart-upper-img" src="./image/products/rado.jpg" alt="rado" height="60px">
+                  <div class="text">
+                    <p class="img-rado"><b>Rado Watch</b>  <span>&#36; 10.00</span></p>
+                  <p class="img-item2">Black</p>
+                  <p class="img-item3">Quantity: 1</p>
+                 </div>
+              </div>
+              <div>
+                <hr>
+              </div>
+              <div class="product-mobile">
+                  <img class="cart-upper-img" src="./image/products/usb-c-2-micro.jpeg" alt="usb-c-2-micro" height="60px">
+                  <div class="text">
+                    <p class="img-micro"><b>C type to Micro Convertor</b>  <span>&#36; 10.00</span></p>
+                  <p class="img-item2">Black</p>
+                  <p class="img-item3">Quantity: 1</p>
+                 </div>
+              </div>
+              <div>
+                <hr>
+              </div>
+              <div class="product-mobile">
+                  <img class="cart-upper-img" src="./image/products/hard-case.jpg" alt="hard-case" height="60px">
+                  <div class="text">
+                    <p class="img-case"><b>Mobile Case</b>  <span>&#36; 10.00</span></p>
+                  <p class="img-item2">Black</p>
+                  <p class="img-item3">Quantity: 1</p>
+                 </div>
+              </div>
+              <div class="cart-lower">
+                <hr>
+                <p class="cart-lower--sub">Sub Total  <span>&#36; 100.00</span></p>
+                <p class="cart-lower--ship">Shipping  <span>&#36; 10.00</span></p>
+                <p class="cart-lower--tax">Taxes  <span>&#36; 5.00</span></p>
+                <hr>
+                <p class="cart-lower--total"><b>Total</b>  <span>&#36; 115.00</span></p>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </body>
