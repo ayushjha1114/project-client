@@ -7,7 +7,12 @@ import { cricket, football, options } from '../../configs/constants';
 
 class InputDemo extends React.Component {
   schema = yup.object().shape({
-    name: yup.string().required().min(3),
+    name: yup
+      .string()
+      .min(3)
+      .required(),
+    sport: yup.string().required(),
+    radioValue: yup.string().required(),
   });
 
   constructor(props) {
@@ -15,33 +20,65 @@ class InputDemo extends React.Component {
     this.state = {
       name: '',
       sport: '',
-      error: '',
+      Err: {
+        name: '',
+        sport: '',
+        radioValue: '',
+      },
       radioValue: '',
+      isTouched: {
+        name: false,
+        sport: false,
+        radioValue: false,
+      },
+      hasError: {
+        name: false,
+        sport: false,
+        radioValue: false,
+      },
     };
   }
 
-  handleNameChange = (event) => {
-    this.schema.validate({ name: event.target.value }).then((aa) => {
-      console.log(aa);
+  handleChange = field => (event) => {
+    const { isTouched } = this.state;
+    this.setState({
+      [field]: event.target.value,
+      isTouched: { ...isTouched, [field]: true },
+    }, this.getError(field));
+  };
+
+  getError = field => () => {
+    const {
+      name, sport, Err, hasError,
+    } = this.state;
+    this.schema.validate({ name, sport }, { abortEarly: false }).then(() => {
       this.setState({
-        name: event.target.value,
-        error: '',
+        Err: { ...Err, [field]: '' },
+        hasError: { ...hasError, [field]: false },
       });
-    }).catch(err => console.log(err));
-  }
-
-  handleSportChange = (event) => {
-    this.setState({ sport: event.target.value });
-  }
-
-  handleRadioChange = (event) => {
-    this.setState({ radioValue: event.target.value });
-  }
+    }).catch((err) => {
+      err.inner.forEach((error) => {
+        if (error.path === field) {
+          this.setState({
+            Err: { ...Err, [field]: error.message },
+            hasError: { ...hasError, [field]: true },
+          });
+        }
+      });
+      if (!err.inner.some(er => er.path === field) && hasError[field]) {
+        this.setState({
+          Err: { ...Err, [field]: '' },
+          hasError: { ...hasError, [field]: false },
+        });
+      }
+    });
+  };
 
   render() {
     const {
-      name, sport, error, radioValue,
+      name, sport, Err, radioValue,
     } = this.state;
+    console.log('states  ', this.state);
     let result;
     if (sport === 'Cricket') {
       result = cricket;
@@ -49,25 +86,38 @@ class InputDemo extends React.Component {
       result = football;
     }
     return (
-      <>
+      <React.Fragment>
         <h4>Name</h4>
         <TextField
           value={name}
-          onChange={this.handleNameChange}
-          onBlur={this.handleTouched}
-          error={error}
+          onChange={this.handleChange('name')}
+          onBlur={this.getError('name')}
+          error={Err.name}
         />
         <h4>Select the game you play?</h4>
-        <SelectField options={options} onChange={this.handleSportChange} />
-        {
-          (sport) ? <RadioGroup value={radioValue} options={result} onChange={this.handleRadioChange} /> : ''
-        }
+        <SelectField
+          options={options}
+          value={sport}
+          onChange={this.handleChange('sport')}
+          onBlur={this.getError('sport')}
+          error={Err.sport}
+        />
+        {sport ? (
+          <RadioGroup
+            value={radioValue}
+            options={result}
+            onChange={this.handleChange('radioValue')}
+            onBlur={this.getError('radioValue')}
+            error={Err.radioValue}
+          />
+        ) : (
+          ''
+        )}
         <div style={{ textAlign: 'right' }}>
           <Button value="Cancel" />
           <Button value="Submit" disabled />
         </div>
-
-      </>
+      </React.Fragment>
     );
   }
 }

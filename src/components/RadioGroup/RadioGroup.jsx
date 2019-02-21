@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import style from './style';
 
 const propTypes = {
   error: PropTypes.string,
@@ -42,6 +43,7 @@ class RadioGroup extends React.Component {
               {/* </label> */}
             </div>
           ))}
+          { (error) ? <p style={{ ...style.para }}>{error}</p> : '' }
         </div>
       </>
     );

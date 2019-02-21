@@ -6,5 +6,9 @@ const style = {
   err: {
     border: '1px solid red',
   },
+  para: {
+    color: 'red',
+    marginTop: '1px',
+  },
 };
 export default style;

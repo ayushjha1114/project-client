@@ -6,8 +6,6 @@ const propTypes = {
   error: PropTypes.string,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  hasError: PropTypes.bool.isRequired,
 };
 
 // default values for props:
@@ -24,16 +22,14 @@ class TextField extends React.Component {
   render() {
     const {
       error,
-      hasError,
-      // eslint-disable-next-line no-unused-vars
       ...rest
     } = this.props;
-    const err = (hasError) ? { ...style.err } : {};
+    const err = (error) ? { ...style.err } : {};
     return (
       <>
         <div>
-          <input type="text" style={{ ...style.base, err }} />
-          { (error) ? <p style={{ color: 'red' }}>{error}</p> : '' }
+          <input type="text" {...rest} style={{ ...style.base, err }} />
+          { (error) ? <p style={{ ...style.para }}>{error}</p> : '' }
         </div>
       </>
     );
