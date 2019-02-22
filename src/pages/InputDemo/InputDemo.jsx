@@ -99,7 +99,7 @@ class InputDemo extends React.Component {
 
   render() {
     const {
-      name, sport, Err, radioValue,
+      name, sport, Err,
     } = this.state;
     let result;
     if (sport === 'Cricket') {
@@ -126,7 +126,6 @@ class InputDemo extends React.Component {
         />
         {sport ? (
           <RadioGroup
-            value={radioValue}
             options={result}
             onChange={this.handleChange('radioValue')}
             onBlur={this.getError('radioValue')}

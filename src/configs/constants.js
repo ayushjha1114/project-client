@@ -16,11 +16,11 @@ export const options = [
 
 export const cricket = [
   {
-    label: 'Cricket',
+    label: 'Fielder',
     value: 1,
   },
   {
-    label: 'Football',
+    label: 'Batsman',
     value: 2,
   },
   {

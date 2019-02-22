@@ -23,7 +23,7 @@ class RadioGroup extends React.Component {
 
   render() {
     const {
-      error, value, options, ...rest
+      error, options, ...rest
     } = this.props;
     const css = `
     .radio{
@@ -36,8 +36,10 @@ class RadioGroup extends React.Component {
           <h4> What do you do?</h4>
           {options.map(item => (
             <div>
-              <input type="radio" name="sport" {...rest} value={item.label} checked={item.label === value} />
-              <span className="radio">{item.label}</span>
+              <label htmlFor="asf">
+                <input type="radio" name="sport" {...rest} key={item.label} value={item.label} />
+                <span className="radio">{item.label}</span>
+              </label>
             </div>
           ))}
           { (error) ? <p style={{ ...style.para }}>{error}</p> : '' }
