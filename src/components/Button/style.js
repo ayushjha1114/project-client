@@ -3,5 +3,8 @@ const style = {
     margin: '5px',
     padding: '10px',
   },
+  color: {
+    backgroundColor: 'green',
+  },
 };
 export default style;

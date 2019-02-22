@@ -49,9 +49,9 @@ class InputDemo extends React.Component {
 
   getError = field => () => {
     const {
-      name, sport, Err, hasError,
+      name, sport, Err, hasError, radioValue,
     } = this.state;
-    this.schema.validate({ name, sport }, { abortEarly: false }).then(() => {
+    this.schema.validate({ name, sport, radioValue }, { abortEarly: false }).then(() => {
       this.setState({
         Err: { ...Err, [field]: '' },
         hasError: { ...hasError, [field]: false },
@@ -74,11 +74,33 @@ class InputDemo extends React.Component {
     });
   };
 
+  buttonChecked = () => {
+    const { hasError, isTouched } = this.state;
+    let notError = 0;
+    let touched = 0;
+    let result = false;
+    Object.keys(hasError).forEach((i) => {
+      if (hasError[i] === false) {
+        notError += 1;
+      }
+    });
+    Object.keys(isTouched).forEach((i) => {
+      if (isTouched[i] === true) {
+        touched += 1;
+      }
+    });
+    if (notError === 3 && touched === 3) {
+      result = true;
+    } else if (notError !== 3 && touched !== 3) {
+      result = false;
+    }
+    return result;
+  }
+
   render() {
     const {
       name, sport, Err, radioValue,
     } = this.state;
-    console.log('states  ', this.state);
     let result;
     if (sport === 'Cricket') {
       result = cricket;
@@ -115,7 +137,9 @@ class InputDemo extends React.Component {
         )}
         <div style={{ textAlign: 'right' }}>
           <Button value="Cancel" />
-          <Button value="Submit" disabled />
+          {
+            (this.buttonChecked()) ? <Button value="Submit" color={{ backgroundColor: 'green' }} /> : <Button value="Submit" disabled />
+          }
         </div>
       </React.Fragment>
     );

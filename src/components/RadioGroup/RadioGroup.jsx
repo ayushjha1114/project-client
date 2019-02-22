@@ -36,11 +36,8 @@ class RadioGroup extends React.Component {
           <h4> What do you do?</h4>
           {options.map(item => (
             <div>
-              {/* <label> */}
               <input type="radio" name="sport" {...rest} value={item.label} checked={item.label === value} />
-              {''}
               <span className="radio">{item.label}</span>
-              {/* </label> */}
             </div>
           ))}
           { (error) ? <p style={{ ...style.para }}>{error}</p> : '' }

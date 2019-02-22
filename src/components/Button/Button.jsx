@@ -17,7 +17,7 @@ const defaultProps = {
   style: {},
 };
 
-class TextField extends React.Component {
+class Button extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -26,17 +26,18 @@ class TextField extends React.Component {
   render() {
     const {
       disabled,
+      color,
       ...rest
     } = this.props;
     return (
       <>
-        <input type="submit" disabled={disabled} {...rest} style={{ ...style.base }} />
+        <input type="submit" disabled={disabled} {...rest} style={{ ...style.base, ...color }} />
       </>
     );
   }
 }
 
-TextField.propTypes = propTypes;
-TextField.defaultProps = defaultProps;
+Button.propTypes = propTypes;
+Button.defaultProps = defaultProps;
 
-export default TextField;
+export default Button;
