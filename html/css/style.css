@@ -9,7 +9,7 @@
 .breadcrumbs {
     padding: 7px;
 }
-.block--upper {
+.container-upper {
     display: flex;
     height: 4.5%;
 }
@@ -19,34 +19,34 @@
 .breadcrumbs--active {
     font-weight: bold;
 }
-.block--lower {
+.container-lower {
     border-top: 0.5px solid lightgray;
     display: flex;
 }
-.block--lower__payment {
+.container-lower--payment {
     height: 100%;
     flex: 3;
 }
-.block--lower__cart {
+.container-lower--cart {
     height: 100%;
     flex: 2;
     display: flex;
     flex-direction: column;
     background-color: lightgray;
 }
-.block {
+.main-container {
     background-color: white;
     border: 0.5px solid lightgray;
     margin: 70px 100px;
     box-shadow: 5px 10px 8px #888888;
 }
-.card-details--date-cvv {
+.card-details--cvv {
     display: flex;
 }
-#close {
+.close {
     padding: 7px;
 }
-#card-name {
+.card-name {
     border: 0.5px solid lightgray;
     padding: 4px;
     border-radius: 4px;
@@ -54,7 +54,7 @@
     height: 40px;
     margin: 5px;
 }
-#card-number {
+.card-number {
     border: 0.5px solid lightgray;
     border-radius: 4px;
     padding: 4px;
@@ -62,23 +62,23 @@
     height: 40px;
     margin: 5px;
 }
-#card-date {
+.card-date {
     border: 0.5px solid lightgray;
     border-radius: 4px;
     padding: 4px;
-    width: 45%;
+    width: 55%;
     height: 40px;
     margin: 5px;
 }
-#card-cvv {
+.card-cvv {
     border: 0.5px solid lightgray;
     border-radius: 4px;
     padding: 4px;
-    width: 45%;
+    width: 55%;
     height: 40px;
     margin: 5px;
 }
-#card-submit {
+.card-submit {
     border-radius: 4px;
     padding: 4px;
     width: 95%;
@@ -96,17 +96,17 @@
     flex-direction: column;
     align-items: center;
 }
-.header--title {
+.header-title {
     flex: 7;
 }
-.header--title__checkout {
+.header-title--checkout {
     font-weight: bold;
 }
-.header--list {
+.header-list {
     flex: 25;
     font-style: bold;
 }
-.header--icon__close {
+.header-icon--close {
     flex: 0.1;
     align-items: center;
 }
@@ -126,6 +126,7 @@ h3 {
 }
 h4 {
     font-size: 12px;
+    padding-left: 5px;
     color: rgb(70, 69, 69);
 }
 h5 {
@@ -167,7 +168,7 @@ hr {
 .items-subtotal div {
     flex: 1;
 }
-.items--line {
+.items-line {
     margin-top: 30px;
 }
 .items-price {
@@ -179,26 +180,20 @@ hr {
 .items-total div {
     flex: 1;
 }
-.root {
+.main {
     border: 0.5px solid white;
-    background-image: url("../images/background/background.jpg");
+    background-image: url("../images/cards/background.jpg");
     height: 100%;
     background-size: cover;
 }
-#total {
-    font-size: 12px;
-    color: rgb(70, 69, 69);
-    padding: 5px;
-    font-weight: bold;
-}
 @media only screen and (max-width: 992px) {
-    .block {
+    .main-container {
         margin: 70px 20px;
     }
-    .block--lower__payment {
+    .container-lower--payment {
         flex: 1;
     }
-    .block--lower__cart {
+    .container-lower--cart {
         flex: 1;
     }
 }
@@ -208,12 +203,12 @@ hr {
     }
 }
 @media only screen and (max-width: 600px) {
-    .block--lower {
+    .container-lower {
         flex-direction: column-reverse;
     }
 }
 @media only screen and (min-width: 600px) {
-    .block--lower {
+    .container-lower {
         height: 75%;
     }
 }
