@@ -74,14 +74,10 @@ class InputDemo extends React.Component {
 
   hasError = () => {
     const { error } = this.state;
-    let result;
     if (error.name === '' && error.sport === '' && error.radioValue === '') {
-      result = false;
-    } else if (error.name !== '' && error.sport !== '' && error.radioValue !== '') {
-      result = true;
+      return false;
     }
-
-    return result;
+    return true;
   }
 
   getError = (field) => {
@@ -115,6 +111,7 @@ class InputDemo extends React.Component {
     const {
       form,
     } = this.state;
+    console.log(this.state);
     let result;
     if (form.sport === 'Cricket') {
       result = cricket;
