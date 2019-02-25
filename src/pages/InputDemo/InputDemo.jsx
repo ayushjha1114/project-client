@@ -18,20 +18,17 @@ class InputDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      sport: '',
-      Err: {
+      form: {
         name: '',
         sport: '',
         radioValue: '',
       },
-      radioValue: '',
-      isTouched: {
-        name: false,
-        sport: false,
-        radioValue: false,
+      error: {
+        name: '',
+        sport: '',
+        radioValue: '',
       },
-      hasError: {
+      isTouched: {
         name: false,
         sport: false,
         radioValue: false,
@@ -40,58 +37,75 @@ class InputDemo extends React.Component {
   }
 
   handleChange = field => (event) => {
-    const { isTouched } = this.state;
+    const { isTouched, form } = this.state;
+
     this.setState({
-      [field]: event.target.value,
+      form: { ...form, [field]: event.target.value },
       isTouched: { ...isTouched, [field]: true },
-    }, this.getError(field));
+    }, this.handleOnBlur(field));
   };
 
-  getError = field => () => {
+  handleOnBlur = field => () => {
     const {
-      name, sport, Err, hasError, radioValue,
+      form, error, isTouched,
     } = this.state;
+    const { name, sport, radioValue } = form;
     this.schema.validate({ name, sport, radioValue }, { abortEarly: false }).then(() => {
       this.setState({
-        Err: { ...Err, [field]: '' },
-        hasError: { ...hasError, [field]: false },
+        error: { ...error, [field]: '' },
+        isTouched: { ...isTouched, [field]: true },
       });
     }).catch((err) => {
-      err.inner.forEach((error) => {
-        if (error.path === field) {
+      err.inner.forEach((er) => {
+        if (er.path === field) {
           this.setState({
-            Err: { ...Err, [field]: error.message },
-            hasError: { ...hasError, [field]: true },
+            error: { ...error, [field]: er.message },
+            isTouched: { ...isTouched, [field]: true },
           });
         }
       });
-      if (!err.inner.some(er => er.path === field) && hasError[field]) {
+      if (!err.inner.some(er => er.path === field)) {
         this.setState({
-          Err: { ...Err, [field]: '' },
-          hasError: { ...hasError, [field]: false },
+          error: { ...error, [field]: '' },
         });
       }
     });
   };
 
+  hasError = () => {
+    const { error } = this.state;
+    let result;
+    if (error.name === '' && error.sport === '' && error.radioValue === '') {
+      result = false;
+    } else if (error.name !== '' && error.sport !== '' && error.radioValue !== '') {
+      result = true;
+    }
+
+    return result;
+  }
+
+  getError = (field) => {
+    const { isTouched, error } = this.state;
+    let result = '';
+    if (isTouched[field] === true) {
+      result = error[field];
+    }
+    return result;
+  }
+
   buttonChecked = () => {
-    const { hasError, isTouched } = this.state;
-    let notError = 0;
+    const { isTouched } = this.state;
     let touched = 0;
     let result = false;
-    Object.keys(hasError).forEach((i) => {
-      if (hasError[i] === false) {
-        notError += 1;
-      }
-    });
+    const checkError = this.hasError();
     Object.keys(isTouched).forEach((i) => {
       if (isTouched[i] === true) {
         touched += 1;
       }
     });
-    if (notError === 3 && touched === 3) {
+    if (!checkError && touched === 3) {
       result = true;
-    } else if (notError !== 3 && touched !== 3) {
+    } else if (checkError && touched !== 3) {
       result = false;
     }
     return result;
@@ -99,37 +113,37 @@ class InputDemo extends React.Component {
 
   render() {
     const {
-      name, sport, Err,
+      form,
     } = this.state;
     let result;
-    if (sport === 'Cricket') {
+    if (form.sport === 'Cricket') {
       result = cricket;
-    } else if (sport === 'Football') {
+    } else if (form.sport === 'Football') {
       result = football;
     }
     return (
       <React.Fragment>
         <h4>Name</h4>
         <TextField
-          value={name}
+          value={form.name}
           onChange={this.handleChange('name')}
-          onBlur={this.getError('name')}
-          error={Err.name}
+          onBlur={this.handleOnBlur('name')}
+          error={this.getError('name')}
         />
         <h4>Select the game you play?</h4>
         <SelectField
           options={options}
-          value={sport}
+          value={form.sport}
           onChange={this.handleChange('sport')}
-          onBlur={this.getError('sport')}
-          error={Err.sport}
+          onBlur={this.handleOnBlur('sport')}
+          error={this.getError('sport')}
         />
-        {sport ? (
+        {form.sport ? (
           <RadioGroup
             options={result}
             onChange={this.handleChange('radioValue')}
-            onBlur={this.getError('radioValue')}
-            error={Err.radioValue}
+            onBlur={this.handleOnBlur('radioValue')}
+            error={this.getError('radioValue')}
           />
         ) : (
           ''
