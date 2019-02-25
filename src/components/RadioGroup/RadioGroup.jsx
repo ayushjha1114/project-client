@@ -4,7 +4,7 @@ import style from './style';
 
 const propTypes = {
   error: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.object),
 };
@@ -13,6 +13,7 @@ const propTypes = {
 const defaultProps = {
   error: '',
   options: [],
+  value: '',
 };
 
 class RadioGroup extends React.Component {

@@ -30,7 +30,6 @@ class SelectField extends React.Component {
       options,
       ...rest
     } = this.props;
-    // const option = (options) ? options : defaultText;
     return (
       <>
         <div>
