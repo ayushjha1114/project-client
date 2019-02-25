@@ -111,7 +111,6 @@ class InputDemo extends React.Component {
     const {
       form,
     } = this.state;
-    console.log(this.state);
     let result;
     if (form.sport === 'Cricket') {
       result = cricket;

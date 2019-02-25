@@ -37,7 +37,7 @@ class SelectField extends React.Component {
             <option value={defaultText}>{defaultText}</option>
             {
               options.map(item => (
-                <option value={item.label}>{item.label}</option>
+                <option key={item.label} value={item.label}>{item.label}</option>
               ))
             }
           </select>
