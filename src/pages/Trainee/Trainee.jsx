@@ -1,10 +1,5 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { AddDialog } from '.';
 
 export default class Trainee extends React.Component {
@@ -16,8 +11,13 @@ export default class Trainee extends React.Component {
     this.setState({ open: true });
   };
 
-  handleClose = () => {
+  handleClose = (value) => {
+    this.setState({ open: value });
+  };
+
+  handleSubmit = (form) => {
     this.setState({ open: false });
+    console.log(form);
   };
 
   render() {
@@ -32,27 +32,7 @@ export default class Trainee extends React.Component {
           >
             Add Trainee
           </Button>
-          <Dialog
-            open={open}
-            onClose={this.handleClose}
-            aria-labelledby="form-dialog-title"
-          >
-            <DialogTitle id="form-dialog-title">Add Trainee</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                  Enter your trainee details
-              </DialogContentText>
-              <AddDialog />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleClose} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={this.handleClose} color="primary">
-                Submit
-              </Button>
-            </DialogActions>
-          </Dialog>
+          <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
         </div>
       </>
     );
