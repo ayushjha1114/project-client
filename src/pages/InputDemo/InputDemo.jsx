@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { TextField, SelectField, RadioGroup } from '../../components';
-import { cricket, football, options } from '../../configs/constants';
+import { cricket, football, options, dropdown1, dropdown2 } from '../../configs/constants';
 
 class InputDemo extends React.Component {
   constructor(props) {
@@ -22,10 +22,11 @@ class InputDemo extends React.Component {
 
   render() {
     const { name, sport } = this.state;
+    console.log(this.state);
     let result;
-    if (sport === 'Cricket') {
+    if (sport === dropdown1) {
       result = cricket;
-    } else if (sport === 'Football') {
+    } else if (sport === dropdown2) {
       result = football;
     }
     return (

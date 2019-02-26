@@ -16,11 +16,11 @@ export const options = [
 
 export const cricket = [
   {
-    label: 'Cricket',
+    label: 'Batsman',
     value: 1,
   },
   {
-    label: 'Football',
+    label: 'Fielder',
     value: 2,
   },
   {
@@ -43,3 +43,5 @@ export const football = [
     value: 2,
   },
 ];
+export const dropdown1 = 'Cricket';
+export const dropdown2 = 'Football';

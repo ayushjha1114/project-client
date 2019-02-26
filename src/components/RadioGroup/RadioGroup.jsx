@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   error: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
 };
 
@@ -12,6 +12,8 @@ const propTypes = {
 const defaultProps = {
   error: '',
   options: [],
+  value: '',
+  onChange: () => {},
 };
 
 class RadioGroup extends React.Component {
@@ -32,9 +34,8 @@ class RadioGroup extends React.Component {
           <h4> What do you do?</h4>
           {
             options.map(item => (
-              <div>
-                <input type="radio" name="sport" {...rest} value={item.label} />
-                {' '}
+              <div key={item.label}>
+                <input type="radio" name="sport" key={item.label} {...rest} value={item.label} />
                 {item.label}
               </div>
             ))
