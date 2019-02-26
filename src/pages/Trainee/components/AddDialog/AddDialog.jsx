@@ -1,16 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogContentText,
+  DialogTitle, TextField, FormHelperText, IconButton, InputAdornment,
+} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {
   Person, Visibility, VisibilityOff, Email,
@@ -211,6 +205,7 @@ class AddDialog extends React.Component {
               fullWidth
               id="outlined-name"
               label="Name"
+              error={this.getError('name')}
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -227,6 +222,7 @@ class AddDialog extends React.Component {
               fullWidth
               id="outlined-email-input"
               label="Email"
+              error={this.getError('password')}
               className={classes.textField}
               type="email"
               name="email"
@@ -248,6 +244,7 @@ class AddDialog extends React.Component {
                   fullWidth
                   id="outlined-password-input"
                   label="Password"
+                  error={this.getError('password')}
                   className={classes.textField}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
@@ -277,6 +274,7 @@ class AddDialog extends React.Component {
                   fullWidth
                   id="outlined-password-input1"
                   label="Confirm Password"
+                  error={this.getError('confirmPassword')}
                   className={classes.textField}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
