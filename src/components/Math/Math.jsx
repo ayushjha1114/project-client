@@ -17,6 +17,22 @@ class Math extends Component {
   }
 
   calculate = (first, second, operator) => {
+  /*     switch (operator) {
+    case '+':
+      return first + second;
+    case '-':
+      return first - second;
+    case '*':
+      return first * second;
+    case '/':
+      if (second !== 0) {
+        return first / second;
+      } else if (second === 0) {
+        return 'infinity';
+      }
+    default:
+      return 'Invalid Operation';
+    } */
     if (operator === '+') {
       return first + second;
     }
@@ -44,9 +60,9 @@ class Math extends Component {
     } = this.props;
     const result = this.calculate(first, second, operator);
     return (
-      <div>
+      <>
         { children(first, second, operator, result) }
-      </div>
+      </>
     );
   }
 }
