@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Typography } from '@material-ui/core';
 import { Math } from '../../components';
 
 class ChildrenDemo extends Component {
@@ -13,18 +14,18 @@ class ChildrenDemo extends Component {
       <>
         <Math first={7} second={3} operator="-">
           {(first, second, operator, result) => (
-            <h1>
+            <Typography variant="body1">
               {first}
               {operator}
               {second}
               =
               {result}
-            </h1>
+            </Typography>
           )}
         </Math>
         <Math first={7} second={4} operator="+">
           {(first, second, operator, result) => (
-            <h1>
+            <p>
               Sum of
               {' '}
               {first}
@@ -36,12 +37,12 @@ class ChildrenDemo extends Component {
               is
               {' '}
               {result}
-            </h1>
+            </p>
           )}
         </Math>
         <Math first={3} second={4} operator="+">
           {(first, second, operator, result) => (
-            <h1>
+            <p>
               When we add
               {' '}
               {first}
@@ -55,29 +56,29 @@ class ChildrenDemo extends Component {
               {result}
               {' '}
               as result.
-            </h1>
+            </p>
           )}
         </Math>
         <Math first={7} second={0} operator="/">
           {(first, second, operator, result) => (
-            <h1>
+            <p>
               {first}
               {operator}
               {second}
               =
               {result}
-            </h1>
+            </p>
           )}
         </Math>
         <Math first={7} second={8} operator="^">
           {(first, second, operator, result) => (
-            <h5>
+            <p>
               {first}
               {operator}
               {second}
               =
               {result}
-            </h5>
+            </p>
           )}
         </Math>
       </>
