@@ -24,10 +24,12 @@ class TextField extends React.Component {
       error,
       ...rest
     } = this.props;
+    const err = (error) ? { ...style.err } : {};
     return (
       <>
         <div>
-          <input type="text" {...rest} style={{ ...style.base }} />
+          <input type="text" {...rest} style={{ ...style.base, err }} />
+          { (error) ? <p style={{ ...style.para }}>{error}</p> : '' }
         </div>
       </>
     );

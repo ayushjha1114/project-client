@@ -1,11 +1,10 @@
 const style = {
   base: {
+    margin: '5px',
     padding: '10px',
-    width: '100%',
   },
-  para: {
-    color: 'red',
-    marginTop: '1px',
+  color: {
+    backgroundColor: 'green',
   },
 };
 export default style;

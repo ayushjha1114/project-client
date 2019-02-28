@@ -42,6 +42,7 @@ class SelectField extends React.Component {
               ))
             }
           </select>
+          { (error) ? <p style={{ ...style.para }}>{error}</p> : '' }
         </div>
       </>
     );
