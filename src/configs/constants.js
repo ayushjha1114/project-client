@@ -21,6 +21,7 @@ export const cricket = [
   },
   {
     label: 'Batsman',
+
     value: 2,
   },
   {
@@ -43,3 +44,5 @@ export const football = [
     value: 2,
   },
 ];
+export const dropdown1 = 'Cricket';
+export const dropdown2 = 'Football';
