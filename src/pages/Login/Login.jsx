@@ -10,7 +10,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import withStyles from '@material-ui/core/styles/withStyles';
 import * as yup from 'yup';
 
-
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -176,94 +175,96 @@ handleClickShowPassword = () => {
 };
 
 render() {
-  const { classes } = this.props;
+  const { classes, ...rest } = this.props;
   const { showPassword } = this.state;
   return (
-    <main className={classes.main}>
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+    <>
+      <main {...rest} className={classes.main}>
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
           Log in
-        </Typography>
-        <form className={classes.form}>
-          <TextField
-            fullWidth
-            error={this.getError('email')}
-            id="outlined-email-input"
-            label="Email Address"
-            className={classes.textField}
-            type="email"
-            name="email"
-            autoComplete="email"
-            margin="normal"
-            variant="outlined"
-            onChange={this.handleChange('email')}
-            onBlur={this.handleOnBlur('email')}
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><Email /></InputAdornment>,
-            }}
-          />
-          <FormHelperText id="component-error-text2" className={classes.error}>
-            {this.getError('email')}
-          </FormHelperText>
-          <TextField
-            fullWidth
-            error={this.getError('password')}
-            id="outlined-password-input"
-            label="Password"
-            className={classes.textField}
-            type={showPassword ? 'text' : 'password'}
-            autoComplete="current-password"
-            margin="normal"
-            variant="outlined"
-            onChange={this.handleChange('password')}
-            onBlur={this.handleOnBlur('password')}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton
-                    aria-label="Toggle password visibility"
-                    onClick={this.handleClickShowPassword}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <FormHelperText id="component-error-text3" className={classes.error}>
-            {this.getError('password')}
-          </FormHelperText>
+          </Typography>
+          <form className={classes.form}>
+            <TextField
+              fullWidth
+              error={this.getError('email')}
+              id="outlined-email-input"
+              label="Email Address"
+              className={classes.textField}
+              type="email"
+              name="email"
+              autoComplete="email"
+              margin="normal"
+              variant="outlined"
+              onChange={this.handleChange('email')}
+              onBlur={this.handleOnBlur('email')}
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><Email /></InputAdornment>,
+              }}
+            />
+            <FormHelperText id="component-error-text2" className={classes.error}>
+              {this.getError('email')}
+            </FormHelperText>
+            <TextField
+              fullWidth
+              error={this.getError('password')}
+              id="outlined-password-input"
+              label="Password"
+              className={classes.textField}
+              type={showPassword ? 'text' : 'password'}
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+              onChange={this.handleChange('password')}
+              onBlur={this.handleOnBlur('password')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton
+                      aria-label="Toggle password visibility"
+                      onClick={this.handleClickShowPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <FormHelperText id="component-error-text3" className={classes.error}>
+              {this.getError('password')}
+            </FormHelperText>
 
-          {
-            (this.buttonChecked()) ? (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
+            {
+              (this.buttonChecked()) ? (
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
                 SIGN IN
-              </Button>
-            ) : (
-              <Button
-                disabled
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
+                </Button>
+              ) : (
+                <Button
+                  disabled
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
                 SIGN IN
-              </Button>
-            )
-          }
-        </form>
-      </Paper>
-    </main>
+                </Button>
+              )
+            }
+          </form>
+        </Paper>
+      </main>
+    </>
   );
 }
 }

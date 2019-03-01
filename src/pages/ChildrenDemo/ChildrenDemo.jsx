@@ -14,6 +14,7 @@ class ChildrenDemo extends Component {
       <>
         <Math first={7} second={3} operator="-">
           {(first, second, operator, result) => (
+
             <Typography variant="body1">
               {first}
               {operator}
