@@ -27,22 +27,22 @@ function NavBar(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             Trainee Portal
           </Typography>
-          <Link component={RouterLink} color="inherit" to="/trainee">
+          <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
             <Button color="inherit">
               TRAINEE
             </Button>
           </Link>
-          <Link component={RouterLink} color="inherit" to="/text-field-demo">
+          <Link component={RouterLink} underline="none" color="inherit" to="/text-field-demo">
             <Button color="inherit">
             TEXTFIELD DEMO
             </Button>
           </Link>
-          <Link component={RouterLink} color="inherit" to="/input-demo">
+          <Link component={RouterLink} underline="none" color="inherit" to="/input-demo">
             <Button color="inherit">
             INPUT DEMO
             </Button>
           </Link>
-          <Link component={RouterLink} color="inherit" to="/children-demo">
+          <Link component={RouterLink} underline="none" color="inherit" to="/children-demo">
             <Button color="inherit">
             CHILDREN DEMO
             </Button>

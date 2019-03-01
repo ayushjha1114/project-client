@@ -44,5 +44,6 @@ export const football = [
     value: 2,
   },
 ];
+export const traineePath = '/trainee';
 export const dropdown1 = 'Cricket';
 export const dropdown2 = 'Football';

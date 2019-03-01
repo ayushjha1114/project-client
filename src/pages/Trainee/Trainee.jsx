@@ -1,40 +1,27 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import { AddDialog } from '.';
+import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
+import TraineeDetail from './TraineeDetail';
+import TraineeList from './TraineeList';
+import { NoMatch } from '..';
 
-export default class Trainee extends React.Component {
-  state = {
-    open: false,
-  };
+function Trainee(props) {
+  const { match } = props;
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = (value) => {
-    this.setState({ open: value });
-  };
-
-  handleSubmit = (form) => {
-    this.setState({ open: false });
-    console.log(form);
-  };
-
-  render() {
-    const { open } = this.state;
-    return (
-      <>
-        <div>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={this.handleClickOpen}
-          >
-            Add Trainee
-          </Button>
-          <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <Switch>
+        <Route exact path={`${match.path}`} component={TraineeList} />
+        <Route exact path={`${match.path}/:id`} component={TraineeDetail} />
+        <Route path={`${match.path}/`} component={NoMatch} />
+      </Switch>
+    </>
+  );
 }
+
+Trainee.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  match: PropTypes.object.isRequired,
+};
+
+export default Trainee;
