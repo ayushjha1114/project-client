@@ -59,10 +59,10 @@ function TraineeTable(props) {
 }
 
 TraineeTable.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.objectOf.isRequired,
   id: PropTypes.string,
-  columns: PropTypes.array,
-  data: PropTypes.array,
+  columns: PropTypes.arrayOf(PropTypes.objectOf),
+  data: PropTypes.arrayOf,
 };
 
 TraineeTable.defaultProps = {
