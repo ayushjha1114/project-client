@@ -5,7 +5,7 @@ import style from './style';
 const propTypes = {
   color: PropTypes.string,
   disabled: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
+  // onClick: PropTypes.func.isRequired,
   style: PropTypes.objectOf(PropTypes.string),
   value: PropTypes.string.isRequired,
 };

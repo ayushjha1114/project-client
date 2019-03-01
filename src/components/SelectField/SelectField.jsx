@@ -4,7 +4,7 @@ import style from './style';
 
 const propTypes = {
   error: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.object),
   defaultText: PropTypes.string,
@@ -12,6 +12,7 @@ const propTypes = {
 
 // default values for props:
 const defaultProps = {
+  value: '',
   error: '',
   options: [],
   defaultText: 'Select',

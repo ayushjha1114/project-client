@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Typography } from '@material-ui/core';
 import { Math } from '../../components';
 
 class ChildrenDemo extends Component {
@@ -13,13 +14,14 @@ class ChildrenDemo extends Component {
       <>
         <Math first={7} second={3} operator="-">
           {(first, second, operator, result) => (
-            <p>
+
+            <Typography variant="body1">
               {first}
               {operator}
               {second}
               =
               {result}
-            </p>
+            </Typography>
           )}
         </Math>
         <Math first={7} second={4} operator="+">

@@ -36,7 +36,7 @@ class RadioGroup extends React.Component {
         <div>
           <h4> What do you do?</h4>
           {options.map(item => (
-            <div>
+            <div key={item.label}>
               <label htmlFor="asf">
                 <input type="radio" name="sport" {...rest} key={item.label} value={item.label} />
                 <span className="radio">{item.label}</span>
