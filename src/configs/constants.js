@@ -43,3 +43,4 @@ export const football = [
     value: 2,
   },
 ];
+export const traineePath = '/trainee';
