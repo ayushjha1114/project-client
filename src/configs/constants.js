@@ -21,6 +21,7 @@ export const cricket = [
   },
   {
     label: 'Batsman',
+
     value: 2,
   },
   {
@@ -44,3 +45,5 @@ export const football = [
   },
 ];
 export const traineePath = '/trainee';
+export const dropdown1 = 'Cricket';
+export const dropdown2 = 'Football';
