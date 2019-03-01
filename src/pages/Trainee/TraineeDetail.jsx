@@ -89,7 +89,7 @@ function TraineeDetail(props) {
 
 TraineeDetail.propTypes = {
   classes: PropTypes.objectOf.isRequired,
-  match: PropTypes.objectOf.isRequired,
+  match: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(TraineeDetail);

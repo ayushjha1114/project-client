@@ -47,3 +47,15 @@ export const football = [
 export const traineePath = '/trainee';
 export const dropdown1 = 'Cricket';
 export const dropdown2 = 'Football';
+
+export const column = [
+  {
+    field: 'name',
+    label: 'Name',
+    align: 'center',
+  },
+  {
+    field: 'email',
+    label: 'Email Address',
+  },
+];

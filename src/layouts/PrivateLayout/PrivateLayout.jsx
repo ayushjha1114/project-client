@@ -12,7 +12,8 @@ const PrivateLayout = ({ children, ...rest }) => (
 );
 
 PrivateLayout.propTypes = {
-  children: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.object.isRequired,
 };
 
 export default PrivateLayout;

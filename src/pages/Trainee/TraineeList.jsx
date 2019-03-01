@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { AddDialog } from '.';
 import trainee from './data/trainee';
+import { column } from '../../configs/constants';
+import TraineeTable from '../../components/TraineeTable/TraineeTable';
 
 export default class Trainee extends React.Component {
   state = {
@@ -27,16 +29,18 @@ export default class Trainee extends React.Component {
     return (
       <>
         <div>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={this.handleClickOpen}
-            style={{ margin: 10 }}
-          >
+          <div style={{ margin: 10, textAlign: 'right' }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={this.handleClickOpen}
+            >
             Add Trainee
-          </Button>
+            </Button>
+          </div>
           <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
         </div>
+        <TraineeTable data={trainee} columns={column} id="id" />
         <ul>
           {
             trainee.map(train => (
