@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Button, Card, CardContent, CardMedia, Typography,
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
+import { getDateFormatted } from '../../lib/utils';
 import trainee from './data/trainee';
 import { traineePath } from '../../configs/constants';
 import NoMatch from '../NoMatch';
@@ -31,10 +31,6 @@ const styles = theme => ({
     textAlign: 'center',
   },
 });
-
-function getDateFormatted(date) {
-  return moment(date).format('dddd, MMMM Do YYYY, h:mm:ss a');
-}
 
 function getData(id) {
   let data;
@@ -88,7 +84,7 @@ function TraineeDetail(props) {
 }
 
 TraineeDetail.propTypes = {
-  classes: PropTypes.objectOf.isRequired,
+  classes: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   match: PropTypes.func.isRequired,
 };
 
