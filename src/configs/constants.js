@@ -51,7 +51,6 @@ export const traineePath = '/trainee';
 export const dropdown1 = 'Cricket';
 export const dropdown2 = 'Football';
 
-// const ss = new Trainee();
 export const column = [
   {
     field: 'name',
@@ -69,3 +68,14 @@ export const column = [
     format: getDateFormatted,
   },
 ];
+
+/* export const actions = [
+  {
+    icon: <EditIcon />,
+    handler: TraineeList.handlerEditDialogOpen,
+  },
+  {
+    icon: <DeleteIcon />,
+    handler: TraineeList.handlerRemoveDialogOpen,
+  },
+]; */
