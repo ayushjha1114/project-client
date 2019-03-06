@@ -65,7 +65,7 @@ class TraineeTable extends React.Component {
               <TableHead>
                 <TableRow key="col">
                   {columns.map(column => (
-                    <>
+                    <React.Fragment key={column.field}>
                       <TableCell
                         align={column.align}
                         key={column.field}
@@ -79,7 +79,7 @@ class TraineeTable extends React.Component {
                           {column.label || column.field}
                         </TableSortLabel>
                       </TableCell>
-                    </>
+                    </React.Fragment>
                   ))}
                   <TableCell />
                 </TableRow>
@@ -108,7 +108,7 @@ class TraineeTable extends React.Component {
                       {
                         actions.map(action => (
                           <Button
-                            onClick={() => action.handler(row.id)}
+                            onClick={() => action.handler(row)}
                             className={classes.iconButton}
                           >
                             {action.icon}

@@ -9,7 +9,6 @@ import {
   Person, Email,
 } from '@material-ui/icons';
 import * as yup from 'yup';
-import trainee from '../../data/trainee';
 
 
 const styles = theme => ({
@@ -48,10 +47,12 @@ class AddDialog extends React.Component {
 
   constructor(props) {
     super(props);
+    const { traineeId } = this.props;
+    const { name, email } = traineeId;
     this.state = {
       form: {
-        name: '',
-        email: '',
+        name,
+        email,
       },
       error: {
         name: '',
@@ -150,7 +151,7 @@ class AddDialog extends React.Component {
         touched += 1;
       }
     });
-    if (!checkError && touched === 2) {
+    if (!checkError && (touched === 2 || touched === 1)) {
       result = true;
     } else if (checkError && touched !== 2) {
       result = false;
@@ -171,15 +172,17 @@ class AddDialog extends React.Component {
   };
 
   render() {
-    const { editOpen, classes, traineeId } = this.props;
-    let traineeName;
+    const { editOpen, classes } = this.props;
+    const { form } = this.state;
+    const { name, email } = form;
+    /*     let traineeName;
     let traineeEmail;
     trainee.forEach((train) => {
       if (traineeId === train.id) {
         traineeName = train.name;
         traineeEmail = train.email;
       }
-    });
+    }); */
     return (
       <>
         <Dialog
@@ -198,7 +201,7 @@ class AddDialog extends React.Component {
               fullWidth
               id="outlined-name"
               label="Name"
-              defaultValue={traineeName}
+              value={name}
               error={this.getError('name')}
               className={classes.textField}
               margin="normal"
@@ -220,7 +223,7 @@ class AddDialog extends React.Component {
               className={classes.textField}
               type="email"
               name="email"
-              defaultValue={traineeEmail}
+              value={email}
               autoComplete="email"
               margin="normal"
               variant="outlined"

@@ -4,7 +4,6 @@ import {
   Button, Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle,
 } from '@material-ui/core';
-import trainee from '../../data/trainee';
 
 const propTypes = {
   removeOpen: PropTypes.bool,
@@ -28,14 +27,14 @@ class AddDialog extends React.Component {
   handleSubmit = () => {
     const { onSubmit, traineeId } = this.props;
     // const { form } = this.state;
-    let data;
+    /*     let data;
     trainee.forEach((train) => {
       if (traineeId === train.id) {
         data = train;
       }
-    });
+    }); */
 
-    onSubmit(data);
+    onSubmit(traineeId);
   };
 
   handleClose = () => {

@@ -30,7 +30,7 @@ export default class TraineeList extends React.Component {
   };
 
   handleEditClose = (value) => {
-    this.setState({ editDialog: value });
+    this.setState({ editDialog: value, id: '' });
   };
 
   handleRemoveClose = (value) => {
@@ -43,7 +43,7 @@ export default class TraineeList extends React.Component {
   };
 
   handleEditSubmit = (form) => {
-    this.setState({ editDialog: false });
+    this.setState({ editDialog: false, id: '' });
     console.log('Edited', form);
   };
 
@@ -70,16 +70,16 @@ export default class TraineeList extends React.Component {
     this.setState({ page });
   }
 
-  handlerEditDialogOpen = (rowID) => {
+  handlerEditDialogOpen = (row) => {
     this.setState({
-      id: rowID,
+      id: row,
       editDialog: true,
     });
   };
 
-  handlerRemoveDialogOpen = (rowID) => {
+  handlerRemoveDialogOpen = (row) => {
     this.setState({
-      id: rowID,
+      id: row,
       deleteDialog: true,
     });
   };
@@ -102,18 +102,25 @@ export default class TraineeList extends React.Component {
           </div>
           <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
         </div>
-        <EditDialog
-          traineeId={id}
-          editOpen={editDialog}
-          onClose={this.handleEditClose}
-          onSubmit={this.handleEditSubmit}
-        />
-        <RemoveDialog
-          traineeId={id}
-          removeOpen={deleteDialog}
-          onClose={this.handleRemoveClose}
-          onSubmit={this.handleRemoveSubmit}
-        />
+        {
+          (id) ? (
+            <>
+              <EditDialog
+                traineeId={id}
+                editOpen={editDialog}
+                onClose={this.handleEditClose}
+                onSubmit={this.handleEditSubmit}
+              />
+              <RemoveDialog
+                traineeId={id}
+                removeOpen={deleteDialog}
+                onClose={this.handleRemoveClose}
+                onSubmit={this.handleRemoveSubmit}
+              />
+            </>
+          ) : ''
+        }
+
         <TraineeTable
           data={trainee}
           columns={column}
