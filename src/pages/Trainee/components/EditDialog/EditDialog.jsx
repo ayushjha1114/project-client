@@ -9,6 +9,7 @@ import {
   Person, Email,
 } from '@material-ui/icons';
 import * as yup from 'yup';
+import { SnackbarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
 
 
 const styles = theme => ({
@@ -160,11 +161,11 @@ class AddDialog extends React.Component {
   }
 
 
-  handleSubmit = () => {
+  /*   handleSubmit = () => {
     const { onSubmit } = this.props;
     const { form } = this.state;
     onSubmit(form);
-  };
+  }; */
 
   handleClose = () => {
     const { onClose } = this.props;
@@ -172,7 +173,7 @@ class AddDialog extends React.Component {
   };
 
   render() {
-    const { editOpen, classes } = this.props;
+    const { editOpen, classes, onSubmit } = this.props;
     const { form } = this.state;
     const { name, email } = form;
     /*     let traineeName;
@@ -241,17 +242,33 @@ class AddDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
                 Cancel
             </Button>
-            {
-              (this.buttonChecked()) ? (
-                <Button onClick={this.handleSubmit} color="primary">
-                Submit
-                </Button>
-              ) : (
-                <Button onClick={this.handleSubmit} color="primary" disabled>
-                Submit
-                </Button>
-              )
-            }
+            <SnackbarConsumer>
+              {({ openSnack }) => (
+
+                (this.buttonChecked()) ? (
+                  <Button
+                    onClick={() => {
+                      onSubmit(form);
+                      openSnack('This is an success message!', 'success');
+                    }}
+                    color="primary"
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      onSubmit(form);
+                      openSnack('This is an success message!', 'success');
+                    }}
+                    color="primary"
+                    disabled
+                  >
+                    Submit
+                  </Button>
+                )
+              )}
+            </SnackbarConsumer>
           </DialogActions>
         </Dialog>
       </>
