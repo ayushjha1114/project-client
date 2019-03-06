@@ -28,7 +28,7 @@ const propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   classes: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
-  traineeId: PropTypes.string.isRequired,
+  traineeId: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
 
 // default values for props:

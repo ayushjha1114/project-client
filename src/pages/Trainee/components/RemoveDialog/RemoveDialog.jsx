@@ -9,7 +9,7 @@ const propTypes = {
   removeOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  traineeId: PropTypes.string.isRequired,
+  traineeId: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
 
 // default values for props:
