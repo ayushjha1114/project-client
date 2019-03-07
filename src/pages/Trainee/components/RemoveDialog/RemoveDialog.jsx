@@ -66,35 +66,23 @@ class AddDialog extends React.Component {
                 Cancel
             </Button>
             {
-              (this.dateMatch()) ? (
-                <SnackbarConsumer>
-                  {({ openSnack }) => (
-                    <Button
-                      onClick={() => {
-                        onSubmit(traineeId);
-                        openSnack('This is an success message!', 'success');
-                      }}
-                      color="primary"
-                    >
+              <SnackbarConsumer>
+                {({ openSnack }) => (
+                  <Button
+                    onClick={() => {
+                      onSubmit(traineeId);
+                      if (this.dateMatch()) {
+                        openSnack('Trainee deleted!', 'success');
+                      } else {
+                        openSnack('Trainee cannot be deleted!', 'error');
+                      }
+                    }}
+                    color="primary"
+                  >
                     Delete
-                    </Button>
-                  )}
-                </SnackbarConsumer>
-              ) : (
-                <SnackbarConsumer>
-                  {({ openSnack }) => (
-                    <Button
-                      onClick={() => {
-                        onSubmit(traineeId);
-                        openSnack('This is an error message!', 'error');
-                      }}
-                      color="primary"
-                    >
-                    Delete
-                    </Button>
-                  )}
-                </SnackbarConsumer>
-              )
+                  </Button>
+                )}
+              </SnackbarConsumer>
             }
           </DialogActions>
         </Dialog>

@@ -313,7 +313,7 @@ class AddDialog extends React.Component {
                   <Button
                     onClick={() => {
                       onSubmit(form);
-                      openSnack('This is an success message!', 'success');
+                      openSnack('Trainee Added!', 'success');
                     }}
                     color="primary"
                   >
@@ -323,7 +323,7 @@ class AddDialog extends React.Component {
                   <Button
                     onClick={() => {
                       onSubmit(form);
-                      openSnack('This is an success message!', 'success');
+                      openSnack('Trainee Added!', 'success');
                     }}
                     color="primary"
                     disabled
