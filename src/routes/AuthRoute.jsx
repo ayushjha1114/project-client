@@ -5,6 +5,19 @@ import AuthLayout from '../layouts';
 
 const AuthRoute = ({ component: Component, ...rest }) => (
   <>
+    {/*     {
+      (localStorage.getItem('token')) ? (
+        <Route
+          {...rest}
+          render={matchProps => (
+            <AuthLayout>
+              <Component {...matchProps} />
+            </AuthLayout>
+          )}
+        />
+      )
+        : <Redirect to="/" />
+    } */}
     <Route
       {...rest}
       render={matchProps => (
@@ -13,6 +26,7 @@ const AuthRoute = ({ component: Component, ...rest }) => (
         </AuthLayout>
       )}
     />
+
   </>
 );
 

@@ -49,6 +49,7 @@ function NavBar(props) {
           </Link>
           <Button
             color="inherit"
+            onClick={() => localStorage.removeItem('token')}
           >
           LOGOUT
             <ExitToApp />

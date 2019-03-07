@@ -75,6 +75,7 @@ class SnackbarProvider extends React.Component {
   };
 
   render() {
+    // eslint-disable-next-line react/prop-types
     const { classes, children } = this.props;
     const { open, message, status } = this.state;
     const Icon = variantIcon[status];
