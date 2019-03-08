@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import EnhancedTable from '../HOC';
 
 
 const styles = theme => ({
@@ -42,6 +43,13 @@ class TraineeTable extends React.Component {
     onSort(property);
   };
 
+  retrieveData = async () => {
+    // eslint-disable-next-line react/prop-types
+    const { dataOpen } = this.props;
+    const data = await dataOpen;
+    return data;
+  }
+
   render() {
     const {
       id,
@@ -56,7 +64,7 @@ class TraineeTable extends React.Component {
       onChangePage,
       actions,
     } = this.props;
-
+    console.log('inside table', this.props, this.retrieveData());
     return (
       <>
         <Paper className={classes.root}>
@@ -155,7 +163,7 @@ TraineeTable.defaultProps = {
   data: [],
   columns: [],
   id: '',
-  rowsPerPage: 100,
+  rowsPerPage: 20,
 };
 
-export default withStyles(styles)(TraineeTable);
+export default EnhancedTable(withStyles(styles)(TraineeTable));

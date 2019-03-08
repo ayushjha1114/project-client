@@ -1,17 +1,17 @@
 import axios from 'axios';
 
-export async function callApi(method, form, url) {
+export async function callApi(method, form, url, token, queryObj) {
   try {
     return await axios({
       method,
-      url: `https://express-training.herokuapp.com/api/${url}`,
-      data: {
-        email: form.email,
-        password: form.password,
+      baseURL: 'https://express-training.herokuapp.com/api/',
+      url,
+      data: form,
+      headers: {
+        Authorization: token,
       },
+      query: queryObj,
     });
-    // window.localStorage.setItem('token', JSON.stringify(res.data.data));
-    // console.log('success!!!!', res.data.data, '#####', window.localStorage.getItem('token'));
   } catch (error) {
     return error;
   }

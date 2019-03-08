@@ -141,7 +141,7 @@ export default class TraineeList extends React.Component {
           onSelect={this.handleSelect}
           count={100}
           page={page}
-          rowsPerPage={5}
+          rowsPerPage={20}
           onChangePage={this.handleChangePage}
         />
       </>
