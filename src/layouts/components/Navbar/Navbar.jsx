@@ -20,6 +20,12 @@ const styles = ({
 
 function NavBar(props) {
   const { classes } = props;
+
+  function handleLogout() {
+    console.log('dd', props);
+    localStorage.removeItem('token');
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -47,13 +53,15 @@ function NavBar(props) {
             CHILDREN DEMO
             </Button>
           </Link>
-          <Button
-            color="inherit"
-            onClick={() => localStorage.removeItem('token')}
-          >
+          <Link component={RouterLink} underline="none" color="inherit" to="/children-demo">
+            <Button
+              color="inherit"
+              onClick={() => handleLogout()}
+            >
           LOGOUT
-            <ExitToApp />
-          </Button>
+              <ExitToApp />
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

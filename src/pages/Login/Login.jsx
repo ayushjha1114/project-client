@@ -180,7 +180,7 @@ handleClickShowPassword = () => {
   this.setState({ showPassword: !showPassword });
 };
 
-handleSubmit = async (e,values) => {
+handleSubmit = async (e, values) => {
   e.preventDefault();
   const { form } = this.state;
   this.setState({
@@ -199,6 +199,7 @@ handleSubmit = async (e,values) => {
     values.openSnack('Not Valid', 'error');
     this.setState({
       snackCheck: true,
+      load: false,
     });
   }
 }
@@ -207,7 +208,9 @@ handleSubmit = async (e,values) => {
 render() {
   const { classes, ...rest } = this.props;
   const { showPassword, load, snackCheck } = this.state;
-
+  console.log((!this.buttonChecked()), 'buttonchecked');
+  console.log((load), 'load');
+  console.log((!this.buttonChecked() || load), 'combine');
   return (
     <>
       <main {...rest} className={classes.main}>
@@ -273,18 +276,19 @@ render() {
                   <Button
                     type="submit"
                     fullWidth
-                    disabled={!this.buttonChecked()}
+                    disabled={(!this.buttonChecked() || load)}
                     variant="contained"
                     color="primary"
                     className={classes.submit}
                     onClick={(e) => {
                       this.handleSubmit(e, value);
-                      // if (snackCheck) {
-                      //   openSnack('Not Valid!', 'error');
-                      // }
                     }}
                   >
-                    {(!load || snackCheck) ? <b>SIGN IN</b> : <CircularProgress size={24} thickness={4} />}
+                    {
+                      (!load || snackCheck)
+                        ? <b>SIGN IN</b>
+                        : <CircularProgress size={24} thickness={4} />
+                    }
                   </Button>
                 )}
               </SnackbarConsumer>
