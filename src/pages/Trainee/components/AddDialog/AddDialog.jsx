@@ -184,7 +184,7 @@ class AddDialog extends React.Component {
       loader: true,
     });
     const { confirmPassword, ...rest } = form;
-    const result = await callApi('post', rest, 'trainee', localStorage.getItem('token'));
+    const result = await callApi('post', rest, 'trainee');
     // eslint-disable-next-line react/prop-types
     const { onSubmit } = this.props;
     if (result.status) {

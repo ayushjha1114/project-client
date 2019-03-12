@@ -40,11 +40,14 @@ const styles = theme => ({
 });
 
 class SnackbarProvider extends React.Component {
-  state = {
-    open: false,
-    message: '',
-    status: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      message: '',
+      status: '',
+    };
+  }
 
   handleClick = () => {
     this.setState({ open: true });
@@ -59,6 +62,7 @@ class SnackbarProvider extends React.Component {
   };
 
   openSnackBar = (message, status) => {
+    console.log('inside open snack', message, status);
     this.setState({
       message,
       open: true,
@@ -79,18 +83,16 @@ class SnackbarProvider extends React.Component {
     const { classes, children } = this.props;
     const { open, message, status } = this.state;
     const Icon = variantIcon[status];
-
+    console.log('inside snack render');
     return (
       <>
         <SnackBarContext.Provider
           value={{
             openSnack: this.openSnackBar,
             closeSnack: this.closeSnackbar,
-            snackbarIsOpen: open,
-            message,
-            status,
           }}
         >
+          {children}
           <Snackbar
             anchorOrigin={{
               vertical: 'bottom',
@@ -125,7 +127,6 @@ class SnackbarProvider extends React.Component {
               ]}
             />
           </Snackbar>
-          {children}
         </SnackBarContext.Provider>
       </>
     );

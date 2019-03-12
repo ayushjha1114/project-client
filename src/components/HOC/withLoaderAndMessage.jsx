@@ -1,29 +1,61 @@
 import React from 'react';
-import { callApi } from '../../lib/utils/api';
-
+import { CircularProgress } from '@material-ui/core';
 
 function EnhancedTable(WrappedComponent) {
+  const progess = {
+    textAlign: 'center',
+  };
   return class extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {
-        loader: false,
-      };
+      this.state = {};
     }
 
-    getTrainee = async () => {
-      // eslint-disable-next-line react/prop-types
-      const { page } = this.props;
-      const skipPage = page * 20;
-      const limitpage = 20 * (page + 1);
-      const result = await callApi('get', {}, 'trainee', localStorage.getItem('token'), { skip: skipPage, limit: limitpage });
-      console.log('@@@##', result);
-      return result;
-    }
+    /*     static getDerivedStateFromProps(nextProps, prevState) {
+      console.log('43-----------', nextProps, 'QQQ', prevState);
+      if (nextProps.page !== 0) {
+        return {
+          loader: true,
+        };
+      }
+    } */
 
     render() {
-      console.log('######', this.props);
-      return <WrappedComponent dataOpen={this.getTrainee()} {...this.props} />;
+      // eslint-disable-next-line react/prop-types
+      const { loader, dataLength } = this.props;
+      console.log('51---------', this.props);
+      // return <WrappedComponent {...this.props} />;
+      if (loader) {
+        return (
+          <div style={progess}>
+            <CircularProgress size={50} />
+          </div>
+        );
+      }
+      if (!loader && dataLength !== 0) {
+        return <WrappedComponent {...this.props} />;
+      }
+      /*       if (!loader && dataLength === 0) {
+        return <h2><center>OOPS! No More Trainees</center></h2>;
+      } */
+      return <h2><center>OOPS! No More Trainees</center></h2>;
+      // return (
+      //   <>
+      //     {
+      //       (loader)
+      //         ? <CircularProgress size={50} />
+      //         : (
+      //           <SnackbarConsumer>
+      //             {openSnack => (
+      //               (errorAlert)
+      //                 ? openSnack('ERROR', 'error')
+      //                 : <WrappedComponent {...this.props} />
+      //             )}
+      //           </SnackbarConsumer>
+      //         )
+      //     }
+      //   </>
+      // );
     }
   };
 }
