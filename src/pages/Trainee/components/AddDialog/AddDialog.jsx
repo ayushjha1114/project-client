@@ -186,12 +186,14 @@ class AddDialog extends React.Component {
     const { confirmPassword, ...rest } = form;
     const result = await callApi('post', rest, 'trainee');
     // eslint-disable-next-line react/prop-types
-    const { onSubmit } = this.props;
+    const { onSubmit, history } = this.props;
+    console.log('inside add ', this.props);
     if (result.status) {
       this.setState({
         loader: false,
       });
       values.openSnack(result.data.message, 'success');
+      history.push('/trainee');
     } else {
       values.openSnack('Not Authorized', 'error');
       this.setState({

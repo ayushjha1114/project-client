@@ -23,7 +23,6 @@ function EnhancedTable(WrappedComponent) {
     render() {
       // eslint-disable-next-line react/prop-types
       const { loader, dataLength } = this.props;
-      console.log('51---------', this.props);
       // return <WrappedComponent {...this.props} />;
       if (loader) {
         return (

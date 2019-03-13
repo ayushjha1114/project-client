@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogContentText,
+  Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle, TextField, FormHelperText, InputAdornment,
 } from '@material-ui/core';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@material-ui/icons';
 import * as yup from 'yup';
 import { SnackbarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
+import { callApi } from '../../../../lib/utils/api';
 
 
 const styles = theme => ({
@@ -29,7 +30,7 @@ const propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   classes: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
-  traineeId: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
+  traineeData: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
 
 // default values for props:
@@ -48,9 +49,11 @@ class AddDialog extends React.Component {
 
   constructor(props) {
     super(props);
-    const { traineeId } = this.props;
-    const { name, email } = traineeId;
+    const { traineeData } = this.props;
+    const { name, email } = traineeData;
     this.state = {
+      loader: false,
+      snackCheck: false,
       form: {
         name,
         email,
@@ -161,11 +164,38 @@ class AddDialog extends React.Component {
   }
 
 
-  /*   handleSubmit = () => {
-    const { onSubmit } = this.props;
+  handleSubmit = (e, value) => {
+    e.preventDefault();
     const { form } = this.state;
-    onSubmit(form);
-  }; */
+    const { name, email } = form;
+    this.setState({
+      loader: true,
+    });
+    // eslint-disable-next-line react/prop-types
+    const { onSubmit, traineeData } = this.props;
+    callApi(
+      'PUT',
+      {
+        name, email, password: '', id: traineeData.originalId,
+      },
+      'trainee',
+      {},
+    ).then((result) => {
+      if (result.status) {
+        this.setState({
+          loader: false,
+        });
+        value.openSnack('Trainee edited!', 'success');
+        onSubmit(form);
+      } else {
+        value.openSnack(result.message, 'error');
+        this.setState({
+          snackCheck: true,
+          loader: false,
+        });
+      }
+    });
+  };
 
   handleClose = () => {
     const { onClose } = this.props;
@@ -173,8 +203,8 @@ class AddDialog extends React.Component {
   };
 
   render() {
-    const { editOpen, classes, onSubmit } = this.props;
-    const { form } = this.state;
+    const { editOpen, classes } = this.props;
+    const { form, loader, snackCheck } = this.state;
     const { name, email } = form;
     /*     let traineeName;
     let traineeEmail;
@@ -243,7 +273,7 @@ class AddDialog extends React.Component {
                 Cancel
             </Button>
             <SnackbarConsumer>
-              {({ openSnack }) => (
+              {/* {({ openSnack }) => (
 
                 (this.buttonChecked()) ? (
                   <Button
@@ -267,6 +297,22 @@ class AddDialog extends React.Component {
                     Submit
                   </Button>
                 )
+              )} */}
+              {value => (
+                <Button
+                  type="submit"
+                  disabled={(!this.buttonChecked() || loader)}
+                  color="primary"
+                  onClick={(e) => {
+                    this.handleSubmit(e, value);
+                  }}
+                >
+                  {
+                    (!loader || snackCheck)
+                      ? <b>Submit</b>
+                      : <CircularProgress size={24} thickness={4} />
+                  }
+                </Button>
               )}
             </SnackbarConsumer>
           </DialogActions>

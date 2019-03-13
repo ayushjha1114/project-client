@@ -4,22 +4,17 @@ import { Route, Switch } from 'react-router-dom';
 import TraineeDetail from './TraineeDetail';
 import TraineeList from './TraineeList';
 import { NoMatch } from '..';
-// import { SnackbarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
-// import EnhancedTable from '../../components/HOC';
-
 
 function Trainee(props) {
   const { match } = props;
 
   return (
     <>
-      {/* <SnackbarConsumer> */}
       <Switch>
-        <Route exact path={`${match.path}`} component={(TraineeList)} />
+        <Route exact path={`${match.path}`} {...props} component={TraineeList} />
         <Route exact path={`${match.path}/:id`} component={TraineeDetail} />
         <Route path={`${match.path}/`} component={NoMatch} />
       </Switch>
-      {/* </SnackbarConsumer> */}
     </>
   );
 }
