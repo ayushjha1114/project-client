@@ -7,11 +7,12 @@ const propTypes = {
   disabled: PropTypes.bool,
   // onClick: PropTypes.func.isRequired,
   style: PropTypes.objectOf(PropTypes.string),
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
 };
 
 // default values for props:
 const defaultProps = {
+  value: '',
   color: '',
   disabled: false,
   style: {},

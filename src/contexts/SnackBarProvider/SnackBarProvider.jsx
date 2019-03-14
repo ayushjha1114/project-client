@@ -132,7 +132,7 @@ class SnackbarProvider extends React.Component {
 }
 
 SnackbarProvider.propTypes = {
-  classes: PropTypes.objectOf.isRequired,
+  classes: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
 
 export default withStyles(styles)(SnackbarProvider);

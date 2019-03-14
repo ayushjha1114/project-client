@@ -11,7 +11,7 @@ const propTypes = {
   removeOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  traineeData: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
+  traineeData: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
 
 // default values for props:
@@ -71,10 +71,6 @@ class AddDialog extends React.Component {
   render() {
     const { removeOpen } = this.props;
     const { loader, snackCheck } = this.state;
-    console.log('---74---- inisde remove', this.state);
-    /*     const date = moment(traineeData.createdAt).format('ll');
-    console.log('@@@@', moment(date).isSame('Feb 14, 2019'));
-    console.log('!!!!', moment(date).isAfter('Feb 14, 2019')); */
 
     return (
       <>

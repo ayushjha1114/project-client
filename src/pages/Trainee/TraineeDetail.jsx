@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  Button, Card, CardContent, CardMedia, Typography,
+  Button, CircularProgress, Card, CardContent, CardMedia, Typography,
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { getDateFormatted } from '../../lib/utils';
 import { traineePath } from '../../configs/constants';
-import NoMatch from '../NoMatch';
 import { callApi } from '../../lib/utils/api';
 
 
@@ -30,6 +29,10 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     textAlign: 'center',
+  },
+  progress: {
+    textAlign: 'center',
+    margin: theme.spacing.unit * 6,
   },
 });
 
@@ -60,7 +63,11 @@ class TraineeDetail extends React.Component {
     const { classes } = this.props;
     const { data } = this.state;
     if (!(data)) {
-      return <NoMatch />;
+      return (
+        <div className={classes.progress}>
+          <CircularProgress size={50} />
+        </div>
+      );
     }
     return (
       <>

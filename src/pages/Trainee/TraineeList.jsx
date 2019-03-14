@@ -35,7 +35,6 @@ export default class TraineeList extends React.Component {
     const skipPage = page * 10;
     const limitpage = 10;
     callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
-      console.log('---38---', result);
       if (result.status) {
         this.setState({
           item: result.data,
@@ -103,10 +102,8 @@ export default class TraineeList extends React.Component {
     this.setState({ deleteDialog: value });
   };
 
-  handleSubmit = (form) => {
-    this.setState({ open: false });
+  commonCallApi = () => {
     const { page } = this.state;
-    console.log('-----113------', page);
     const skipPage = page * 10;
     const limitpage = 10;
     callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
@@ -124,54 +121,23 @@ export default class TraineeList extends React.Component {
         });
       }
     });
+  }
+
+  handleSubmit = (form) => {
+    this.setState({ open: false });
+    this.commonCallApi();
     console.log(form);
   };
 
   handleEditSubmit = (form) => {
     this.setState({ editDialog: false, id: '' });
-    const { page } = this.state;
-    console.log('-----113------', page);
-    const skipPage = page * 10;
-    const limitpage = 10;
-    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
-      if (result.status) {
-        this.setState({
-          item: result.data,
-          loader: false,
-          dataLength: result.data.data.count,
-          errorAlert: '',
-        });
-      } else {
-        this.setState({
-          loader: false,
-          errorAlert: result.message,
-        });
-      }
-    });
+    this.commonCallApi();
     console.log('Edited', form);
   };
 
   handleRemoveSubmit = (form) => {
     this.setState({ deleteDialog: false });
-    const { page } = this.state;
-    console.log('-----113------', page);
-    const skipPage = page * 10;
-    const limitpage = 10;
-    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
-      if (result.status) {
-        this.setState({
-          item: result.data,
-          loader: false,
-          dataLength: result.data.data.count,
-          errorAlert: '',
-        });
-      } else {
-        this.setState({
-          loader: false,
-          errorAlert: result.message,
-        });
-      }
-    });
+    this.commonCallApi();
     console.log('Remove', form);
   };
 
@@ -208,7 +174,6 @@ export default class TraineeList extends React.Component {
       open, order, orderBy, page, editDialog, id,
       deleteDialog, item, loader, dataLength, errorAlert,
     } = this.state;
-    console.log('------153--', id);
     return (
       <SnackbarConsumer>
         {value => (

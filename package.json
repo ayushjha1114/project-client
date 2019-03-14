@@ -22,11 +22,26 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js src/**/*.jsx",
     "lint:fix": "npm run lint -- --fix",
-    "commit": "npx git-cz"
+    "commit": "npx git-cz",
+    "test:jest": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --colors"
   },
   "hooks": {
     "pre-commit": "npm run lint && npm run test:c",
     "pre-push": "npm run lint && npm run test:c"
+  },
+  "jest": {
+    "verbose": true,
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/",
+      "/.babelrc"
+    ],
+    "moduleNameMapper": {
+      "^Components(.*)$": "<rootDir>/src/components$1"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,7 +53,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
     "eslint-config-airbnb": "^17.1.0",
-    "husky": "^1.3.1"
+    "husky": "^1.3.1",
+    "jest": "^23.6.0",
+    "sinon": "^7.2.7"
   }
 }

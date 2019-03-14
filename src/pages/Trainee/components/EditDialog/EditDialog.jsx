@@ -30,7 +30,7 @@ const propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   classes: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
-  traineeData: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
+  traineeData: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
 
 // default values for props:
@@ -145,6 +145,14 @@ class AddDialog extends React.Component {
     return result;
   }
 
+  showBooleanError = (field) => {
+    const { isTouched } = this.state;
+    if (isTouched[field] === true) {
+      return true;
+    }
+    return false;
+  }
+
   buttonChecked = () => {
     const { isTouched } = this.state;
     let touched = 0;
@@ -233,7 +241,7 @@ class AddDialog extends React.Component {
               id="outlined-name"
               label="Name"
               value={name}
-              error={this.getError('name')}
+              error={this.showBooleanError('name')}
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -250,7 +258,7 @@ class AddDialog extends React.Component {
               fullWidth
               id="outlined-email-input"
               label="Email"
-              error={this.getError('password')}
+              error={this.showBooleanError('email')}
               className={classes.textField}
               type="email"
               name="email"
@@ -273,31 +281,6 @@ class AddDialog extends React.Component {
                 Cancel
             </Button>
             <SnackbarConsumer>
-              {/* {({ openSnack }) => (
-
-                (this.buttonChecked()) ? (
-                  <Button
-                    onClick={() => {
-                      onSubmit(form);
-                      openSnack('Trainee edited!', 'success');
-                    }}
-                    color="primary"
-                  >
-                    Submit
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      onSubmit(form);
-                      openSnack('Trainee edited!', 'success');
-                    }}
-                    color="primary"
-                    disabled
-                  >
-                    Submit
-                  </Button>
-                )
-              )} */}
               {value => (
                 <Button
                   type="submit"

@@ -154,6 +154,14 @@ class AddDialog extends React.Component {
     return result;
   }
 
+  showBooleanError = (field) => {
+    const { isTouched } = this.state;
+    if (isTouched[field] === true) {
+      return true;
+    }
+    return false;
+  }
+
   buttonChecked = () => {
     const { isTouched } = this.state;
     let touched = 0;
@@ -232,7 +240,7 @@ class AddDialog extends React.Component {
               fullWidth
               id="outlined-name"
               label="Name"
-              error={this.getError('name')}
+              error={this.showBooleanError('name')}
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -249,7 +257,7 @@ class AddDialog extends React.Component {
               fullWidth
               id="outlined-email-input"
               label="Email"
-              error={this.getError('password')}
+              error={this.showBooleanError('email')}
               className={classes.textField}
               type="email"
               name="email"
@@ -271,7 +279,7 @@ class AddDialog extends React.Component {
                   fullWidth
                   id="outlined-password-input"
                   label="Password"
-                  error={this.getError('password')}
+                  error={this.showBooleanError('password')}
                   className={classes.textField}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
@@ -301,7 +309,7 @@ class AddDialog extends React.Component {
                   fullWidth
                   id="outlined-password-input1"
                   label="Confirm Password"
-                  error={this.getError('confirmPassword')}
+                  error={this.showBooleanError('confirmPassword')}
                   className={classes.textField}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
