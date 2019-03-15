@@ -38,10 +38,7 @@
       "/node_modules/",
       "/lib/",
       "/.babelrc"
-    ],
-    "moduleNameMapper": {
-      "^Components(.*)$": "<rootDir>/src/components$1"
-    }
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
