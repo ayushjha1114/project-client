@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  first: PropTypes.number.isRequired,
-  second: PropTypes.number.isRequired,
-  operator: PropTypes.string.isRequired,
-  children: PropTypes.func.isRequired,
+  first: PropTypes.number,
+  second: PropTypes.number,
+  operator: PropTypes.string,
+  children: PropTypes.func,
 };
 const defaultProps = {
+  first: 0,
+  second: 0,
+  operator: '',
+  children: () => {},
 };
 
 class Math extends Component {

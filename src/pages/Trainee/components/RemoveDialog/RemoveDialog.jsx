@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogContentText,
+  Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle,
 } from '@material-ui/core';
-import moment from 'moment';
 import { SnackbarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
+import { callApi } from '../../../../lib/utils/api';
 
 const propTypes = {
   removeOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  traineeId: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
+  traineeData: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
 
 // default values for props:
@@ -23,6 +23,8 @@ class AddDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loader: false,
+      snackCheck: false,
     };
   }
 
@@ -31,20 +33,44 @@ class AddDialog extends React.Component {
     onClose(false);
   };
 
-  dateMatch = () => {
-    const { traineeId } = this.props;
-    const date = moment(traineeId.createdAt).format('ll');
+  /*   dateMatch = () => {
+    const { traineeData } = this.props;
+    const date = moment(traineeData.createdAt).format('ll');
     if (moment(date).isSame('Feb 14, 2019') || moment(date).isAfter('Feb 14, 2019')) {
       return true;
     }
     return false;
-  }
+  } */
+
+  handleSubmit = (e, value) => {
+    e.preventDefault();
+    this.setState({
+      loader: true,
+    });
+    // eslint-disable-next-line react/prop-types
+    const { history, traineeData } = this.props;
+    callApi('DELETE', {}, `trainee/${traineeData.originalId}`, {}).then((result) => {
+      if (result.status) {
+        this.setState({
+          loader: false,
+        });
+        value.openSnack('Trainee deleted!', 'success');
+        history.push('/trainee');
+      } else {
+        value.openSnack(result.message, 'error');
+        this.setState({
+          snackCheck: true,
+          loader: false,
+        });
+      }
+    });
+    const { onSubmit } = this.props;
+    onSubmit(traineeData);
+  };
 
   render() {
-    const { removeOpen, onSubmit, traineeId } = this.props;
-    /*     const date = moment(traineeId.createdAt).format('ll');
-    console.log('@@@@', moment(date).isSame('Feb 14, 2019'));
-    console.log('!!!!', moment(date).isAfter('Feb 14, 2019')); */
+    const { removeOpen } = this.props;
+    const { loader, snackCheck } = this.state;
 
     return (
       <>
@@ -67,19 +93,19 @@ class AddDialog extends React.Component {
             </Button>
             {
               <SnackbarConsumer>
-                {({ openSnack }) => (
+                {value => (
                   <Button
-                    onClick={() => {
-                      onSubmit(traineeId);
-                      if (this.dateMatch()) {
-                        openSnack('Trainee deleted!', 'success');
-                      } else {
-                        openSnack('Trainee cannot be deleted!', 'error');
-                      }
+                    disabled={loader}
+                    onClick={(e) => {
+                      this.handleSubmit(e, value);
                     }}
                     color="primary"
                   >
-                    Delete
+                    {
+                      (!loader || snackCheck)
+                        ? <b>Delete</b>
+                        : <CircularProgress size={24} thickness={4} />
+                    }
                   </Button>
                 )}
               </SnackbarConsumer>

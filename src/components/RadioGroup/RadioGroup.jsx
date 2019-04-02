@@ -5,7 +5,7 @@ import style from './style';
 const propTypes = {
   error: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
 };
 
@@ -14,6 +14,7 @@ const defaultProps = {
   error: '',
   options: [],
   value: '',
+  onChange: () => {},
 };
 
 class RadioGroup extends React.Component {

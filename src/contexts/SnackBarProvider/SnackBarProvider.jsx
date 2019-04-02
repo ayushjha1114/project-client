@@ -62,7 +62,6 @@ class SnackbarProvider extends React.Component {
   };
 
   openSnackBar = (message, status) => {
-    console.log('inside open snack', message, status);
     this.setState({
       message,
       open: true,
@@ -83,7 +82,6 @@ class SnackbarProvider extends React.Component {
     const { classes, children } = this.props;
     const { open, message, status } = this.state;
     const Icon = variantIcon[status];
-    console.log('inside snack render');
     return (
       <>
         <SnackBarContext.Provider
@@ -134,7 +132,7 @@ class SnackbarProvider extends React.Component {
 }
 
 SnackbarProvider.propTypes = {
-  classes: PropTypes.objectOf.isRequired,
+  classes: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
 
 export default withStyles(styles)(SnackbarProvider);

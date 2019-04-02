@@ -157,6 +157,14 @@ getError = (field) => {
   return result;
 }
 
+showBooleanError = (field) => {
+  const { isTouched } = this.state;
+  if (isTouched[field] === true) {
+    return true;
+  }
+  return false;
+}
+
 buttonChecked = () => {
   const { isTouched } = this.state;
   let touched = 0;
@@ -221,7 +229,7 @@ render() {
           <form className={classes.form}>
             <TextField
               fullWidth
-              error={this.getError('email')}
+              error={this.showBooleanError('email')}
               id="outlined-email-input"
               label="Email Address"
               className={classes.textField}
@@ -241,7 +249,7 @@ render() {
             </FormHelperText>
             <TextField
               fullWidth
-              error={this.getError('password')}
+              error={this.showBooleanError('password')}
               id="outlined-password-input"
               label="Password"
               className={classes.textField}

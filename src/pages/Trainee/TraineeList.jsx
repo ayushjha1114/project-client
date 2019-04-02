@@ -34,8 +34,7 @@ export default class TraineeList extends React.Component {
     const { page } = this.state;
     const skipPage = page * 10;
     const limitpage = 10;
-    callApi('get', {}, 'traine', { skip: skipPage, limit: limitpage }).then((result) => {
-      console.log('30-----line-----', result.message);
+    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
       if (result.status) {
         this.setState({
           item: result.data,
@@ -44,7 +43,6 @@ export default class TraineeList extends React.Component {
           errorAlert: '',
         });
       } else {
-        console.log('46-------------');
         this.setState({
           loader: false,
           errorAlert: result.message,
@@ -61,7 +59,6 @@ export default class TraineeList extends React.Component {
     const skipPage = page * 10;
     const limitpage = 10;
     callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
-      console.log('AJKNAKNSDDN', result.data.data.count);
       if (result.status) {
         this.setState({
           item: result.data,
@@ -79,10 +76,8 @@ export default class TraineeList extends React.Component {
   }
 
   showErrorAlert = (value) => {
-    console.log('79-------------', value);
     const { errorAlert } = this.state;
     const { openSnack } = value;
-    console.log('----------82--------', errorAlert);
     if (errorAlert) {
       openSnack(errorAlert, 'error');
       this.setState({
@@ -107,18 +102,42 @@ export default class TraineeList extends React.Component {
     this.setState({ deleteDialog: value });
   };
 
+  commonCallApi = () => {
+    const { page } = this.state;
+    const skipPage = page * 10;
+    const limitpage = 10;
+    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
+      if (result.status) {
+        this.setState({
+          item: result.data,
+          loader: false,
+          dataLength: result.data.data.count,
+          errorAlert: '',
+        });
+      } else {
+        this.setState({
+          loader: false,
+          errorAlert: result.message,
+        });
+      }
+    });
+  }
+
   handleSubmit = (form) => {
     this.setState({ open: false });
+    this.commonCallApi();
     console.log(form);
   };
 
   handleEditSubmit = (form) => {
     this.setState({ editDialog: false, id: '' });
+    this.commonCallApi();
     console.log('Edited', form);
   };
 
   handleRemoveSubmit = (form) => {
     this.setState({ deleteDialog: false });
+    this.commonCallApi();
     console.log('Remove', form);
   };
 
@@ -155,7 +174,6 @@ export default class TraineeList extends React.Component {
       open, order, orderBy, page, editDialog, id,
       deleteDialog, item, loader, dataLength, errorAlert,
     } = this.state;
-    console.log('120===========', item);
     return (
       <SnackbarConsumer>
         {value => (
@@ -170,19 +188,26 @@ export default class TraineeList extends React.Component {
             Add Trainee
                 </Button>
               </div>
-              <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
+              <AddDialog
+                open={open}
+                {...this.props}
+                onClose={this.handleClose}
+                onSubmit={this.handleSubmit}
+              />
             </div>
             {
               (id) ? (
                 <>
                   <EditDialog
-                    traineeId={id}
+                    traineeData={id}
+                    {...this.props}
                     editOpen={editDialog}
                     onClose={this.handleEditClose}
                     onSubmit={this.handleEditSubmit}
                   />
                   <RemoveDialog
-                    traineeId={id}
+                    traineeData={id}
+                    {...this.props}
                     removeOpen={deleteDialog}
                     onClose={this.handleRemoveClose}
                     onSubmit={this.handleRemoveSubmit}
@@ -210,7 +235,7 @@ export default class TraineeList extends React.Component {
                   order={order}
                   onSort={this.handleSort}
                   onSelect={this.handleSelect}
-                  count={100}
+                  count={dataLength}
                   page={page}
                   rowsPerPage={10}
                   onChangePage={this.handleChangePage}

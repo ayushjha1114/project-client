@@ -33,7 +33,6 @@ const styles = theme => ({
 });
 
 class TraineeTable extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -76,8 +75,6 @@ class TraineeTable extends React.Component {
       onChangePage,
       actions,
     } = this.props;
-    console.log(' inside table component 1111111111', result.data.records);
-
 
     return (
       <>
@@ -117,7 +114,8 @@ class TraineeTable extends React.Component {
                       <TableCell
                         align={column.align}
                         key={column.field}
-                        onClick={this.handleSelect(row.id)}
+                        // eslint-disable-next-line no-underscore-dangle
+                        onClick={this.handleSelect(row._id)}
                       >
                         {column.format
                           ? column.format(row[column.field])
