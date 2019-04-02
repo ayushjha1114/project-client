@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Avatar, Button, TextField, FormHelperText, IconButton, InputAdornment, Paper, Typography,
+  Avatar, Button, CircularProgress, TextField,
+  FormHelperText, IconButton, InputAdornment, Paper, Typography,
 } from '@material-ui/core';
 import {
   Visibility, VisibilityOff, Email,
@@ -9,6 +10,9 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import withStyles from '@material-ui/core/styles/withStyles';
 import * as yup from 'yup';
+import { callApi } from '../../lib/utils/api';
+import { SnackbarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
+
 
 const styles = theme => ({
   main: {
@@ -60,6 +64,8 @@ class Login extends React.Component {
     super(props);
     this.state = {
       showPassword: false,
+      load: false,
+      snackCheck: false,
       form: {
         password: '',
         email: '',
@@ -174,9 +180,37 @@ handleClickShowPassword = () => {
   this.setState({ showPassword: !showPassword });
 };
 
+handleSubmit = async (e, values) => {
+  e.preventDefault();
+  const { form } = this.state;
+  this.setState({
+    load: true,
+  });
+  const result = await callApi('post', form, 'user/login');
+  // eslint-disable-next-line react/prop-types
+  const { children } = this.props;
+  if (result.status) {
+    this.setState({
+      load: false,
+    });
+    window.localStorage.setItem('token', JSON.stringify(result.data.data));
+    children.props.history.push('/trainee');
+  } else {
+    values.openSnack('Not Valid', 'error');
+    this.setState({
+      snackCheck: true,
+      load: false,
+    });
+  }
+}
+
+
 render() {
   const { classes, ...rest } = this.props;
-  const { showPassword } = this.state;
+  const { showPassword, load, snackCheck } = this.state;
+  console.log((!this.buttonChecked()), 'buttonchecked');
+  console.log((load), 'load');
+  console.log((!this.buttonChecked() || load), 'combine');
   return (
     <>
       <main {...rest} className={classes.main}>
@@ -236,31 +270,30 @@ render() {
             <FormHelperText id="component-error-text3" className={classes.error}>
               {this.getError('password')}
             </FormHelperText>
-
             {
-              (this.buttonChecked()) ? (
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                SIGN IN
-                </Button>
-              ) : (
-                <Button
-                  disabled
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                SIGN IN
-                </Button>
-              )
+              <SnackbarConsumer>
+                {value => (
+                  <Button
+                    type="submit"
+                    fullWidth
+                    disabled={(!this.buttonChecked() || load)}
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={(e) => {
+                      this.handleSubmit(e, value);
+                    }}
+                  >
+                    {
+                      (!load || snackCheck)
+                        ? <b>SIGN IN</b>
+                        : <CircularProgress size={24} thickness={4} />
+                    }
+                  </Button>
+                )}
+              </SnackbarConsumer>
             }
+
           </form>
         </Paper>
       </main>
