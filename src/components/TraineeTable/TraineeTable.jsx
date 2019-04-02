@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import EnhancedTable from '../HOC';
 
 
 const styles = theme => ({
@@ -32,6 +33,23 @@ const styles = theme => ({
 });
 
 class TraineeTable extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
+  /*   async componentDidMount() {
+    // eslint-disable-next-line react/prop-types
+    const { result } = this.props;
+    console.log('SSSSSSS', result);
+    const res = await result;
+    this.setState({
+      serverData: res.data.records,
+    });
+  } */
+
   handleSelect = ID => () => {
     const { onSelect } = this.props;
     onSelect(ID);
@@ -42,11 +60,13 @@ class TraineeTable extends React.Component {
     onSort(property);
   };
 
+
   render() {
     const {
       id,
+      // eslint-disable-next-line react/prop-types
+      result,
       classes,
-      data,
       columns,
       order,
       orderBy,
@@ -56,6 +76,8 @@ class TraineeTable extends React.Component {
       onChangePage,
       actions,
     } = this.props;
+    console.log(' inside table component 1111111111', result.data.records);
+
 
     return (
       <>
@@ -85,12 +107,11 @@ class TraineeTable extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map(row => (
+                {(result.data.records).map(row => (
                   <TableRow
                     className={classes.row}
                     key={row.id}
                     hover
-
                   >
                     {columns.map(column => (
                       <TableCell
@@ -139,7 +160,6 @@ TraineeTable.propTypes = {
   classes: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   id: PropTypes.string,
   columns: PropTypes.arrayOf(PropTypes.objectOf),
-  data: PropTypes.arrayOf(PropTypes.objectOf),
   onSort: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
@@ -152,10 +172,9 @@ TraineeTable.propTypes = {
 };
 
 TraineeTable.defaultProps = {
-  data: [],
   columns: [],
   id: '',
-  rowsPerPage: 100,
+  rowsPerPage: 20,
 };
 
-export default withStyles(styles)(TraineeTable);
+export default EnhancedTable(withStyles(styles)(TraineeTable));

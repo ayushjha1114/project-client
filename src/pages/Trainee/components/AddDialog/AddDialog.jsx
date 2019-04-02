@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogContentText,
+  Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle, TextField, FormHelperText, IconButton, InputAdornment,
 } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +10,7 @@ import {
   Person, Visibility, VisibilityOff, Email,
 } from '@material-ui/icons';
 import * as yup from 'yup';
+import { callApi } from '../../../../lib/utils/api';
 import { SnackbarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
 
 
@@ -54,6 +55,8 @@ class AddDialog extends React.Component {
     super(props);
     this.state = {
       showPassword: false,
+      loader: false,
+      snackCheck: false,
       form: {
         name: '',
         password: '',
@@ -174,11 +177,30 @@ class AddDialog extends React.Component {
     this.setState({ showPassword: !showPassword });
   };
 
-  /*   handleSubmit = () => {
-    const { onSubmit } = this.props;
+  handleSubmit = async (e, values) => {
+    e.preventDefault();
     const { form } = this.state;
+    this.setState({
+      loader: true,
+    });
+    const { confirmPassword, ...rest } = form;
+    const result = await callApi('post', rest, 'trainee');
+    // eslint-disable-next-line react/prop-types
+    const { onSubmit } = this.props;
+    if (result.status) {
+      this.setState({
+        loader: false,
+      });
+      values.openSnack(result.data.message, 'success');
+    } else {
+      values.openSnack('Not Authorized', 'error');
+      this.setState({
+        snackCheck: true,
+        loader: false,
+      });
+    }
     onSubmit(form);
-  }; */
+  };
 
   handleClose = () => {
     const { onClose } = this.props;
@@ -186,8 +208,10 @@ class AddDialog extends React.Component {
   };
 
   render() {
-    const { open, classes, onSubmit } = this.props;
-    const { showPassword, form } = this.state;
+    const { open, classes } = this.props;
+    const {
+      showPassword, loader, snackCheck,
+    } = this.state;
     return (
       <>
         <Dialog
@@ -307,30 +331,20 @@ class AddDialog extends React.Component {
                 Cancel
             </Button>
             <SnackbarConsumer>
-              {({ openSnack }) => (
-
-                (this.buttonChecked()) ? (
-                  <Button
-                    onClick={() => {
-                      onSubmit(form);
-                      openSnack('Trainee Added!', 'success');
-                    }}
-                    color="primary"
-                  >
-                    Submit
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      onSubmit(form);
-                      openSnack('Trainee Added!', 'success');
-                    }}
-                    color="primary"
-                    disabled
-                  >
-                    Submit
-                  </Button>
-                )
+              {value => (
+                <Button
+                  color="primary"
+                  disabled={(!this.buttonChecked() || loader)}
+                  onClick={(e) => {
+                    this.handleSubmit(e, value);
+                  }}
+                >
+                  {
+                    (!loader || snackCheck)
+                      ? <b>Submit</b>
+                      : <CircularProgress size={24} thickness={4} />
+                  }
+                </Button>
               )}
             </SnackbarConsumer>
           </DialogActions>

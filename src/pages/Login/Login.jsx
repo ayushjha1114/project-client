@@ -64,7 +64,7 @@ class Login extends React.Component {
     super(props);
     this.state = {
       showPassword: false,
-      load: false,
+      loader: false,
       snackCheck: false,
       form: {
         password: '',
@@ -184,22 +184,22 @@ handleSubmit = async (e, values) => {
   e.preventDefault();
   const { form } = this.state;
   this.setState({
-    load: true,
+    loader: true,
   });
   const result = await callApi('post', form, 'user/login');
   // eslint-disable-next-line react/prop-types
   const { children } = this.props;
   if (result.status) {
     this.setState({
-      load: false,
+      loader: false,
     });
-    window.localStorage.setItem('token', JSON.stringify(result.data.data));
+    window.localStorage.setItem('token', result.data.data);
     children.props.history.push('/trainee');
   } else {
     values.openSnack('Not Valid', 'error');
     this.setState({
       snackCheck: true,
-      load: false,
+      loader: false,
     });
   }
 }
@@ -207,10 +207,7 @@ handleSubmit = async (e, values) => {
 
 render() {
   const { classes, ...rest } = this.props;
-  const { showPassword, load, snackCheck } = this.state;
-  console.log((!this.buttonChecked()), 'buttonchecked');
-  console.log((load), 'load');
-  console.log((!this.buttonChecked() || load), 'combine');
+  const { showPassword, loader, snackCheck } = this.state;
   return (
     <>
       <main {...rest} className={classes.main}>
@@ -276,7 +273,7 @@ render() {
                   <Button
                     type="submit"
                     fullWidth
-                    disabled={(!this.buttonChecked() || load)}
+                    disabled={(!this.buttonChecked() || loader)}
                     variant="contained"
                     color="primary"
                     className={classes.submit}
@@ -285,7 +282,7 @@ render() {
                     }}
                   >
                     {
-                      (!load || snackCheck)
+                      (!loader || snackCheck)
                         ? <b>SIGN IN</b>
                         : <CircularProgress size={24} thickness={4} />
                     }
