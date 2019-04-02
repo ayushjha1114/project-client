@@ -1,3 +1,6 @@
+import { getDateFormatted } from '../lib/utils';
+
+
 const PUBLIC_IMAGE_FOLDER = 'images/';
 export const DEFAULT_BANNER_IMAGE = 'images/default.png';
 
@@ -48,14 +51,21 @@ export const traineePath = '/trainee';
 export const dropdown1 = 'Cricket';
 export const dropdown2 = 'Football';
 
+// const ss = new Trainee();
 export const column = [
   {
     field: 'name',
     label: 'Name',
-    align: 'center',
   },
   {
     field: 'email',
     label: 'Email Address',
+    format: value => value && value.toUpperCase(),
+  },
+  {
+    field: 'createdAt',
+    label: 'Date',
+    align: 'right',
+    format: getDateFormatted,
   },
 ];
