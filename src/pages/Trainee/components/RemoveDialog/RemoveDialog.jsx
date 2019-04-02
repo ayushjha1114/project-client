@@ -4,6 +4,8 @@ import {
   Button, Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle,
 } from '@material-ui/core';
+import moment from 'moment';
+import { SnackbarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
 
 const propTypes = {
   removeOpen: PropTypes.bool,
@@ -24,26 +26,26 @@ class AddDialog extends React.Component {
     };
   }
 
-  handleSubmit = () => {
-    const { onSubmit, traineeId } = this.props;
-    // const { form } = this.state;
-    /*     let data;
-    trainee.forEach((train) => {
-      if (traineeId === train.id) {
-        data = train;
-      }
-    }); */
-
-    onSubmit(traineeId);
-  };
-
   handleClose = () => {
     const { onClose } = this.props;
     onClose(false);
   };
 
+  dateMatch = () => {
+    const { traineeId } = this.props;
+    const date = moment(traineeId.createdAt).format('ll');
+    if (moment(date).isSame('Feb 14, 2019') || moment(date).isAfter('Feb 14, 2019')) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
-    const { removeOpen } = this.props;
+    const { removeOpen, onSubmit, traineeId } = this.props;
+    /*     const date = moment(traineeId.createdAt).format('ll');
+    console.log('@@@@', moment(date).isSame('Feb 14, 2019'));
+    console.log('!!!!', moment(date).isAfter('Feb 14, 2019')); */
+
     return (
       <>
         <Dialog
@@ -63,9 +65,25 @@ class AddDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
                 Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
-                Delete
-            </Button>
+            {
+              <SnackbarConsumer>
+                {({ openSnack }) => (
+                  <Button
+                    onClick={() => {
+                      onSubmit(traineeId);
+                      if (this.dateMatch()) {
+                        openSnack('Trainee deleted!', 'success');
+                      } else {
+                        openSnack('Trainee cannot be deleted!', 'error');
+                      }
+                    }}
+                    color="primary"
+                  >
+                    Delete
+                  </Button>
+                )}
+              </SnackbarConsumer>
+            }
           </DialogActions>
         </Dialog>
       </>

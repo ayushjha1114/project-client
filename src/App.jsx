@@ -7,21 +7,24 @@ import TextFieldDemo, {
   NoMatch, Trainee, ChildrenDemo, InputDemo,
 } from './pages';
 import { traineePath } from './configs/constants';
+import SnackbarProvider from './contexts';
 
 const App = () => (
   <>
-    <CssBaseline />
-    <Router>
-      <Switch>
-        <PrivateRoute exact path="/" component={Trainee} />
-        <AuthRoute path="/login" component={Login} />
-        <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
-        <PrivateRoute path={traineePath} component={Trainee} />
-        <PrivateRoute path="/children-demo" component={ChildrenDemo} />
-        <PrivateRoute path="/input-demo" component={InputDemo} />
-        <PrivateRoute component={NoMatch} />
-      </Switch>
-    </Router>
+    <SnackbarProvider>
+      <CssBaseline />
+      <Router>
+        <Switch>
+          <PrivateRoute exact path="/" component={Trainee} />
+          <AuthRoute path="/login" component={Login} />
+          <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
+          <PrivateRoute path={traineePath} component={Trainee} />
+          <PrivateRoute path="/children-demo" component={ChildrenDemo} />
+          <PrivateRoute path="/input-demo" component={InputDemo} />
+          <PrivateRoute component={NoMatch} />
+        </Switch>
+      </Router>
+    </SnackbarProvider>
   </>
 );
 export default App;
