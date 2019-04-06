@@ -5,7 +5,7 @@ import { PrivateLayout } from '../layouts';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <>
-    {
+    {/* {
       (localStorage.getItem('token')) ? (
         <Route
           {...rest}
@@ -17,7 +17,15 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         />
       )
         : <Redirect to="/login" />
-    }
+    } */}
+    <Route
+      {...rest}
+      render={matchProps => (
+        <PrivateLayout>
+          <Component {...matchProps} />
+        </PrivateLayout>
+      )}
+    />
 
   </>
 );

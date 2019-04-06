@@ -8,6 +8,7 @@ import TextFieldDemo, {
 } from './pages';
 import { traineePath } from './configs/constants';
 import SnackbarProvider from './contexts';
+import AdminDashBoard from './layouts/components/AdminDashboard';
 
 const App = () => (
   <>
@@ -15,6 +16,7 @@ const App = () => (
       <CssBaseline />
       <Router>
         <Switch>
+          <AdminDashBoard />
           <PrivateRoute exact path="/" component={Trainee} />
           <AuthRoute path="/login" component={Login} />
           <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
