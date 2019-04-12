@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthRoute, PrivateRoute } from './routes';
 import Login from './pages/Login';
 import TextFieldDemo, {
-  NoMatch, Trainee, ChildrenDemo, InputDemo,
+  NoMatch, AboutUs, Trainee, ChildrenDemo, InputDemo,
 } from './pages';
 import { traineePath } from './configs/constants';
 import SnackbarProvider from './contexts';
@@ -16,8 +16,8 @@ const App = () => (
       <CssBaseline />
       <Router>
         <Switch>
-          <AdminDashBoard />
-          <PrivateRoute exact path="/" component={Trainee} />
+          {/* <AdminDashBoard /> */}
+          <PrivateRoute exact path="/" component={AboutUs} />
           <AuthRoute path="/login" component={Login} />
           <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
           <PrivateRoute path={traineePath} component={Trainee} />

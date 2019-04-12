@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  AppBar, Button, Toolbar, Typography,
+  AppBar, Button, Badge, IconButton, Toolbar, Typography,
 } from '@material-ui/core';
-import { ExitToApp } from '@material-ui/icons';
+import { ExitToApp, Notifications } from '@material-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
@@ -18,7 +18,7 @@ const styles = ({
   },
 });
 
-function NavBar(props) {
+function AdminDashboard(props) {
   const { classes } = props;
 
   function handleLogout() {
@@ -28,29 +28,26 @@ function NavBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            Trainee Portal
+            <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
+            Admin Dashboard
+            </Link>
           </Typography>
           <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
             <Button color="inherit">
-              TRAINEE
+              Employess
             </Button>
           </Link>
           <Link component={RouterLink} underline="none" color="inherit" to="/text-field-demo">
             <Button color="inherit">
-            TEXTFIELD DEMO
-            </Button>
-          </Link>
-          <Link component={RouterLink} underline="none" color="inherit" to="/input-demo">
-            <Button color="inherit">
-            INPUT DEMO
+            Users
             </Button>
           </Link>
           <Link component={RouterLink} underline="none" color="inherit" to="/children-demo">
             <Button color="inherit">
-            CHILDREN DEMO
+            Complaints
             </Button>
           </Link>
           <Link component={RouterLink} underline="none" color="inherit" to="/children-demo">
@@ -58,19 +55,24 @@ function NavBar(props) {
               color="inherit"
               onClick={() => handleLogout()}
             >
-          LOGOUT
+          Logout
               <ExitToApp />
             </Button>
           </Link>
+          {/* <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <Notifications />
+            </Badge>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-NavBar.propTypes = {
+AdminDashboard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(NavBar);
+export default withStyles(styles)(AdminDashboard);

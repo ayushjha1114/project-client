@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Navbar from '../components';
+import Navbar, { Footer } from '../components';
 
 const PrivateLayout = ({ children, ...rest }) => (
   <>
@@ -8,6 +8,8 @@ const PrivateLayout = ({ children, ...rest }) => (
     <div {...rest}>
       {children}
     </div>
+    <Footer />
+
   </>
 );
 

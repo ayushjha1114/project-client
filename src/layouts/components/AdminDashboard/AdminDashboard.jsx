@@ -28,24 +28,26 @@ function AdminDashboard(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="absolute">
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            ADMIN DASHBOARD
+            <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
+            Admin Dashboard
+            </Link>
           </Typography>
           <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
             <Button color="inherit">
-              EMPLOYEES
+              Employess
             </Button>
           </Link>
           <Link component={RouterLink} underline="none" color="inherit" to="/text-field-demo">
             <Button color="inherit">
-            USERS
+            Users
             </Button>
           </Link>
           <Link component={RouterLink} underline="none" color="inherit" to="/children-demo">
             <Button color="inherit">
-            COMPLAINT
+            Complaints
             </Button>
           </Link>
           <Link component={RouterLink} underline="none" color="inherit" to="/children-demo">
@@ -53,15 +55,17 @@ function AdminDashboard(props) {
               color="inherit"
               onClick={() => handleLogout()}
             >
-          LOGOUT
+          Logout
               <ExitToApp />
             </Button>
           </Link>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <Notifications />
-            </Badge>
-          </IconButton>
+          <Link component={RouterLink} underline="none" color="inherit" to="/children-demo">
+            <IconButton color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <Notifications />
+              </Badge>
+            </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
