@@ -2,7 +2,7 @@ import { getDateFormatted } from '../lib/utils';
 
 
 const PUBLIC_IMAGE_FOLDER = 'images/';
-export const DEFAULT_BANNER_IMAGE = 'images/default.png';
+export const DEFAULT_BANNER_IMAGE = 'images/trash-pickup.jpg';
 
 export default PUBLIC_IMAGE_FOLDER;
 
@@ -47,7 +47,8 @@ export const football = [
     value: 2,
   },
 ];
-export const traineePath = '/trainee';
+export const userPath = '/user';
+export const adminPath = '/admin';
 export const dropdown1 = 'Cricket';
 export const dropdown2 = 'Football';
 

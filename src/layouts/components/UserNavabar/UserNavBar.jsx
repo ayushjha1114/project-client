@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  AppBar, Button, Toolbar, Typography,
+  AppBar, Button, Badge, IconButton, Toolbar, Typography,
 } from '@material-ui/core';
-import { ExitToApp, PersonAdd } from '@material-ui/icons';
+import { ExitToApp, Notifications } from '@material-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
+import { userPath } from '../../../configs/constants';
 
 const styles = ({
   root: {
@@ -18,7 +19,7 @@ const styles = ({
   },
 });
 
-function NavBar(props) {
+function AdminDashboard(props) {
   const { classes } = props;
 
   function handleLogout() {
@@ -28,47 +29,51 @@ function NavBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-          <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
-           Welcome
-          </Link>
+            <Link component={RouterLink} underline="none" color="inherit" to={userPath}>
+            Welcome, Ayush
+            </Link>
           </Typography>
-          <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
+          <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/profile`}>
             <Button color="inherit">
-              About Us
+              Profile
             </Button>
           </Link>
-          <Link component={RouterLink} underline="none" color="inherit" to="/contactUs">
+          <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/complaint`} >
             <Button color="inherit">
-            Contact Us
+            Complaint
             </Button>
           </Link>
-          <Link component={RouterLink} underline="none" color="inherit" to="/signup">
-            <Button color="inherit" onClick={() => handleSignIn()}>
-            Sign Up
-            <PersonAdd />
+          <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/orders`} >
+            <Button color="inherit">
+            Orders
             </Button>
           </Link>
-          <Link component={RouterLink} underline="none" color="inherit" to="/logout">
+          <Link component={RouterLink} underline="none" color="inherit" to="logOut">
             <Button
               color="inherit"
               onClick={() => handleLogout()}
             >
-          LOGOUT
+          Logout
               <ExitToApp />
             </Button>
           </Link>
+          {/* <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <Notifications />
+            </Badge>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-NavBar.propTypes = {
+AdminDashboard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(NavBar);
+export default withStyles(styles)(AdminDashboard);

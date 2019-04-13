@@ -36,11 +36,11 @@ class Slider extends React.Component {
       const { index } = this.state;
       if (random) {
         this.setState({
-          index: getRandomNumber(6),
+          index: getRandomNumber(5),
         });
         return;
       }
-      const val = getNextRoundRobin(5, index);
+      const val = getNextRoundRobin(4, index);
       this.setState({
         index: val,
       });

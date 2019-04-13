@@ -16,7 +16,7 @@ function Footer(props) {
     <>
       <footer className={classes.footer}>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-        &#169; Successive Technologies
+        &#169; Ayush
         </Typography>
       </footer>
     </>
