@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import TraineeDetail from './TraineeDetail';
-import TraineeList from './TraineeList';
+import TraineeList from './Quantity';
 import { NoMatch } from '..';
 
 function Trainee(props) {

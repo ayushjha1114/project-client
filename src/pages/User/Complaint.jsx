@@ -1,255 +1,308 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import PropTypes from 'prop-types';
-import { AddDialog } from '.';
-import { column } from '../../configs/constants';
-import TraineeTable from '../../components/TraineeTable/TraineeTable';
-import { EditDialog, RemoveDialog } from './components';
-import { callApi } from '../../lib/utils/api';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import {
+  Button, CircularProgress,
+  TextField, FormHelperText, Paper,
+} from '@material-ui/core';
+import * as yup from 'yup';
 import { SnackbarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
 
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  error: {
+    color: 'red',
+    margin: 10,
+  },
+});
 
-export default class TraineeList extends React.Component {
+const propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  classes: PropTypes.object,
+};
+
+// default values for props:
+const defaultProps = {
+  classes: {},
+};
+
+class Complaint extends React.Component {
+  schema = yup.object().shape({
+    firstName: yup
+      .string()
+      .required(),
+    lastName: yup
+      .string()
+      .required(),
+    email: yup.string().email().required(),
+    address: yup.string().required(),
+    city: yup.string().required(),
+    state: yup.string().required(),
+    zip: yup.string().required(),
+    country: yup.string().required(),
+    plastic: yup.number().required(),
+    metal: yup.number().required(),
+  });
+
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      editDialog: false,
-      deleteDialog: false,
-      open: false,
-      orderBy: '',
-      order: 'asc',
-      page: 0,
-      item: {},
-      loader: true,
-      dataLength: 0,
-      errorAlert: '',
+      loader: false,
+      snackCheck: false,
+      addressform: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: '',
+        country: '',
+        plastic: '',
+        metal: '',
+      },
+      error: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: '',
+        country: '',
+        plastic: '',
+        metal: '',
+      },
+      isTouched: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        address: false,
+        city: false,
+        state: false,
+        zip: false,
+        country: false,
+        plastic: false,
+        metal: false,
+      },
     };
   }
 
-  componentDidMount() {
-    // eslint-disable-next-line react/prop-types
-    const { page } = this.state;
-    const skipPage = page * 10;
-    const limitpage = 10;
-    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
-      if (result.status) {
+  handleChange = field => (event) => {
+    const { isTouched, addressform } = this.state;
+
+    this.setState({
+      addressform: { ...addressform, [field]: event.target.value },
+      isTouched: { ...isTouched, [field]: true },
+    }, this.handleValidate(field));
+  };
+
+  handleValidate = field => () => {
+    const {
+      addressform, error, isTouched,
+    } = this.state;
+    const {
+      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+    } = addressform;
+    this.schema.validate({
+      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+    }, { abortEarly: false }).then(() => {
+      this.setState({
+        error: { ...error, [field]: '' },
+        isTouched: { ...isTouched, [field]: true },
+      });
+    }).catch((err) => {
+      if (!err.inner.some(er => er.path === field)) {
         this.setState({
-          item: result.data,
-          loader: false,
-          dataLength: result.data.data.count,
-          errorAlert: '',
-        });
-      } else {
-        this.setState({
-          loader: false,
-          errorAlert: result.message,
+          error: { ...error, [field]: '' },
+          isTouched: { ...isTouched, [field]: true },
         });
       }
     });
   }
 
-  handleChangePage = (event, page) => {
+  handleOnBlur = field => () => {
+    const {
+      addressform, error, isTouched,
+    } = this.state;
+    const {
+      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+    } = addressform;
+    this.schema.validate({
+      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+    }, { abortEarly: false }).then(() => {
+      this.setState({
+        error: { ...error, [field]: '' },
+        isTouched: { ...isTouched, [field]: true },
+      });
+    }).catch((err) => {
+      err.inner.forEach((er) => {
+        if (er.path === field) {
+          this.setState({
+            error: { ...error, [field]: er.message },
+            isTouched: { ...isTouched, [field]: true },
+          });
+        }
+      });
+    });
+  }
+
+  hasError = () => {
+    const { error } = this.state;
+    if (error.firstName === '' && error.lastName === '' && error.email === ''
+    && error.address === '' && error.city === '' && error.state === '' && error.zip === '' && error.country === ''
+    && error.plastic === '' && error.metal === '') {
+      return false;
+    }
+    return true;
+  }
+
+  getError = (field) => {
+    const { isTouched, error } = this.state;
+    let result = '';
+    if (isTouched[field] === true) {
+      result = error[field];
+    }
+    return result;
+  }
+
+  showBooleanError = (field) => {
+    const { isTouched } = this.state;
+    if (isTouched[field] === true) {
+      return true;
+    }
+    return false;
+  }
+
+  buttonChecked = () => {
+    const { isTouched } = this.state;
+    let touched = 0;
+    let result = false;
+    const checkError = this.hasError();
+    Object.keys(isTouched).forEach((i) => {
+      if (isTouched[i] === true) {
+        touched += 1;
+      }
+    });
+    if (!checkError && touched === 10) {
+      result = true;
+    } else if (checkError && touched !== 10) {
+      result = false;
+    }
+    return result;
+  }
+
+  handleSubmit = async (e, values) => {
+    e.preventDefault();
+    const { addressform } = this.state;
     this.setState({
-      page,
       loader: true,
     });
-    const skipPage = page * 10;
-    const limitpage = 10;
-    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
-      if (result.status) {
-        this.setState({
-          item: result.data,
-          loader: false,
-          dataLength: result.data.data.count,
-          errorAlert: '',
-        });
-      } else {
-        this.setState({
-          loader: false,
-          errorAlert: result.message,
-        });
-      }
-    });
-  }
-
-  showErrorAlert = (value) => {
-    const { errorAlert } = this.state;
-    const { openSnack } = value;
-    if (errorAlert) {
-      openSnack(errorAlert, 'error');
+    const { confirmPassword, ...rest } = addressform;
+    const result = await callApi('post', rest, 'trainee');
+    // eslint-disable-next-line react/prop-types
+    const { onSubmit, history } = this.props;
+    console.log('inside add ', this.props);
+    if (result.status) {
       this.setState({
-        errorAlert: '',
+        loader: false,
+      });
+      values.openSnack(result.data.message, 'success');
+      history.push('/trainee');
+    } else {
+      values.openSnack('Not Authorized', 'error');
+      this.setState({
+        snackCheck: true,
+        loader: false,
       });
     }
-  }
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = (value) => {
-    this.setState({ open: value });
-  };
-
-  handleEditClose = (value) => {
-    this.setState({ editDialog: value, id: '' });
-  };
-
-  handleRemoveClose = (value) => {
-    this.setState({ deleteDialog: value });
-  };
-
-  commonCallApi = () => {
-    const { page } = this.state;
-    const skipPage = page * 10;
-    const limitpage = 10;
-    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
-      if (result.status) {
-        this.setState({
-          item: result.data,
-          loader: false,
-          dataLength: result.data.data.count,
-          errorAlert: '',
-        });
-      } else {
-        this.setState({
-          loader: false,
-          errorAlert: result.message,
-        });
-      }
-    });
-  }
-
-  handleSubmit = (form) => {
-    this.setState({ open: false });
-    this.commonCallApi();
-    console.log(form);
-  };
-
-  handleEditSubmit = (form) => {
-    this.setState({ editDialog: false, id: '' });
-    this.commonCallApi();
-    console.log('Edited', form);
-  };
-
-  handleRemoveSubmit = (form) => {
-    this.setState({ deleteDialog: false });
-    this.commonCallApi();
-    console.log('Remove', form);
-  };
-
-  handleSort = (property) => {
-    const { orderBy, order } = this.state;
-    if (orderBy === property && order === 'desc') {
-      this.setState({ order: 'asc', orderBy: property });
-    } else {
-      this.setState({ order: 'desc', orderBy: property });
-    }
-  };
-
-  handleSelect = (id) => {
-    const { history } = this.props;
-    history.push(`/trainee/${id}`);
-  };
-
-  handlerEditDialogOpen = (row) => {
-    this.setState({
-      id: row,
-      editDialog: true,
-    });
-  };
-
-  handlerRemoveDialogOpen = (row) => {
-    this.setState({
-      id: row,
-      deleteDialog: true,
-    });
+    onSubmit(form);
   };
 
   render() {
-    const {
-      open, order, orderBy, page, editDialog, id,
-      deleteDialog, item, loader, dataLength, errorAlert,
-    } = this.state;
+    const { classes } = this.props;
+    const { loader, snackCheck } = this.state;
+
     return (
-      <SnackbarConsumer>
-        {value => (
-          <>
-            <div>
-              <div style={{ margin: 10, textAlign: 'right' }}>
-                <Button
+      <React.Fragment>
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Typography component="h1" variant="h4" align="center">
+              Your Address
+            </Typography>
+            <Grid container spacing={24}>
+              <Grid item xs={12}>
+                     <TextField
+                  fullWidth
+                  id="outlined-email-input"
+                  label="Email"
+                  error={this.showBooleanError('email')}
+                  className={classes.textField}
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  margin="normal"
                   variant="outlined"
-                  color="primary"
-                  onClick={this.handleClickOpen}
-                >
-            Add Trainee
-                </Button>
-              </div>
-              <AddDialog
-                open={open}
-                {...this.props}
-                onClose={this.handleClose}
-                onSubmit={this.handleSubmit}
-              />
-            </div>
-            {
-              (id) ? (
-                <>
-                  <EditDialog
-                    traineeData={id}
-                    {...this.props}
-                    editOpen={editDialog}
-                    onClose={this.handleEditClose}
-                    onSubmit={this.handleEditSubmit}
-                  />
-                  <RemoveDialog
-                    traineeData={id}
-                    {...this.props}
-                    removeOpen={deleteDialog}
-                    onClose={this.handleRemoveClose}
-                    onSubmit={this.handleRemoveSubmit}
-                  />
-                </>
-              ) : ''
-            }
-            {(errorAlert) ? (this.showErrorAlert(value))
-              : (
-                <TraineeTable
-                  result={item}
-                  columns={column}
-                  id="id"
-                  actions={[
-                    {
-                      icon: <EditIcon />,
-                      handler: this.handlerEditDialogOpen,
-                    },
-                    {
-                      icon: <DeleteIcon />,
-                      handler: this.handlerRemoveDialogOpen,
-                    },
-                  ]}
-                  orderBy={orderBy}
-                  order={order}
-                  onSort={this.handleSort}
-                  onSelect={this.handleSelect}
-                  count={dataLength}
-                  page={page}
-                  rowsPerPage={10}
-                  onChangePage={this.handleChangePage}
-                  loader={loader}
-                  dataLength={dataLength}
+                  onChange={this.handleChange('email')}
+                  onBlur={this.handleOnBlur('email')}
                 />
-              )}
-          </>
-        )}
-      </SnackbarConsumer>
+                     <FormHelperText id="component-email-text2" className={classes.error}>
+                  {this.getError('email')}
+                </FormHelperText>
+                   </Grid>
+              <Grid item xs={12}>
+                     <TextField
+                  fullWidth
+                  id="outlined-multiline-static"
+                  label="Complaint"
+                  error={this.showBooleanError('complaint')}
+                  multiline
+                  type="text"
+                  name="address"
+                  rows="4"
+                  defaultValue="type here"
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                  onChange={this.handleChange('complaint')}
+                  onBlur={this.handleOnBlur('complaint')}
+                />
+                     <FormHelperText id="component-complaint-text2" className={classes.error}>
+                  {this.getError('complaint')}
+                </FormHelperText>
+                   </Grid>
+              <SnackbarConsumer>
+                     {value => (
+                  <Button
+                    color="primary"
+                    disabled={(!this.buttonChecked() || loader)}
+                    onClick={(e) => {
+                      this.handleSubmit(e, value);
+                    }}
+                  >
+                    {
+                      (!loader || snackCheck)
+                        ? <b>Complaint</b>
+                        : <CircularProgress size={24} thickness={4} />
+                    }
+                  </Button>
+                )}
+                   </SnackbarConsumer>
+            </Grid>
+          </Paper>
+        </main>
+      </React.Fragment>
     );
   }
 }
 
-TraineeList.propTypes = {
-  history: PropTypes.objectOf(PropTypes.objectOf).isRequired,
-};
+
+Complaint.propTypes = propTypes;
+Complaint.defaultProps = defaultProps;
+
+export default withStyles(styles)(Complaint);
