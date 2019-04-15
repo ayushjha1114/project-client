@@ -7,7 +7,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { getDateFormatted } from '../../lib/utils';
-import { traineePath } from '../../configs/constants';
+import { userPath } from '../../configs/constants';
 import { callApi } from '../../lib/utils/api';
 
 
@@ -36,7 +36,7 @@ const styles = theme => ({
   },
 });
 
-class TraineeDetail extends React.Component {
+class OrderDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,7 +93,7 @@ class TraineeDetail extends React.Component {
           </div>
         </Card>
         <Typography align="center">
-          <Link underline="none" component={RouterLink} to={traineePath}>
+          <Link underline="none" component={RouterLink} to={userPath}>
             <Button variant="outlined" className={classes.button}>
               BACK
             </Button>
@@ -104,9 +104,9 @@ class TraineeDetail extends React.Component {
   }
 }
 
-TraineeDetail.propTypes = {
+OrderDetail.propTypes = {
   classes: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   match: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(TraineeDetail);
+export default withStyles(styles)(OrderDetail);

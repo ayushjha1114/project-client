@@ -5,7 +5,7 @@ import TraineeDetail from './TraineeDetail';
 import TraineeList from './TraineeList';
 import { NoMatch } from '..';
 
-function Trainee(props) {
+function Admin(props) {
   const { match } = props;
 
   return (
@@ -19,9 +19,9 @@ function Trainee(props) {
   );
 }
 
-Trainee.propTypes = {
+Admin.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   match: PropTypes.object.isRequired,
 };
 
-export default Trainee;
+export default Admin;

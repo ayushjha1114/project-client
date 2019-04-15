@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import AuthLayout from '../layouts';
+import PublicLayout from '../layouts';
 
 const PublicRoute = ({ component: Component, ...rest }) => (
   <>
@@ -21,9 +21,9 @@ const PublicRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
       render={matchProps => (
-        <AuthLayout>
+        <PublicLayout>
           <Component {...matchProps} />
-        </AuthLayout>
+        </PublicLayout>
       )}
     />
 

@@ -1,18 +1,18 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { PrivateLayout } from '../layouts';
+import { UserLayout } from '../layouts';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const UserRoute = ({ component: Component, ...rest }) => (
   <>
     {
       (localStorage.getItem('token')) ? (
         <Route
           {...rest}
           render={matchProps => (
-            <PrivateLayout>
+            <UserLayout>
               <Component {...matchProps} />
-            </PrivateLayout>
+            </UserLayout>
           )}
         />
       )
@@ -30,7 +30,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   </>
 );
 
-PrivateRoute.propTypes = {
+UserRoute.propTypes = {
   component: PropTypes.func.isRequired,
 };
-export default PrivateRoute;
+export default UserRoute;

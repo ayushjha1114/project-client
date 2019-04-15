@@ -31,9 +31,9 @@ function NavBar(props) {
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-          <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
+            <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
            Welcome
-          </Link>
+            </Link>
           </Typography>
           <Link component={RouterLink} underline="none" color="inherit" to="/trainee">
             <Button color="inherit">

@@ -32,7 +32,7 @@ const defaultProps = {
   classes: {},
 };
 
-class AddressForm extends React.Component {
+class Quantity extends React.Component {
   schema = yup.object().shape({
     firstName: yup
       .string()
@@ -45,7 +45,6 @@ class AddressForm extends React.Component {
     city: yup.string().required(),
     state: yup.string().required(),
     zip: yup.string().required(),
-    country: yup.string().required(),
     plastic: yup.number().required(),
     metal: yup.number().required(),
   });
@@ -63,7 +62,6 @@ class AddressForm extends React.Component {
         city: '',
         state: '',
         zip: '',
-        country: '',
         plastic: '',
         metal: '',
       },
@@ -75,7 +73,6 @@ class AddressForm extends React.Component {
         city: '',
         state: '',
         zip: '',
-        country: '',
         plastic: '',
         metal: '',
       },
@@ -87,7 +84,6 @@ class AddressForm extends React.Component {
         city: false,
         state: false,
         zip: false,
-        country: false,
         plastic: false,
         metal: false,
       },
@@ -108,10 +104,10 @@ class AddressForm extends React.Component {
       addressform, error, isTouched,
     } = this.state;
     const {
-      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+      firstName, lastName, email, address, city, state, zip, plastic, metal,
     } = addressform;
     this.schema.validate({
-      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+      firstName, lastName, email, address, city, state, zip, plastic, metal,
     }, { abortEarly: false }).then(() => {
       this.setState({
         error: { ...error, [field]: '' },
@@ -132,10 +128,10 @@ class AddressForm extends React.Component {
       addressform, error, isTouched,
     } = this.state;
     const {
-      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+      firstName, lastName, email, address, city, state, zip, plastic, metal,
     } = addressform;
     this.schema.validate({
-      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+      firstName, lastName, email, address, city, state, zip, plastic, metal,
     }, { abortEarly: false }).then(() => {
       this.setState({
         error: { ...error, [field]: '' },
@@ -156,7 +152,7 @@ class AddressForm extends React.Component {
   hasError = () => {
     const { error } = this.state;
     if (error.firstName === '' && error.lastName === '' && error.email === ''
-    && error.address === '' && error.city === '' && error.state === '' && error.zip === '' && error.country === ''
+    && error.address === '' && error.city === '' && error.state === '' && error.zip === ''
     && error.plastic === '' && error.metal === '') {
       return false;
     }
@@ -190,9 +186,9 @@ class AddressForm extends React.Component {
         touched += 1;
       }
     });
-    if (!checkError && touched === 10) {
+    if (!checkError && touched === 9) {
       result = true;
-    } else if (checkError && touched !== 10) {
+    } else if (checkError && touched !== 9) {
       result = false;
     }
     return result;
@@ -365,34 +361,6 @@ class AddressForm extends React.Component {
             </FormHelperText>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            onChange={this.handleChange('country')}
-            autoComplete="billing country"
-          />
-          <TextField
-              fullWidth
-              id="outlined-country-input"
-              label="Country"
-              error={this.showBooleanError('country')}
-              className={classes.textField}
-              type="text"
-              name="country"
-              autoComplete="country"
-              margin="normal"
-              variant="outlined"
-              onChange={this.handleChange('country')}
-              onBlur={this.handleOnBlur('country')}
-            />
-            <FormHelperText id="component-country-text2" className={classes.error}>
-              {this.getError('country')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12} sm={6}>
         <TextField
           id="plastic waste"
           variant="outlined"
@@ -455,7 +423,7 @@ class AddressForm extends React.Component {
   }
 }
 
-AddressForm.propTypes = propTypes;
-AddressForm.defaultProps = defaultProps;
+Quantity.propTypes = propTypes;
+Quantity.defaultProps = defaultProps;
 
-export default withStyles(styles)(AddressForm);
+export default withStyles(styles)(Quantity);

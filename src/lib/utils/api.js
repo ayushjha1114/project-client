@@ -5,7 +5,7 @@ export async function callApi(method, form, url, queryObj) {
     const token = localStorage.getItem('token');
     return await axios({
       method,
-      baseURL: 'https://express-training.herokuapp.com/api/',
+      baseURL: 'localhost:8000/api/',
       url,
       data: form,
       headers: {

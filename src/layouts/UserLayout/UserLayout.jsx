@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AdminNavbar, { Footer } from '../components';
+import UserNavbar, { Footer } from '../components';
 
-const PrivateLayout = ({ children, ...rest }) => (
+const UserLayout = ({ children, ...rest }) => (
   <>
-    <AdminNavbar />
+    <UserNavbar />
     <div {...rest}>
       {children}
     </div>
@@ -13,9 +13,9 @@ const PrivateLayout = ({ children, ...rest }) => (
   </>
 );
 
-PrivateLayout.propTypes = {
+UserLayout.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   children: PropTypes.object.isRequired,
 };
 
-export default PrivateLayout;
+export default UserLayout;

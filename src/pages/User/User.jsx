@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import TraineeDetail from './TraineeDetail';
-import TraineeList from './Quantity';
+import OrderDetail from './OrderDetail';
+import Quantity from './Quantity';
+import Orders from './Orders';
+import Profile from './Profile';
+import Complaint from './Complaint';
 import { NoMatch } from '..';
 
 function Trainee(props) {
@@ -16,7 +19,7 @@ function Trainee(props) {
         <Route exact path={`${match.path}/complaint`} {...props} component={Complaint} />
         <Route exact path={`${match.path}/profile`} {...props} component={Profile} />
         {/* <Route exact path={`${match.path}/complaint`} {...props} component={TraineeList} /> */}
-        <Route exact path={`${match.path}/:id`} component={TraineeDetail} />
+        <Route exact path={`${match.path}/orders/:id`} {...props} component={OrderDetail} />
         <Route path={`${match.path}/`} component={NoMatch} />
       </Switch>
     </>

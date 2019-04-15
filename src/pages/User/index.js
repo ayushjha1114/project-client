@@ -1,4 +1,3 @@
-export { default as AddDialog } from './components';
-export { default as Trainee } from './User';
-export { default as TraineeDetail } from './TraineeDetail';
-export { default as TraineeList } from './Quantity';
+export { default as User } from './User';
+export { default as OrderDetail } from './OrderDetail';
+export { default as Quantity } from './Quantity';

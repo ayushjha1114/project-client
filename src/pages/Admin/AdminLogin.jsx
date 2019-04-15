@@ -54,7 +54,7 @@ const propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-class Login extends React.Component {
+class AdminLogin extends React.Component {
   schema = yup.object().shape({
     email: yup.string().email().required(),
     password: yup.string().required(),
@@ -202,7 +202,7 @@ handleSubmit = async (e, values) => {
       loader: false,
     });
     window.localStorage.setItem('token', result.data.data);
-    children.props.history.push('/user');
+    children.props.history.push('/admin');
   } else {
     values.openSnack('Not Valid', 'error');
     this.setState({
@@ -307,6 +307,6 @@ render() {
 }
 }
 
-Login.propTypes = propTypes;
+AdminLogin.propTypes = propTypes;
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(AdminLogin);
