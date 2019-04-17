@@ -72,9 +72,10 @@ function AboutUs(props) {
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               About Us
             </Typography>
-            <Card className={classes.card}>
+            {/* <Card className={classes.card}>
               <Slider banners={banner} />
-            </Card>
+            </Card> */}
+            <Slider banners={banner} />
             <Typography variant="h6" align="center" color="textSecondary" paragraph>
             We are the provider of solid waste collection, transfer,
             recycling and disposal services in mostly exclusive and

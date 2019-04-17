@@ -5,7 +5,7 @@ import {
   AuthRoute, PrivateRoute, PublicRoute, UserRoute,
 } from './routes';
 import Login from './pages/Login';
-import AdminLogin from './pages/Admin';
+import AdminLogin from './pages/Admin/AdminLogin';
 import {
   Admin, NoMatch, AboutUs, User, ContactUs,
   SignUp,

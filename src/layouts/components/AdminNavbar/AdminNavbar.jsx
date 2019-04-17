@@ -8,7 +8,7 @@ import { ExitToApp, Notifications } from '@material-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { SnackbarConsumer } from '../../../contexts/SnackBarProvider/SnackBarProvider';
-import { callApi } from '../../lib/utils/api';
+import { callApi } from '../../../lib/utils/api';
 
 
 const styles = ({

@@ -204,7 +204,7 @@ handleSubmit = async (e, values) => {
     window.localStorage.setItem('token', result.data.data);
     children.props.history.push('/user');
   } else {
-    values.openSnack('Not Valid', 'error');
+    values.openSnack(result.message, 'error');
     this.setState({
       snackCheck: true,
       loader: false,

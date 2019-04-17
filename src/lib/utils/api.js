@@ -5,7 +5,7 @@ export async function callApi(method, form, url, queryObj) {
     const token = localStorage.getItem('token');
     return await axios({
       method,
-      baseURL: 'localhost:8000/api/',
+      baseURL: 'http://localhost:8000/api/',
       url,
       data: form,
       headers: {

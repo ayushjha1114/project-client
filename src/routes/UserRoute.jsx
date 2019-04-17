@@ -5,7 +5,7 @@ import { UserLayout } from '../layouts';
 
 const UserRoute = ({ component: Component, ...rest }) => (
   <>
-    {
+    {/* {
       (localStorage.getItem('token')) ? (
         <Route
           {...rest}
@@ -17,15 +17,15 @@ const UserRoute = ({ component: Component, ...rest }) => (
         />
       )
         : <Redirect to="/login" />
-    }
-    {/* <Route
+    } */}
+    <Route
       {...rest}
       render={matchProps => (
-        <PrivateLayout>
-          <Component {...matchProps} />
-        </PrivateLayout>
+        <UserLayout>
+        <Component {...matchProps} />
+      </UserLayout>
       )}
-    /> */}
+    />
 
   </>
 );

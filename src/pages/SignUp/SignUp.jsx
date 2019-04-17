@@ -5,7 +5,7 @@ import {
   FormHelperText, IconButton, InputAdornment, Paper, Typography,
 } from '@material-ui/core';
 import {
-  Visibility, VisibilityOff, Email, Person, PersonAdd,
+  Visibility, VisibilityOff, Email, Person,
 } from '@material-ui/icons';
 import withStyles from '@material-ui/core/styles/withStyles';
 import * as yup from 'yup';
@@ -17,8 +17,8 @@ const styles = theme => ({
   main: {
     width: 'auto',
     display: 'block',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
+    margin: theme.spacing.unit * 3,
+    // marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
       width: 400,
       marginLeft: 'auto',
@@ -227,10 +227,10 @@ render() {
       <main {...rest} className={classes.main}>
         <Paper className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <PersonAdd />
+            <Person />
           </Avatar>
           <Typography component="h1" variant="h5">
-          Log in
+          Sign Up
           </Typography>
           <form className={classes.form}>
             <TextField

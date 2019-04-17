@@ -8,6 +8,8 @@ import { ExitToApp, Notifications } from '@material-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { userPath } from '../../../configs/constants';
+import { SnackbarConsumer } from '../../../contexts/SnackBarProvider/SnackBarProvider';
+
 
 const styles = ({
   root: {
@@ -22,9 +24,12 @@ const styles = ({
 function AdminDashboard(props) {
   const { classes } = props;
 
-  function handleLogout() {
-    console.log('dd', props);
+  function handleLogout(e, values) {
+    e.preventDefault();
+    const { history } = props;
+    history.push('/login');
     localStorage.removeItem('token');
+    values.openSnack('Successfully logged out', 'success');
   }
 
   return (
@@ -51,15 +56,21 @@ function AdminDashboard(props) {
             Orders
             </Button>
           </Link>
-          <Link component={RouterLink} underline="none" color="inherit" to="logOut">
-            <Button
-              color="inherit"
-              onClick={() => handleLogout()}
-            >
-          Logout
-              <ExitToApp />
-            </Button>
-          </Link>
+          {
+            <SnackbarConsumer>
+              {value => (
+                <Link component={RouterLink} underline="none" color="inherit" to="/login">
+                  <Button
+                    color="inherit"
+                    onClick={e => handleLogout(e, value)}
+                  >
+                        Logout
+                    <ExitToApp />
+                  </Button>
+                </Link>
+              )}
+            </SnackbarConsumer>
+          }
           {/* <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <Notifications />

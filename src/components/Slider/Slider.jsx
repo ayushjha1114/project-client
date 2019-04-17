@@ -18,7 +18,7 @@ const defaultProps = {
   banners: '',
   defaultBanner: DEFAULT_BANNER_IMAGE,
   duration: 2000,
-  height: 200,
+  height: 300,
   random: false,
 };
 

@@ -7,7 +7,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { getDateFormatted } from '../../lib/utils';
-import { traineePath } from '../../configs/constants';
+import { userPath } from '../../configs/constants';
 import { callApi } from '../../lib/utils/api';
 
 
@@ -93,7 +93,7 @@ class Profile extends React.Component {
           </div>
         </Card>
         <Typography align="center">
-          <Link underline="none" component={RouterLink} to={traineePath}>
+          <Link underline="none" component={RouterLink} to={userPath}>
             <Button variant="outlined" className={classes.button}>
               BACK
             </Button>
