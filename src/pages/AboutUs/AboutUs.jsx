@@ -1,8 +1,7 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Divider,
+  Divider,
 } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
@@ -74,11 +73,13 @@ function AboutUs(props) {
               About Us
             </Typography>
             <Card className={classes.card}>
-            <Slider banners={banner} />
-      </Card>
+              <Slider banners={banner} />
+            </Card>
             <Typography variant="h6" align="center" color="textSecondary" paragraph>
             We are the provider of solid waste collection, transfer,
-            recycling and disposal services in mostly exclusive and secondary markets across the Ghaziabad, India.<Divider />
+            recycling and disposal services in mostly exclusive and
+            secondary markets across the Ghaziabad, India.
+              <Divider />
               25% of all items in recycling bins are actually trash.
               That’s a big problem impacting recycling efforts around the world.
               You can help by following three simple rules:

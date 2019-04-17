@@ -1,6 +1,7 @@
 export { default } from './TextFieldDemo';
 export { default as InputDemo } from './InputDemo';
-export { default as ChildrenDemo } from './ChildrenDemo';
+export { default as ContactUs } from './ContactUs';
+export { default as SignUp } from './SignUp';
 export { User } from './User';
 export { Admin } from './Admin';
 export { default as Login } from './Login';

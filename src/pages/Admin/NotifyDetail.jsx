@@ -50,7 +50,7 @@ class UserDetail extends React.Component {
   }
 
   getData = (id) => {
-    callApi('get', {}, 'trainee', {}).then((result) => {
+    callApi('get', {}, 'order', {}).then((result) => {
       result.data.data.records.forEach((getID) => {
         // eslint-disable-next-line no-underscore-dangle
         if (id === getID._id) {

@@ -1,11 +1,13 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { AuthRoute, PrivateRoute, PublicRoute, UserRoute } from './routes';
+import {
+  AuthRoute, PrivateRoute, PublicRoute, UserRoute,
+} from './routes';
 import Login from './pages/Login';
 import AdminLogin from './pages/Admin';
-import TextFieldDemo, {
-  Admin, NoMatch, AboutUs, User, ChildrenDemo, InputDemo,
+import {
+  Admin, NoMatch, AboutUs, User, ContactUs,
   SignUp,
 } from './pages';
 import { userPath, adminPath } from './configs/constants';
@@ -27,10 +29,7 @@ const App = () => (
 
           <UserRoute exact path={userPath} component={User} />
 
-          <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
           <PrivateRoute path={adminPath} component={Admin} />
-          <PrivateRoute path="/logout" component={ChildrenDemo} />
-          <PrivateRoute path="/input-demo" component={InputDemo} />
           <PrivateRoute component={NoMatch} />
         </Switch>
       </Router>

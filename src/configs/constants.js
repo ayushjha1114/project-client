@@ -6,51 +6,8 @@ export const DEFAULT_BANNER_IMAGE = 'images/trash-pickup.jpg';
 
 export default PUBLIC_IMAGE_FOLDER;
 
-export const options = [
-  {
-    label: 'Cricket',
-    value: 1,
-  },
-  {
-    label: 'Football',
-    value: 2,
-  },
-];
-
-export const cricket = [
-  {
-    label: 'Fielder',
-    value: 1,
-  },
-  {
-    label: 'Batsman',
-
-    value: 2,
-  },
-  {
-    label: 'Bowler',
-    value: 3,
-  },
-  {
-    label: 'AllRounder',
-    value: 4,
-  },
-];
-
-export const football = [
-  {
-    label: 'Defender',
-    value: 1,
-  },
-  {
-    label: 'Striker',
-    value: 2,
-  },
-];
 export const userPath = '/user';
 export const adminPath = '/admin';
-export const dropdown1 = 'Cricket';
-export const dropdown2 = 'Football';
 
 export const columnArr = [
   {

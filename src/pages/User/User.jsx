@@ -6,6 +6,7 @@ import Quantity from './Quantity';
 import Orders from './Orders';
 import Profile from './Profile';
 import Complaint from './Complaint';
+import OrderPlaced from './OrderPlaced';
 import { NoMatch } from '..';
 
 function Trainee(props) {
@@ -16,6 +17,7 @@ function Trainee(props) {
       <Switch>
         <Route exact path={`${match.path}`} {...props} component={Quantity} />
         <Route exact path={`${match.path}/orders`} {...props} component={Orders} />
+        <Route exact path={`${match.path}/placed`} {...props} component={OrderPlaced} />
         <Route exact path={`${match.path}/complaint`} {...props} component={Complaint} />
         <Route exact path={`${match.path}/profile`} {...props} component={Profile} />
         {/* <Route exact path={`${match.path}/complaint`} {...props} component={TraineeList} /> */}
