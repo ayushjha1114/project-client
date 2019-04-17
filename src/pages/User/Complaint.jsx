@@ -8,6 +8,7 @@ import {
   TextField, FormHelperText, Paper,
 } from '@material-ui/core';
 import * as yup from 'yup';
+import { callApi } from '../../lib/utils/api';
 import { SnackbarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = theme => ({
@@ -55,40 +56,18 @@ class Complaint extends React.Component {
       loader: false,
       snackCheck: false,
       addressform: {
-        firstName: '',
-        lastName: '',
+        complaint: '',
         email: '',
-        address: '',
-        city: '',
-        state: '',
-        zip: '',
-        country: '',
-        plastic: '',
-        metal: '',
+
       },
       error: {
-        firstName: '',
-        lastName: '',
+        complaint: '',
         email: '',
-        address: '',
-        city: '',
-        state: '',
-        zip: '',
-        country: '',
-        plastic: '',
-        metal: '',
+
       },
       isTouched: {
-        firstName: false,
-        lastName: false,
+        complaint: false,
         email: false,
-        address: false,
-        city: false,
-        state: false,
-        zip: false,
-        country: false,
-        plastic: false,
-        metal: false,
       },
     };
   }
@@ -107,10 +86,10 @@ class Complaint extends React.Component {
       addressform, error, isTouched,
     } = this.state;
     const {
-      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+      complaint, email,
     } = addressform;
     this.schema.validate({
-      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+      complaint, email,
     }, { abortEarly: false }).then(() => {
       this.setState({
         error: { ...error, [field]: '' },
@@ -131,10 +110,10 @@ class Complaint extends React.Component {
       addressform, error, isTouched,
     } = this.state;
     const {
-      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+      complaint, email,
     } = addressform;
     this.schema.validate({
-      firstName, lastName, email, address, city, state, zip, country, plastic, metal,
+      complaint, email,
     }, { abortEarly: false }).then(() => {
       this.setState({
         error: { ...error, [field]: '' },
@@ -154,9 +133,7 @@ class Complaint extends React.Component {
 
   hasError = () => {
     const { error } = this.state;
-    if (error.firstName === '' && error.lastName === '' && error.email === ''
-    && error.address === '' && error.city === '' && error.state === '' && error.zip === '' && error.country === ''
-    && error.plastic === '' && error.metal === '') {
+    if (error.complaint === '' && error.email === '') {
       return false;
     }
     return true;
@@ -189,9 +166,9 @@ class Complaint extends React.Component {
         touched += 1;
       }
     });
-    if (!checkError && touched === 10) {
+    if (!checkError && touched === 2) {
       result = true;
-    } else if (checkError && touched !== 10) {
+    } else if (checkError && touched !== 2) {
       result = false;
     }
     return result;
@@ -199,29 +176,39 @@ class Complaint extends React.Component {
 
   handleSubmit = async (e, values) => {
     e.preventDefault();
+    let id = '';
     const { addressform } = this.state;
     this.setState({
       loader: true,
     });
-    const { confirmPassword, ...rest } = addressform;
-    const result = await callApi('post', rest, 'trainee');
-    // eslint-disable-next-line react/prop-types
-    const { onSubmit, history } = this.props;
-    console.log('inside add ', this.props);
-    if (result.status) {
-      this.setState({
-        loader: false,
+    const getID = await callApi('get', {}, 'user', {});
+    if (getID.status) {
+      getID.data.data.records.forEach((element) => {
+        if (addressform.email === element.email) {
+          // eslint-disable-next-line no-underscore-dangle
+          id = element._id;
+        }
       });
-      values.openSnack(result.data.message, 'success');
-      history.push('/trainee');
+      const result = await callApi('put', { addressform, id }, 'order');
+      // eslint-disable-next-line react/prop-types
+      const { history } = this.props;
+      console.log('inside complaint ', this.props);
+      if (result.status) {
+        this.setState({
+          loader: false,
+        });
+        values.openSnack(result.data.message, 'success');
+        history.push('/user');
+      } else {
+        values.openSnack('Not Authorized', 'error');
+        this.setState({
+          snackCheck: true,
+          loader: false,
+        });
+      }
     } else {
-      values.openSnack('Not Authorized', 'error');
-      this.setState({
-        snackCheck: true,
-        loader: false,
-      });
+      console.log('Unable to get ID');
     }
-    onSubmit(form);
   };
 
   render() {
@@ -237,7 +224,7 @@ class Complaint extends React.Component {
             </Typography>
             <Grid container spacing={24}>
               <Grid item xs={12}>
-                     <TextField
+                <TextField
                   fullWidth
                   id="outlined-email-input"
                   label="Email"
@@ -251,12 +238,12 @@ class Complaint extends React.Component {
                   onChange={this.handleChange('email')}
                   onBlur={this.handleOnBlur('email')}
                 />
-                     <FormHelperText id="component-email-text2" className={classes.error}>
+                <FormHelperText id="component-email-text2" className={classes.error}>
                   {this.getError('email')}
                 </FormHelperText>
-                   </Grid>
+              </Grid>
               <Grid item xs={12}>
-                     <TextField
+                <TextField
                   fullWidth
                   id="outlined-multiline-static"
                   label="Complaint"
@@ -272,12 +259,12 @@ class Complaint extends React.Component {
                   onChange={this.handleChange('complaint')}
                   onBlur={this.handleOnBlur('complaint')}
                 />
-                     <FormHelperText id="component-complaint-text2" className={classes.error}>
+                <FormHelperText id="component-complaint-text2" className={classes.error}>
                   {this.getError('complaint')}
                 </FormHelperText>
-                   </Grid>
+              </Grid>
               <SnackbarConsumer>
-                     {value => (
+                {value => (
                   <Button
                     color="primary"
                     disabled={(!this.buttonChecked() || loader)}
@@ -292,7 +279,7 @@ class Complaint extends React.Component {
                     }
                   </Button>
                 )}
-                   </SnackbarConsumer>
+              </SnackbarConsumer>
             </Grid>
           </Paper>
         </main>

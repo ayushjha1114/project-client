@@ -39,7 +39,7 @@ const defaultProps = {
   classes: {},
 };
 
-class AddDialog extends React.Component {
+class EditDialog extends React.Component {
   schema = yup.object().shape({
     name: yup
       .string()
@@ -186,14 +186,14 @@ class AddDialog extends React.Component {
       {
         name, email, password: '', id: traineeData.originalId,
       },
-      'trainee',
+      'user',
       {},
     ).then((result) => {
       if (result.status) {
         this.setState({
           loader: false,
         });
-        value.openSnack('Trainee edited!', 'success');
+        value.openSnack('User edited!', 'success');
         onSubmit(form);
       } else {
         value.openSnack(result.message, 'error');
@@ -231,10 +231,10 @@ class AddDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Edit Trainee</DialogTitle>
+          <DialogTitle id="form-dialog-title">Edit User</DialogTitle>
           <DialogContent>
             <DialogContentText>
-                  Edit trainee details
+                  Edit user details
             </DialogContentText>
             <TextField
               fullWidth
@@ -305,7 +305,7 @@ class AddDialog extends React.Component {
   }
 }
 
-AddDialog.propTypes = propTypes;
-AddDialog.defaultProps = defaultProps;
+EditDialog.propTypes = propTypes;
+EditDialog.defaultProps = defaultProps;
 
-export default withStyles(styles)(AddDialog);
+export default withStyles(styles)(EditDialog);

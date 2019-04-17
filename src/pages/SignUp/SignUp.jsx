@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Avatar, Button, CircularProgress, TextField,
+  Avatar, Button, CircularProgress, TextField, Grid,
   FormHelperText, IconButton, InputAdornment, Paper, Typography,
 } from '@material-ui/core';
 import {
   Visibility, VisibilityOff, Email, Person, PersonAdd,
 } from '@material-ui/icons';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import withStyles from '@material-ui/core/styles/withStyles';
 import * as yup from 'yup';
 import { callApi } from '../../lib/utils/api';
@@ -101,10 +100,10 @@ handleValidate = field => () => {
     form, error, isTouched,
   } = this.state;
   const {
-     name, email, password, confirmPassword,
+    name, email, password, confirmPassword,
   } = form;
   this.schema.validate({
-     name, email, password, confirmPassword,
+    name, email, password, confirmPassword,
   }, { abortEarly: false }).then(() => {
     this.setState({
       error: { ...error, [field]: '' },
@@ -125,10 +124,10 @@ handleOnBlur = field => () => {
     form, error, isTouched,
   } = this.state;
   const {
-        name, email, password, confirmPassword,
+    name, email, password, confirmPassword,
   } = form;
   this.schema.validate({
-        name, email, password, confirmPassword,
+    name, email, password, confirmPassword,
   }, { abortEarly: false }).then(() => {
     this.setState({
       error: { ...error, [field]: '' },
@@ -200,7 +199,8 @@ handleSubmit = async (e, values) => {
   this.setState({
     loader: true,
   });
-  const result = await callApi('post', form, 'user/SignUp');
+  const { confirmPassword, ...rest } = form;
+  const result = await callApi('post', rest, 'user');
   // eslint-disable-next-line react/prop-types
   const { children } = this.props;
   if (result.status) {
@@ -208,7 +208,7 @@ handleSubmit = async (e, values) => {
       loader: false,
     });
     window.localStorage.setItem('token', result.data.data);
-    children.props.history.push('/trainee');
+    children.props.history.push('/');
   } else {
     values.openSnack('Not Valid', 'error');
     this.setState({
@@ -233,7 +233,7 @@ render() {
           Log in
           </Typography>
           <form className={classes.form}>
-          <TextField
+            <TextField
               fullWidth
               id="outlined-name"
               label="Name"

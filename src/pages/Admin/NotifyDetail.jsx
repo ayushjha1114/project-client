@@ -7,9 +7,9 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { getDateFormatted } from '../../lib/utils';
-import { traineePath } from '../../configs/constants';
+import { adminPath } from '../../configs/constants';
 import { callApi } from '../../lib/utils/api';
-
+import { SnackbarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = theme => ({
   card: {
@@ -36,10 +36,13 @@ const styles = theme => ({
   },
 });
 
-class TraineeDetail extends React.Component {
+class UserDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loader: false,
+      snackCheck: false,
+      approved: true,
       data: '',
     };
     const { match } = this.props;
@@ -59,9 +62,41 @@ class TraineeDetail extends React.Component {
     });
   }
 
+  handleApproved = (e, values) => {
+    e.preventDefault();
+    const { approved } = this.state;
+    const { match } = this.props;
+    // history.push('/admin');
+    values.openSnack('Successfully approved', 'success');
+    this.setState({
+      loader: true,
+    });
+    callApi(
+      'PUT',
+      {
+        approved, id: match.params.id,
+      },
+      'approved',
+      {},
+    ).then((result) => {
+      if (result.status) {
+        this.setState({
+          loader: false,
+        });
+        values.openSnack('Successfully approved', 'success');
+      } else {
+        values.openSnack(result.message, 'error');
+        this.setState({
+          snackCheck: true,
+          loader: false,
+        });
+      }
+    });
+  }
+
   render() {
     const { classes } = this.props;
-    const { data } = this.state;
+    const { data, loader, snackCheck } = this.state;
     if (!(data)) {
       return (
         <div className={classes.progress}>
@@ -89,24 +124,52 @@ class TraineeDetail extends React.Component {
               <Typography variant="subtitle2">
                 {data.email}
               </Typography>
+              <Typography variant="subtitle2">
+                {data.address}
+              </Typography>
+              <Typography variant="subtitle2">
+                {data.city}
+              </Typography>
             </CardContent>
           </div>
         </Card>
         <Typography align="center">
-          <Link underline="none" component={RouterLink} to={traineePath}>
+          <Link underline="none" component={RouterLink} to={adminPath}>
             <Button variant="outlined" className={classes.button}>
               BACK
             </Button>
           </Link>
         </Typography>
+        {
+          <SnackbarConsumer>
+            {value => (
+              <Typography>
+                <Link underline="none" component={RouterLink} to={adminPath}>
+                  <Button
+                    variant="outlined"
+                    className={classes.button}
+                    onClick={e => this.handleApproved(e, value)}
+                  >
+                    {
+                      (!loader || snackCheck)
+                        ? <b>APPROVED</b>
+                        : <CircularProgress size={24} thickness={4} />
+                    }
+                  </Button>
+                </Link>
+              </Typography>
+            )}
+          </SnackbarConsumer>
+        }
+
       </>
     );
   }
 }
 
-TraineeDetail.propTypes = {
+UserDetail.propTypes = {
   classes: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   match: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(TraineeDetail);
+export default withStyles(styles)(UserDetail);

@@ -5,10 +5,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  Button, CircularProgress,
+  Button, CircularProgress, InputAdornment,
   TextField, FormHelperText, Paper,
 } from '@material-ui/core';
 import * as yup from 'yup';
+import { callApi } from '../../lib/utils/api';
 import { SnackbarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = theme => ({
@@ -196,230 +197,241 @@ class Quantity extends React.Component {
 
   handleSubmit = async (e, values) => {
     e.preventDefault();
+    let id = '';
     const { addressform } = this.state;
     this.setState({
       loader: true,
     });
-    const { confirmPassword, ...rest } = addressform;
-    const result = await callApi('post', rest, 'trainee');
-    // eslint-disable-next-line react/prop-types
-    const { onSubmit, history } = this.props;
-    console.log('inside add ', this.props);
-    if (result.status) {
-      this.setState({
-        loader: false,
+    const getID = await callApi('get', {}, 'user', {});
+    if (getID.status) {
+      getID.data.data.records.forEach((element) => {
+        if (addressform.email === element.email) {
+          // eslint-disable-next-line no-underscore-dangle
+          id = element._id;
+        }
       });
-      values.openSnack(result.data.message, 'success');
-      history.push('/trainee');
+      const { firstName, lastName, ...rest } = addressform;
+      const result = await callApi('put', { rest, id }, 'order');
+      // eslint-disable-next-line react/prop-types
+      const { history } = this.props;
+      console.log('inside quantity ', this.props);
+      if (result.status) {
+        this.setState({
+          loader: false,
+        });
+        values.openSnack(result.data.message, 'success');
+        history.push('/user');
+      } else {
+        values.openSnack('Not Authorized', 'error');
+        this.setState({
+          snackCheck: true,
+          loader: false,
+        });
+      }
     } else {
-      values.openSnack('Not Authorized', 'error');
-      this.setState({
-        snackCheck: true,
-        loader: false,
-      });
+      console.log('Unable to get ID');
     }
-    onSubmit(form);
   };
 
   render() {
     const { classes } = this.props;
     const { loader, snackCheck } = this.state;
 
-  return (
-    <React.Fragment>
-             <main className={classes.layout}>
+    return (
+      <React.Fragment>
+        <main className={classes.layout}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h4" align="center">
               Your Address
             </Typography>
-      <Grid container spacing={24}>
-        <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              id="outlined-firstname"
-              label="FirstName"
-              error={this.showBooleanError('firstName')}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined"
-              onChange={this.handleChange('firstName')}
-              onBlur={this.handleOnBlur('firstName')}
-            />
-            <FormHelperText id="component-error-text1" className={classes.error}>
-              {this.getError('firstName')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-                 <TextField
-              fullWidth
-              id="outlined-lastname"
-              label="LastName"
-              error={this.showBooleanError('lastName')}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined"
-              onChange={this.handleChange('lastName')}
-              onBlur={this.handleOnBlur('lastName')}
-            />
-            <FormHelperText id="component-name-text1" className={classes.error}>
-              {this.getError('lastName')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12}>
-        <TextField
-              fullWidth
-              id="outlined-email-input"
-              label="Email"
-              error={this.showBooleanError('email')}
-              className={classes.textField}
-              type="email"
-              name="email"
-              autoComplete="email"
-              margin="normal"
-              variant="outlined"
-              onChange={this.handleChange('email')}
-              onBlur={this.handleOnBlur('email')}
-            />
-            <FormHelperText id="component-email-text2" className={classes.error}>
-              {this.getError('email')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12}>
-            <TextField
-              fullWidth
-              id="outlined-address-input"
-              label="Address"
-              error={this.showBooleanError('address')}
-              className={classes.textField}
-              type="text"
-              name="address"
-              autoComplete="address"
-              margin="normal"
-              variant="outlined"
-              onChange={this.handleChange('address')}
-              onBlur={this.handleOnBlur('address')}
-            />
-            <FormHelperText id="component-address-text2" className={classes.error}>
-              {this.getError('address')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-           <TextField
-              fullWidth
-              id="outlined-city-input"
-              label="City"
-              error={this.showBooleanError('city')}
-              className={classes.textField}
-              type="text"
-              name="city"
-              autoComplete="city"
-              margin="normal"
-              variant="outlined"
-              onChange={this.handleChange('city')}
-              onBlur={this.handleOnBlur('city')}
-            />
-            <FormHelperText id="component-city-text2" className={classes.error}>
-              {this.getError('city')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-              fullWidth
-              id="outlined-state-input"
-              label="State"
-              error={this.showBooleanError('state')}
-              className={classes.textField}
-              type="text"
-              name="state"
-              autoComplete="state"
-              margin="normal"
-              variant="outlined"
-              onChange={this.handleChange('state')}
-              onBlur={this.handleOnBlur('state')}
-            />
-            <FormHelperText id="component-state-text2" className={classes.error}>
-              {this.getError('state')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-           <TextField
-              fullWidth
-              id="outlined-zip-input"
-              label="Zip"
-              error={this.showBooleanError('zip')}
-              className={classes.textField}
-              type="text"
-              name="zip"
-              autoComplete="zip"
-              margin="normal"
-              variant="outlined"
-              onChange={this.handleChange('zip')}
-              onBlur={this.handleOnBlur('zip')}
-            />
-            <FormHelperText id="component-zip-text2" className={classes.error}>
-              {this.getError('zip')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-        <TextField
-          id="plastic waste"
-          variant="outlined"
-          className={classes.textField}
-          name="Plastic waste quantity"
-          label="Plastic waste quantity"
-          error={this.showBooleanError('plastic')}
-          fullWidth
-          onChange={this.handleChange('plastic')}
-          onBlur={this.handleOnBlur('plastic')}
-          InputProps={{
-            endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
-          }}
-        />
-         <FormHelperText id="component-plastic-text2" className={classes.error}>
-              {this.getError('plastic')}
-            </FormHelperText>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-        <TextField
-          id="metal waste"
-          variant="outlined"
-          className={classes.textField}
-          name="Metal waste quantity"
-          label="Metal waste quantity"
-          error={this.showBooleanError('metal')}
-          fullWidth
-          onChange={this.handleChange('metal')}
-          onBlur={this.handleOnBlur('metal')}
-          InputProps={{
-            endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
-          }}
-        />
-         <FormHelperText id="component-metal-text2" className={classes.error}>
-              {this.getError('metal')}
-            </FormHelperText>
-        </Grid>
-            <SnackbarConsumer>
-              {value => (
-                <Button
-                  color="primary"
-                  disabled={(!this.buttonChecked() || loader)}
-                  onClick={(e) => {
-                    this.handleSubmit(e, value);
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-firstname"
+                  label="FirstName"
+                  error={this.showBooleanError('firstName')}
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                  onChange={this.handleChange('firstName')}
+                  onBlur={this.handleOnBlur('firstName')}
+                />
+                <FormHelperText id="component-error-text1" className={classes.error}>
+                  {this.getError('firstName')}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-lastname"
+                  label="LastName"
+                  error={this.showBooleanError('lastName')}
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                  onChange={this.handleChange('lastName')}
+                  onBlur={this.handleOnBlur('lastName')}
+                />
+                <FormHelperText id="component-name-text1" className={classes.error}>
+                  {this.getError('lastName')}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="outlined-email-input"
+                  label="Email"
+                  error={this.showBooleanError('email')}
+                  className={classes.textField}
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={this.handleChange('email')}
+                  onBlur={this.handleOnBlur('email')}
+                />
+                <FormHelperText id="component-email-text2" className={classes.error}>
+                  {this.getError('email')}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="outlined-address-input"
+                  label="Address"
+                  error={this.showBooleanError('address')}
+                  className={classes.textField}
+                  type="text"
+                  name="address"
+                  autoComplete="address"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={this.handleChange('address')}
+                  onBlur={this.handleOnBlur('address')}
+                />
+                <FormHelperText id="component-address-text2" className={classes.error}>
+                  {this.getError('address')}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-city-input"
+                  label="City"
+                  error={this.showBooleanError('city')}
+                  className={classes.textField}
+                  type="text"
+                  name="city"
+                  autoComplete="city"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={this.handleChange('city')}
+                  onBlur={this.handleOnBlur('city')}
+                />
+                <FormHelperText id="component-city-text2" className={classes.error}>
+                  {this.getError('city')}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-state-input"
+                  label="State"
+                  error={this.showBooleanError('state')}
+                  className={classes.textField}
+                  type="text"
+                  name="state"
+                  autoComplete="state"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={this.handleChange('state')}
+                  onBlur={this.handleOnBlur('state')}
+                />
+                <FormHelperText id="component-state-text2" className={classes.error}>
+                  {this.getError('state')}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-zip-input"
+                  label="Zip"
+                  error={this.showBooleanError('zip')}
+                  className={classes.textField}
+                  type="text"
+                  name="zip"
+                  autoComplete="zip"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={this.handleChange('zip')}
+                  onBlur={this.handleOnBlur('zip')}
+                />
+                <FormHelperText id="component-zip-text2" className={classes.error}>
+                  {this.getError('zip')}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="plastic waste"
+                  variant="outlined"
+                  className={classes.textField}
+                  name="Plastic waste quantity"
+                  label="Plastic waste quantity"
+                  error={this.showBooleanError('plastic')}
+                  fullWidth
+                  onChange={this.handleChange('plastic')}
+                  onBlur={this.handleOnBlur('plastic')}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
                   }}
-                >
-                  {
-                    (!loader || snackCheck)
-                      ? <b>Order</b>
-                      : <CircularProgress size={24} thickness={4} />
-                  }
-                </Button>
-              )}
-            </SnackbarConsumer>
-      </Grid>
+                />
+                <FormHelperText id="component-plastic-text2" className={classes.error}>
+                  {this.getError('plastic')}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="metal waste"
+                  variant="outlined"
+                  className={classes.textField}
+                  name="Metal waste quantity"
+                  label="Metal waste quantity"
+                  error={this.showBooleanError('metal')}
+                  fullWidth
+                  onChange={this.handleChange('metal')}
+                  onBlur={this.handleOnBlur('metal')}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
+                  }}
+                />
+                <FormHelperText id="component-metal-text2" className={classes.error}>
+                  {this.getError('metal')}
+                </FormHelperText>
+              </Grid>
+              <SnackbarConsumer>
+                {value => (
+                  <Button
+                    color="primary"
+                    disabled={(!this.buttonChecked() || loader)}
+                    onClick={(e) => {
+                      this.handleSubmit(e, value);
+                    }}
+                  >
+                    {
+                      (!loader || snackCheck)
+                        ? <b>Order</b>
+                        : <CircularProgress size={24} thickness={4} />
+                    }
+                  </Button>
+                )}
+              </SnackbarConsumer>
+            </Grid>
           </Paper>
         </main>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
   }
 }
 

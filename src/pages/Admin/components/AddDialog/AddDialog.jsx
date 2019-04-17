@@ -192,7 +192,7 @@ class AddDialog extends React.Component {
       loader: true,
     });
     const { confirmPassword, ...rest } = form;
-    const result = await callApi('post', rest, 'trainee');
+    const result = await callApi('post', rest, 'user');
     // eslint-disable-next-line react/prop-types
     const { onSubmit, history } = this.props;
     console.log('inside add ', this.props);
@@ -201,7 +201,7 @@ class AddDialog extends React.Component {
         loader: false,
       });
       values.openSnack(result.data.message, 'success');
-      history.push('/trainee');
+      history.push('/admin');
     } else {
       values.openSnack('Not Authorized', 'error');
       this.setState({
@@ -231,10 +231,10 @@ class AddDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Add Trainee</DialogTitle>
+          <DialogTitle id="form-dialog-title">Add User</DialogTitle>
           <DialogContent>
             <DialogContentText>
-                  Enter your trainee details
+                  Enter your details
             </DialogContentText>
             <TextField
               fullWidth

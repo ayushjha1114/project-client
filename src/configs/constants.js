@@ -52,7 +52,7 @@ export const adminPath = '/admin';
 export const dropdown1 = 'Cricket';
 export const dropdown2 = 'Football';
 
-export const column = [
+export const columnArr = [
   {
     field: 'name',
     label: 'Name',
@@ -70,13 +70,24 @@ export const column = [
   },
 ];
 
-/* export const actions = [
+export const complaintArr = [
   {
-    icon: <EditIcon />,
-    handler: TraineeList.handlerEditDialogOpen,
+    field: 'name',
+    label: 'Name',
   },
   {
-    icon: <DeleteIcon />,
-    handler: TraineeList.handlerRemoveDialogOpen,
+    field: 'email',
+    label: 'Email Address',
+    format: value => value && value.toUpperCase(),
   },
-]; */
+  {
+    field: 'createdAt',
+    label: 'Date',
+    align: 'right',
+    format: getDateFormatted,
+  },
+  {
+    field: 'complaint',
+    label: 'Complaint',
+  },
+];

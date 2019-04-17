@@ -19,7 +19,7 @@ const defaultProps = {
   removeOpen: false,
 };
 
-class AddDialog extends React.Component {
+class RemoveDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,13 +49,13 @@ class AddDialog extends React.Component {
     });
     // eslint-disable-next-line react/prop-types
     const { history, traineeData } = this.props;
-    callApi('DELETE', {}, `trainee/${traineeData.originalId}`, {}).then((result) => {
+    callApi('DELETE', {}, `user/${traineeData.originalId}`, {}).then((result) => {
       if (result.status) {
         this.setState({
           loader: false,
         });
-        value.openSnack('Trainee deleted!', 'success');
-        history.push('/trainee');
+        value.openSnack('User deleted!', 'success');
+        history.push('/admin');
       } else {
         value.openSnack(result.message, 'error');
         this.setState({
@@ -81,10 +81,10 @@ class AddDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Remove Trainee</DialogTitle>
+          <DialogTitle id="form-dialog-title">Remove User</DialogTitle>
           <DialogContent>
             <DialogContentText>
-                  Do you want to remove trainee details?
+                  Do you want to remove User details?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -117,7 +117,7 @@ class AddDialog extends React.Component {
   }
 }
 
-AddDialog.propTypes = propTypes;
-AddDialog.defaultProps = defaultProps;
+RemoveDialog.propTypes = propTypes;
+RemoveDialog.defaultProps = defaultProps;
 
-export default AddDialog;
+export default RemoveDialog;

@@ -24,7 +24,6 @@ const App = () => (
           <PublicRoute exact path="/aboutUs" component={AboutUs} />
           <PublicRoute exact path="/contactUs" component={ContactUs} />
           <PublicRoute exact path="/signUp" component={SignUp} />
-          <PublicRoute exact path="/logOut" component={LogOut} />
 
           <UserRoute exact path={userPath} component={User} />
 

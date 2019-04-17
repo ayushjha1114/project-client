@@ -4,14 +4,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PropTypes from 'prop-types';
 import { AddDialog } from '.';
-import { column } from '../../configs/constants';
+import { columnArr } from '../../configs/constants';
 import TraineeTable from '../../components/TraineeTable/TraineeTable';
 import { EditDialog, RemoveDialog } from './components';
 import { callApi } from '../../lib/utils/api';
 import { SnackbarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
 
 
-export default class TraineeList extends React.Component {
+export default class UsersList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -152,7 +152,7 @@ export default class TraineeList extends React.Component {
 
   handleSelect = (id) => {
     const { history } = this.props;
-    history.push(`/trainee/${id}`);
+    history.push(`/users/${id}`);
   };
 
   handlerEditDialogOpen = (row) => {
@@ -185,7 +185,7 @@ export default class TraineeList extends React.Component {
                   color="primary"
                   onClick={this.handleClickOpen}
                 >
-            Add Trainee
+            Add User
                 </Button>
               </div>
               <AddDialog
@@ -219,7 +219,7 @@ export default class TraineeList extends React.Component {
               : (
                 <TraineeTable
                   result={item}
-                  columns={column}
+                  columns={columnArr}
                   id="id"
                   actions={[
                     {
@@ -250,6 +250,6 @@ export default class TraineeList extends React.Component {
   }
 }
 
-TraineeList.propTypes = {
+UsersList.propTypes = {
   history: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
