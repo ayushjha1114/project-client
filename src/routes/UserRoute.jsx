@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { UserLayout } from '../layouts';
+import { UserLayout } from '../layouts/UserLayout';
 
 const UserRoute = ({ component: Component, ...rest }) => (
   <>

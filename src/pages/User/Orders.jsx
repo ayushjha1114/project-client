@@ -49,7 +49,7 @@ class Order extends React.Component {
     const { page } = this.state;
     const skipPage = page * 10;
     const limitpage = 10;
-    callApi('get', {}, 'order', { skip: skipPage, limit: limitpage }).then((result) => {
+    callApi('get', {}, 'notify', { skip: skipPage, limit: limitpage }).then((result) => {
       if (result.status) {
         this.setState({
           item: result.data,

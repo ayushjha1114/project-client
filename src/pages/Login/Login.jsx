@@ -202,6 +202,7 @@ handleSubmit = async (e, values) => {
       loader: false,
     });
     window.localStorage.setItem('token', result.data.data);
+    window.localStorage.setItem('email', form.email);
     children.props.history.push('/user');
   } else {
     values.openSnack(result.message, 'error');

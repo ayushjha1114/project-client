@@ -7,7 +7,6 @@ import {
 import { Lock, Person } from '@material-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import { SnackbarConsumer } from '../../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = ({
   root: {
@@ -22,25 +21,13 @@ const styles = ({
 function NavBar(props) {
   const { classes } = props;
 
-  function handleSignIn() {
-    console.log('dd', props);
-  }
-
-
-  function handleLogout() {
-    // const { history } = props;
-    // console.log(props);
-    // history.push('/login');
-    localStorage.removeItem('token');
-  }
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <Link component={RouterLink} underline="none" color="inherit" to="/aboutUs">
-           Welcome
+              Welcome
             </Link>
           </Typography>
           <Link component={RouterLink} underline="none" color="inherit" to="/aboutUs">
@@ -53,22 +40,15 @@ function NavBar(props) {
             Contact Us
             </Button>
           </Link>
-          {
-            <SnackbarConsumer>
-              {value => (
-                <Link component={RouterLink} underline="none" color="inherit" to="/signup">
-                  <Button color="inherit" onClick={e => handleSignIn(e, value)}>
+          <Link component={RouterLink} underline="none" color="inherit" to="/signUp">
+            <Button color="inherit">
                 Sign Up
-                    <Person />
-                  </Button>
-                </Link>
-              )}
-            </SnackbarConsumer>
-          }
+              <Person />
+            </Button>
+          </Link>
           <Link component={RouterLink} underline="none" color="inherit" to="/login">
             <Button
               color="inherit"
-              onClick={() => handleLogout()}
             >
                         Login
               <Lock />
