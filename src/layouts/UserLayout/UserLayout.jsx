@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UserNavbar, { Footer } from '../components';
+import { UserNavbar, Footer } from '../components';
 
 const UserLayout = ({ children, ...rest }) => (
   <>
