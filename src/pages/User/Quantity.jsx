@@ -21,25 +21,25 @@ const styles = theme => ({
     color: 'red',
     margin: 10,
   },
-  // main: {
-  //   width: 'auto',
-  //   display: 'block',
-  //   marginLeft: theme.spacing.unit * 3,
-  //   marginRight: theme.spacing.unit * 3,
-  //   [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-  //     width: 400,
-  //     marginLeft: 'auto',
-  //     marginRight: 'auto',
-  //   },
-  // },
-  // paper: {
-  //   marginTop: theme.spacing.unit * 8,
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   alignItems: 'center',
-  //   padding: `${theme.spacing.unit * 2}px
-  //   ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-  // },
+  main: {
+    width: 'auto',
+    display: 'block',
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 700,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing.unit,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px
+    ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+  },
 });
 
 const propTypes = {
@@ -259,7 +259,7 @@ class Quantity extends React.Component {
 
     return (
       <React.Fragment>
-        <main className={classes.layout}>
+        <main className={classes.main}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h4" align="center">
               Your Address
@@ -373,7 +373,7 @@ class Quantity extends React.Component {
                   {this.getError('state')}
                 </FormHelperText>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   fullWidth
                   id="outlined-zip-input"
@@ -434,6 +434,7 @@ class Quantity extends React.Component {
                 {value => (
                   <Button
                     color="primary"
+                    size="large"
                     disabled={(!this.buttonChecked() || loader)}
                     onClick={(e) => {
                       this.handleSubmit(e, value);

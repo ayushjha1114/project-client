@@ -230,7 +230,6 @@ render() {
           <form className={classes.form}>
             <TextField
               fullWidth
-              error={this.showBooleanError('email')}
               id="outlined-email-input"
               label="Email Address"
               className={classes.textField}
@@ -250,7 +249,6 @@ render() {
             </FormHelperText>
             <TextField
               fullWidth
-              error={this.showBooleanError('password')}
               id="outlined-password-input"
               label="Password"
               className={classes.textField}

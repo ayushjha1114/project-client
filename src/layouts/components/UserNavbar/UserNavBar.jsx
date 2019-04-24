@@ -34,7 +34,7 @@ class UserNavBar extends React.Component {
   getEmail = () => {
     const email = localStorage.getItem('email');
     callApi('get', {}, 'user', {}).then((result) => {
-      result.data.data.records.forEach((element) => {
+      result.data.data.documents.forEach((element) => {
         // eslint-disable-next-line no-underscore-dangle
         if (email === element.email) {
           this.setState({
@@ -53,6 +53,7 @@ class UserNavBar extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log(this.props)
     const { name } = this.state;
 
     return (
