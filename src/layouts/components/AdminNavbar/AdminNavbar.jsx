@@ -9,7 +9,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { SnackbarConsumer } from '../../../contexts/SnackBarProvider/SnackBarProvider';
 import { callApi } from '../../../lib/utils/api';
-
+import { adminPath } from '../../../configs/constants';
 
 const styles = ({
   root: {
@@ -46,6 +46,26 @@ class AdminNavBar extends React.Component {
     e.preventDefault();
     localStorage.clear();
     values.openSnack('Successfully logged out', 'success');
+    const { history } = this.props;
+    history.push('/adminLogin');
+  }
+
+  handleUsers = (e) => {
+    e.preventDefault();
+    const { history } = this.props;
+    history.push(`${adminPath}/users`);
+  }
+
+  handleUserComplaints = (e) => {
+    e.preventDefault();
+    const { history } = this.props;
+    history.push(`${adminPath}/usercomplaints`);
+  }
+
+  handleNotification = (e) => {
+    e.preventDefault();
+    const { history } = this.props;
+    history.push(`${adminPath}/notification`);
   }
 
   render() {
@@ -56,42 +76,34 @@ class AdminNavBar extends React.Component {
         <AppBar position="fixed">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              <Link component={RouterLink} underline="none" color="inherit" to="/admin">
+              <Link component={RouterLink} underline="none" color="inherit" to={adminPath}>
               Admin Dashboard
               </Link>
             </Typography>
-            <Link component={RouterLink} underline="none" color="inherit" to="/users">
-              <Button color="inherit">
-              Users
-              </Button>
-            </Link>
-            <Link component={RouterLink} underline="none" color="inherit" to="/usercomplaints">
-              <Button color="inherit">
-              Complaints
-              </Button>
-            </Link>
+            <Button color="inherit" onClick={e => this.handleUsers(e)}>
+            Users
+            </Button>
+            <Button color="inherit" onClick={e => this.handleUserComplaints(e)}>
+            Complaints
+            </Button>
             {
               <SnackbarConsumer>
                 {value => (
-                  <Link component={RouterLink} underline="none" color="inherit" to="/adminLogin">
-                    <Button
-                      color="inherit"
-                      onClick={e => this.handleLogout(e, value)}
-                    >
-                        Logout
-                      <ExitToApp />
-                    </Button>
-                  </Link>
+                  <Button
+                    color="inherit"
+                    onClick={e => this.handleLogout(e, value)}
+                  >
+                      Logout
+                    <ExitToApp />
+                  </Button>
                 )}
               </SnackbarConsumer>
             }
-            <Link component={RouterLink} underline="none" color="inherit" to="/notification">
-              <IconButton color="inherit">
-                <Badge badgeContent={notifyCount} color="secondary">
-                  <Notifications />
-                </Badge>
-              </IconButton>
-            </Link>
+            <IconButton color="inherit">
+              <Badge badgeContent={notifyCount} color="secondary" onClick={e => this.handleNotification(e)}>
+                <Notifications />
+              </Badge>
+            </IconButton>
           </Toolbar>
         </AppBar>
       </div>
@@ -100,8 +112,9 @@ class AdminNavBar extends React.Component {
 }
 
 AdminNavBar.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.objectOf.isRequired,
+  history: PropTypes.objectOf.isRequired,
+
 };
 
 export default withStyles(styles)(AdminNavBar);
