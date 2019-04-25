@@ -197,6 +197,7 @@ handleSubmit = async (e, values) => {
   const result = await callApi('post', form, 'token');
   // eslint-disable-next-line react/prop-types
   const { children } = this.props;
+  console.log(this.props, 'sdfd', result);
   if (result.status) {
     this.setState({
       loader: false,
@@ -224,7 +225,7 @@ render() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-          Log in
+          Admin Login
           </Typography>
           <form className={classes.form}>
             <TextField

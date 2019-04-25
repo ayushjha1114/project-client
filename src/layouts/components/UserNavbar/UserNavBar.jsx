@@ -49,11 +49,31 @@ class UserNavBar extends React.Component {
     e.preventDefault();
     localStorage.clear();
     values.openSnack('Successfully logged out', 'success');
+    const { history } = this.props;
+    history.push('/login');
+  }
+
+  handleProfile = (e) => {
+    e.preventDefault();
+    const { history } = this.props;
+    history.push(`${userPath}/profile`);
+  }
+
+  handleComplaint = (e) => {
+    e.preventDefault();
+    const { history } = this.props;
+    history.push(`${userPath}/complaint`);
+  }
+
+  handleOrders = (e) => {
+    e.preventDefault();
+    const { history } = this.props;
+    history.push(`${userPath}/orders`);
   }
 
   render() {
     const { classes } = this.props;
-    console.log(this.props)
+    console.log(this.props);
     const { name } = this.state;
 
     return (
@@ -65,33 +85,27 @@ class UserNavBar extends React.Component {
                 {`Welcome, ${name}`}
               </Link>
             </Typography>
-            <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/profile`}>
-              <Button color="inherit">
-                Profile
-              </Button>
-            </Link>
-            <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/complaint`}>
-              <Button color="inherit">
-              Complaint
-              </Button>
-            </Link>
-            <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/orders`}>
-              <Button color="inherit">
-              Orders
-              </Button>
-            </Link>
+            <Button color="inherit" onClick={e => this.handleProfile(e)}>
+              Profile
+            </Button>
+            <Button color="inherit" onClick={e => this.handleComplaint(e)}>
+            Complaint
+            </Button>
+            {/* <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/orders`}> */}
+            <Button color="inherit" onClick={e => this.handleOrders(e)}>
+            Orders
+            </Button>
+            {/* </Link> */}
             {
               <SnackbarConsumer>
                 {value => (
-                  <Link component={RouterLink} underline="none" color="inherit" to="/login">
-                    <Button
-                      color="inherit"
-                      onClick={e => this.handleLogout(e, value)}
-                    >
-                          Logout
-                      <ExitToApp />
-                    </Button>
-                  </Link>
+                  <Button
+                    color="inherit"
+                    onClick={e => this.handleLogout(e, value)}
+                  >
+                        Logout
+                    <ExitToApp />
+                  </Button>
                 )}
               </SnackbarConsumer>
             }
@@ -108,8 +122,8 @@ class UserNavBar extends React.Component {
 }
 
 UserNavBar.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.objectOf.isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
 export default withStyles(styles)(UserNavBar);

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Login from '../../pages/Login';
+import AdminLogin from '../../pages/Admin/AdminLogin';
 import { Footer } from '../components';
 
 const AuthLayout = ({ children, ...rest }) => (
   <>
-    <Login {...rest}>
+    <AdminLogin {...rest}>
       {children}
-    </Login>
+    </AdminLogin>
     <Footer />
   </>
 );

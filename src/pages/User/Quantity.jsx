@@ -191,9 +191,9 @@ class Quantity extends React.Component {
   showBooleanError = (field) => {
     const { isTouched } = this.state;
     if (isTouched[field] === true) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 
   buttonChecked = () => {

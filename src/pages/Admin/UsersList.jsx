@@ -34,12 +34,13 @@ export default class UsersList extends React.Component {
     const { page } = this.state;
     const skipPage = page * 10;
     const limitpage = 10;
-    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
+    callApi('get', {}, 'user', { skip: skipPage, limit: limitpage }).then((result) => {
+      console.log('@@@', result);
       if (result.status) {
         this.setState({
           item: result.data,
           loader: false,
-          dataLength: result.data.data.count,
+          dataLength: result.data.data.totalNumberOfDocs,
           errorAlert: '',
         });
       } else {
@@ -106,7 +107,7 @@ export default class UsersList extends React.Component {
     const { page } = this.state;
     const skipPage = page * 10;
     const limitpage = 10;
-    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
+    callApi('get', {}, 'user', { skip: skipPage, limit: limitpage }).then((result) => {
       if (result.status) {
         this.setState({
           item: result.data,
@@ -174,6 +175,7 @@ export default class UsersList extends React.Component {
       open, order, orderBy, page, editDialog, id,
       deleteDialog, item, loader, dataLength, errorAlert,
     } = this.state;
+    console.log('333', this.props);
     return (
       <SnackbarConsumer>
         {value => (

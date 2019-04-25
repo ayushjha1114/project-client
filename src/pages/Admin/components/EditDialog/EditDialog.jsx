@@ -181,10 +181,11 @@ class EditDialog extends React.Component {
     });
     // eslint-disable-next-line react/prop-types
     const { onSubmit, traineeData } = this.props;
+    console.log('%%%', traineeData);
     callApi(
       'PUT',
       {
-        name, email, password: '', id: traineeData.originalId,
+        dataToUpdate: { name, email, password: '' }, id: traineeData.originalID,
       },
       'user',
       {},

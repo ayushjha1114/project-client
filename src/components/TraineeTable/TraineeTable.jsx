@@ -75,6 +75,7 @@ class TraineeTable extends React.Component {
       onChangePage,
       actions,
     } = this.props;
+    console.log('222', this.props);
 
     return (
       <>
@@ -104,7 +105,7 @@ class TraineeTable extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(result.data.records).map(row => (
+                {(result.data.documents).map(row => (
                   <TableRow
                     className={classes.row}
                     key={row.id}

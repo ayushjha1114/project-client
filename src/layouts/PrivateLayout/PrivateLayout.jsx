@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AdminNavbar, { Footer } from '../components';
+import { Footer } from '../components';
+import AdminNavbar from '../components/AdminNavbar';
 
 const PrivateLayout = ({ children, ...rest }) => (
   <>
-    <AdminNavbar />
+    <AdminNavbar {...rest} />
     <div {...rest}>
       {children}
     </div>

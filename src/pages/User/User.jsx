@@ -9,8 +9,9 @@ import Complaint from './Complaint';
 import OrderPlaced from './OrderPlaced';
 import { NoMatch } from '..';
 
-function Trainee(props) {
+function User(props) {
   const { match } = props;
+  console.log('sdfsd', match);
 
   return (
     <>
@@ -20,7 +21,7 @@ function Trainee(props) {
         <Route exact path={`${match.path}/placed`} {...props} component={OrderPlaced} />
         <Route exact path={`${match.path}/complaint`} {...props} component={Complaint} />
         <Route exact path={`${match.path}/profile`} {...props} component={Profile} />
-        {/* <Route exact path={`${match.path}/complaint`} {...props} component={TraineeList} /> */}
+        {/* <Route exact path={`${match.path}/complaint`} {...props} component={UserList} /> */}
         <Route exact path={`${match.path}/orders/:id`} {...props} component={OrderDetail} />
         <Route path={`${match.path}/`} component={NoMatch} />
       </Switch>
@@ -28,9 +29,9 @@ function Trainee(props) {
   );
 }
 
-Trainee.propTypes = {
+User.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   match: PropTypes.object.isRequired,
 };
 
-export default Trainee;
+export default User;
