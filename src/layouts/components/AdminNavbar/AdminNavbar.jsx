@@ -7,7 +7,6 @@ import {
 import { ExitToApp, Notifications } from '@material-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import { SnackbarConsumer } from '../../../contexts/SnackBarProvider/SnackBarProvider';
 import { callApi } from '../../../lib/utils/api';
 import { adminPath } from '../../../configs/constants';
 
@@ -18,6 +17,9 @@ const styles = ({
   },
   grow: {
     flexGrow: 1,
+  },
+  app: {
+    backgroundColor: 'gray',
   },
 });
 
@@ -42,68 +44,49 @@ class AdminNavBar extends React.Component {
     });
   }
 
-  handleLogout = (e, values) => {
-    e.preventDefault();
+  handleLogout = () => {
     localStorage.clear();
-    values.openSnack('Successfully logged out', 'success');
-    const { history } = this.props;
-    history.push('/adminLogin');
-  }
-
-  handleUsers = (e) => {
-    e.preventDefault();
-    const { history } = this.props;
-    history.push(`${adminPath}/users`);
-  }
-
-  handleUserComplaints = (e) => {
-    e.preventDefault();
-    const { history } = this.props;
-    history.push(`${adminPath}/usercomplaints`);
-  }
-
-  handleNotification = (e) => {
-    e.preventDefault();
-    const { history } = this.props;
-    history.push(`${adminPath}/notification`);
   }
 
   render() {
     const { classes } = this.props;
-    console.log('11111', this.props, this.state);
     const { notifyCount } = this.state;
+    console.log('inside admin nav');
+
     return (
       <div className={classes.root}>
-        <AppBar position="fixed">
+        <AppBar position="static" className={classes.app}>
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link component={RouterLink} underline="none" color="inherit" to={adminPath}>
               Admin Dashboard
               </Link>
             </Typography>
-            <Button color="inherit" onClick={e => this.handleUsers(e)}>
+            <Link component={RouterLink} underline="none" color="inherit" to={`${adminPath}/users`}>
+              <Button color="inherit">
             Users
-            </Button>
-            <Button color="inherit" onClick={e => this.handleUserComplaints(e)}>
+              </Button>
+            </Link>
+            <Link component={RouterLink} underline="none" color="inherit" to={`${adminPath}/usercomplaints`}>
+              <Button color="inherit">
             Complaints
-            </Button>
-            {
-              <SnackbarConsumer>
-                {value => (
-                  <Button
-                    color="inherit"
-                    onClick={e => this.handleLogout(e, value)}
-                  >
-                      Logout
-                    <ExitToApp />
-                  </Button>
-                )}
-              </SnackbarConsumer>
-            }
+              </Button>
+            </Link>
+            <Link component={RouterLink} underline="none" color="inherit" to="/adminLogin">
+              <Button
+                color="inherit"
+                onClick={() => this.handleLogout()}
+              >
+                Logout
+                <ExitToApp />
+              </Button>
+            </Link>
             <IconButton color="inherit">
-              <Badge badgeContent={notifyCount} color="secondary" onClick={e => this.handleNotification(e)}>
-                <Notifications />
-              </Badge>
+              <Link component={RouterLink} underline="none" color="inherit" to={`${adminPath}/notification`}>
+                <Badge badgeContent={notifyCount} color="secondary">
+                  <Notifications />
+                </Badge>
+              </Link>
             </IconButton>
           </Toolbar>
         </AppBar>

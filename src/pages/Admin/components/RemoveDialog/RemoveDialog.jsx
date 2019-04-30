@@ -49,7 +49,7 @@ class RemoveDialog extends React.Component {
     });
     // eslint-disable-next-line react/prop-types
     const { history, traineeData } = this.props;
-    callApi('DELETE', {}, `user/${traineeData.originalId}`, {}).then((result) => {
+    callApi('DELETE', {}, `user/${traineeData.originalID}`, {}).then((result) => {
       if (result.status) {
         this.setState({
           loader: false,

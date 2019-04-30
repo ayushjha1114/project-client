@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  Card, List, ListItem, ListItemIcon, ListItemText, Typography,
+  Typography,
 } from '@material-ui/core';
 import {
   Call, Room, Email,
 } from '@material-ui/icons';
-import CardMedia from '@material-ui/core/CardMedia';
 import PUBLIC_IMAGE_FOLDER from '../../configs/constants';
 
 const styles = theme => ({

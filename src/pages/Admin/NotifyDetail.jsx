@@ -42,18 +42,19 @@ class UserDetail extends React.Component {
     this.state = {
       loader: false,
       snackCheck: false,
-      approved: true,
+      approve: true,
       data: '',
     };
-    const { match } = this.props;
-    this.getData(match.params.id);
+    this.getData();
   }
 
-  getData = (id) => {
+  getData = () => {
     callApi('get', {}, 'order', {}).then((result) => {
-      result.data.data.records.forEach((getID) => {
+      const { match } = this.props;
+      console.log('$$$', match, result);
+      result.data.data.documents.forEach((getID) => {
         // eslint-disable-next-line no-underscore-dangle
-        if (id === getID._id) {
+        if (match.params.id === getID._id) {
           this.setState({
             data: getID,
           });
@@ -64,17 +65,15 @@ class UserDetail extends React.Component {
 
   handleApproved = (e, values) => {
     e.preventDefault();
-    const { approved } = this.state;
-    const { match } = this.props;
-    // history.push('/admin');
-    values.openSnack('Successfully approved', 'success');
+    const { approve, data } = this.state;
+    const { history } = this.props;
     this.setState({
       loader: true,
     });
     callApi(
       'PUT',
       {
-        approved, id: match.params.id,
+        dataToUpdate: { approved: approve }, id: data.originalID,
       },
       'approved',
       {},
@@ -84,6 +83,7 @@ class UserDetail extends React.Component {
           loader: false,
         });
         values.openSnack('Successfully approved', 'success');
+        history.push('/admin');
       } else {
         values.openSnack(result.message, 'error');
         this.setState({
@@ -147,6 +147,7 @@ class UserDetail extends React.Component {
                 <Link underline="none" component={RouterLink} to={adminPath}>
                   <Button
                     variant="outlined"
+                    color="primary"
                     className={classes.button}
                     onClick={e => this.handleApproved(e, value)}
                   >

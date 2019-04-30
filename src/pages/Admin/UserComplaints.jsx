@@ -49,7 +49,7 @@ class UserComplaints extends React.Component {
     const { page } = this.state;
     const skipPage = page * 10;
     const limitpage = 10;
-    callApi('get', {}, 'trainee', { skip: skipPage, limit: limitpage }).then((result) => {
+    callApi('get', {}, 'notify', { skip: skipPage, limit: limitpage }).then((result) => {
       if (result.status) {
         this.setState({
           item: result.data,
@@ -87,11 +87,11 @@ class UserComplaints extends React.Component {
   }
 
 
-  // handleSelect = (id) => {
-  //   // eslint-disable-next-line react/prop-types
-  //   const { history } = this.props;
-  //   history.push(`/UserComplaints/${id}`);
-  // };
+  handleSelect = (id) => {
+    // eslint-disable-next-line react/prop-types
+    const { history } = this.props;
+    history.push(`/admin/UserComplaints/${id}`);
+  };
 
 
   render() {
@@ -129,11 +129,10 @@ class UserComplaints extends React.Component {
                         </TableCell>
                       </React.Fragment>
                     ))}
-                    <TableCell />
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {(item.data.records).map(row => (
+                  {(item.data.documents).map(row => (
                     <TableRow
                       className={classes.row}
                       key={row.id}
@@ -144,7 +143,7 @@ class UserComplaints extends React.Component {
                           align={column.align}
                           key={column.field}
                           // eslint-disable-next-line no-underscore-dangle
-                          onClick={this.handleSelect(row._id)}
+                          onClick={() => this.handleSelect(row._id)}
                         >
                           {column.format
                             ? column.format(row[column.field])

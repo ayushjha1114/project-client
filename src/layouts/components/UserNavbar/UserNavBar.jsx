@@ -8,7 +8,6 @@ import { ExitToApp } from '@material-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { userPath } from '../../../configs/constants';
-import { SnackbarConsumer } from '../../../contexts/SnackBarProvider/SnackBarProvider';
 import { callApi } from '../../../lib/utils/api';
 
 
@@ -19,6 +18,9 @@ const styles = ({
   },
   grow: {
     flexGrow: 1,
+  },
+  app: {
+    backgroundColor: 'gray',
   },
 });
 
@@ -45,30 +47,8 @@ class UserNavBar extends React.Component {
     });
   }
 
-  handleLogout = (e, values) => {
-    e.preventDefault();
+  handleLogout = () => {
     localStorage.clear();
-    values.openSnack('Successfully logged out', 'success');
-    const { history } = this.props;
-    history.push('/login');
-  }
-
-  handleProfile = (e) => {
-    e.preventDefault();
-    const { history } = this.props;
-    history.push(`${userPath}/profile`);
-  }
-
-  handleComplaint = (e) => {
-    e.preventDefault();
-    const { history } = this.props;
-    history.push(`${userPath}/complaint`);
-  }
-
-  handleOrders = (e) => {
-    e.preventDefault();
-    const { history } = this.props;
-    history.push(`${userPath}/orders`);
   }
 
   render() {
@@ -78,37 +58,37 @@ class UserNavBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.app}>
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link component={RouterLink} underline="none" color="inherit" to={userPath}>
                 {`Welcome, ${name}`}
               </Link>
             </Typography>
-            <Button color="inherit" onClick={e => this.handleProfile(e)}>
+            <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/profile`}>
+              <Button color="inherit">
               Profile
-            </Button>
-            <Button color="inherit" onClick={e => this.handleComplaint(e)}>
+              </Button>
+            </Link>
+            <Link component={RouterLink} underline="none" color="inherit" to="/user/complaint">
+              <Button color="inherit">
             Complaint
-            </Button>
-            {/* <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/orders`}> */}
-            <Button color="inherit" onClick={e => this.handleOrders(e)}>
-            Orders
-            </Button>
-            {/* </Link> */}
-            {
-              <SnackbarConsumer>
-                {value => (
-                  <Button
-                    color="inherit"
-                    onClick={e => this.handleLogout(e, value)}
-                  >
+              </Button>
+            </Link>
+            <Link component={RouterLink} underline="none" color="inherit" to={`${userPath}/orders`}>
+              <Button color="inherit">
+                Orders
+              </Button>
+            </Link>
+            <Link component={RouterLink} underline="none" color="inherit" to="/login">
+              <Button
+                color="inherit"
+                onClick={() => this.handleLogout()}
+              >
                         Logout
-                    <ExitToApp />
-                  </Button>
-                )}
-              </SnackbarConsumer>
-            }
+                <ExitToApp />
+              </Button>
+            </Link>
             {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <Notifications />
@@ -123,7 +103,6 @@ class UserNavBar extends React.Component {
 
 UserNavBar.propTypes = {
   classes: PropTypes.objectOf.isRequired,
-  history: PropTypes.objectOf.isRequired,
 };
 
 export default withStyles(styles)(UserNavBar);

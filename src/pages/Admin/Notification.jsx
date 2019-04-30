@@ -90,7 +90,7 @@ class Notification extends React.Component {
   handleSelect = (id) => {
     // eslint-disable-next-line react/prop-types
     const { history } = this.props;
-    history.push(`/notification/${id}`);
+    history.push(`/admin/notification/${id}`);
   };
 
 
@@ -129,11 +129,10 @@ class Notification extends React.Component {
                         </TableCell>
                       </React.Fragment>
                     ))}
-                    <TableCell />
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {(item.data.records).map(row => (
+                  {(item.data.documents).map(row => (
                     <TableRow
                       className={classes.row}
                       key={row.id}
@@ -144,7 +143,7 @@ class Notification extends React.Component {
                           align={column.align}
                           key={column.field}
                           // eslint-disable-next-line no-underscore-dangle
-                          onClick={this.handleSelect(row._id)}
+                          onClick={() => this.handleSelect(row._id)}
                         >
                           {column.format
                             ? column.format(row[column.field])

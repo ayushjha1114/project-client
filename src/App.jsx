@@ -30,7 +30,7 @@ const App = () => (
           <UserRoute exact path={userPath} component={User} />
 
           <PrivateRoute path={adminPath} component={Admin} />
-          <PrivateRoute component={NoMatch} />
+          <PublicRoute component={NoMatch} />
         </Switch>
       </Router>
     </SnackbarProvider>

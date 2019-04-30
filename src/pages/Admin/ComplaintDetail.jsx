@@ -7,7 +7,6 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { getDateFormatted } from '../../lib/utils';
-import { adminPath } from '../../configs/constants';
 import { callApi } from '../../lib/utils/api';
 
 
@@ -36,7 +35,7 @@ const styles = theme => ({
   },
 });
 
-class UserDetail extends React.Component {
+class ComplaintDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +46,7 @@ class UserDetail extends React.Component {
   }
 
   getData = (id) => {
-    callApi('get', {}, 'user', {}).then((result) => {
+    callApi('get', {}, 'notify', {}).then((result) => {
       result.data.data.documents.forEach((getID) => {
         // eslint-disable-next-line no-underscore-dangle
         if (id === getID._id) {
@@ -62,6 +61,7 @@ class UserDetail extends React.Component {
   render() {
     const { classes } = this.props;
     const { data } = this.state;
+    console.log('^^^^', data);
     if (!(data)) {
       return (
         <div className={classes.progress}>
@@ -89,11 +89,14 @@ class UserDetail extends React.Component {
               <Typography variant="subtitle2">
                 {data.email}
               </Typography>
+              <Typography variant="subtitle2">
+                {data.complaint}
+              </Typography>
             </CardContent>
           </div>
         </Card>
         <Typography align="center">
-          <Link underline="none" component={RouterLink} to={adminPath}>
+          <Link underline="none" component={RouterLink} to="/admin/usercomplaints">
             <Button variant="outlined" className={classes.button}>
               BACK
             </Button>
@@ -104,9 +107,9 @@ class UserDetail extends React.Component {
   }
 }
 
-UserDetail.propTypes = {
+ComplaintDetail.propTypes = {
   classes: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   match: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(UserDetail);
+export default withStyles(styles)(ComplaintDetail);

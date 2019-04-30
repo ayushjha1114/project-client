@@ -16,6 +16,9 @@ const styles = ({
   grow: {
     flexGrow: 1,
   },
+  app: {
+    backgroundColor: 'gray',
+  },
 });
 
 function NavBar(props) {
@@ -23,7 +26,7 @@ function NavBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.app}>
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <Link component={RouterLink} underline="none" color="inherit" to="/aboutUs">

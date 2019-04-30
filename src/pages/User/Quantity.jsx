@@ -40,6 +40,9 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 2}px
     ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
+  button: {
+    float: 'right',
+  },
 });
 
 const propTypes = {
@@ -191,9 +194,9 @@ class Quantity extends React.Component {
   showBooleanError = (field) => {
     const { isTouched } = this.state;
     if (isTouched[field] === true) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   buttonChecked = () => {
@@ -262,7 +265,7 @@ class Quantity extends React.Component {
         <main className={classes.main}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h4" align="center">
-              Your Address
+              Your Address & Quantity
             </Typography>
             <Grid container spacing={24}>
               <Grid item xs={12} sm={6}>
@@ -270,7 +273,6 @@ class Quantity extends React.Component {
                   fullWidth
                   id="outlined-firstname"
                   label="FirstName"
-                  error={this.showBooleanError('firstName')}
                   className={classes.textField}
                   margin="normal"
                   variant="outlined"
@@ -286,7 +288,6 @@ class Quantity extends React.Component {
                   fullWidth
                   id="outlined-lastname"
                   label="LastName"
-                  error={this.showBooleanError('lastName')}
                   className={classes.textField}
                   margin="normal"
                   variant="outlined"
@@ -302,7 +303,6 @@ class Quantity extends React.Component {
                   fullWidth
                   id="outlined-email-input"
                   label="Email"
-                  error={this.showBooleanError('email')}
                   className={classes.textField}
                   type="email"
                   name="email"
@@ -321,7 +321,6 @@ class Quantity extends React.Component {
                   fullWidth
                   id="outlined-address-input"
                   label="Address"
-                  error={this.showBooleanError('address')}
                   className={classes.textField}
                   type="text"
                   name="address"
@@ -340,7 +339,6 @@ class Quantity extends React.Component {
                   fullWidth
                   id="outlined-city-input"
                   label="City"
-                  error={this.showBooleanError('city')}
                   className={classes.textField}
                   type="text"
                   name="city"
@@ -359,7 +357,6 @@ class Quantity extends React.Component {
                   fullWidth
                   id="outlined-state-input"
                   label="State"
-                  error={this.showBooleanError('state')}
                   className={classes.textField}
                   type="text"
                   name="state"
@@ -378,7 +375,6 @@ class Quantity extends React.Component {
                   fullWidth
                   id="outlined-zip-input"
                   label="Zip"
-                  error={this.showBooleanError('zip')}
                   className={classes.textField}
                   type="text"
                   name="zip"
@@ -399,7 +395,6 @@ class Quantity extends React.Component {
                   className={classes.textField}
                   name="Plastic waste quantity"
                   label="Plastic waste quantity"
-                  error={this.showBooleanError('plastic')}
                   fullWidth
                   onChange={this.handleChange('plastic')}
                   onBlur={this.handleOnBlur('plastic')}
@@ -418,7 +413,6 @@ class Quantity extends React.Component {
                   className={classes.textField}
                   name="Metal waste quantity"
                   label="Metal waste quantity"
-                  error={this.showBooleanError('metal')}
                   fullWidth
                   onChange={this.handleChange('metal')}
                   onBlur={this.handleOnBlur('metal')}
@@ -432,20 +426,22 @@ class Quantity extends React.Component {
               </Grid>
               <SnackbarConsumer>
                 {value => (
-                  <Button
-                    color="primary"
-                    size="large"
-                    disabled={(!this.buttonChecked() || loader)}
-                    onClick={(e) => {
-                      this.handleSubmit(e, value);
-                    }}
-                  >
-                    {
-                      (!loader || snackCheck)
-                        ? <b>Order</b>
-                        : <CircularProgress size={24} thickness={4} />
-                    }
-                  </Button>
+                  <div className={classes.button}>
+                    <Button
+                      color="primary"
+                      size="large"
+                      disabled={(!this.buttonChecked() || loader)}
+                      onClick={(e) => {
+                        this.handleSubmit(e, value);
+                      }}
+                    >
+                      {
+                        (!loader || snackCheck)
+                          ? <b>Order</b>
+                          : <CircularProgress size={24} thickness={4} />
+                      }
+                    </Button>
+                  </div>
                 )}
               </SnackbarConsumer>
             </Grid>

@@ -189,7 +189,7 @@ class Complaint extends React.Component {
           id = element._id;
         }
       });
-      const result = await callApi('put', { addressform, id }, 'order');
+      const result = await callApi('put', { dataToUpdate: addressform, id }, 'order');
       // eslint-disable-next-line react/prop-types
       const { history } = this.props;
       console.log('inside complaint ', this.props);
@@ -214,13 +214,14 @@ class Complaint extends React.Component {
   render() {
     const { classes } = this.props;
     const { loader, snackCheck } = this.state;
+    console.log('^^^^^^')
 
     return (
       <React.Fragment>
         <main className={classes.layout}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h4" align="center">
-              Your Address
+              Type your Complaint
             </Typography>
             <Grid container spacing={24}>
               <Grid item xs={12}>
@@ -228,7 +229,6 @@ class Complaint extends React.Component {
                   fullWidth
                   id="outlined-email-input"
                   label="Email"
-                  error={this.showBooleanError('email')}
                   className={classes.textField}
                   type="email"
                   name="email"
@@ -247,7 +247,6 @@ class Complaint extends React.Component {
                   fullWidth
                   id="outlined-multiline-static"
                   label="Complaint"
-                  error={this.showBooleanError('complaint')}
                   multiline
                   type="text"
                   name="address"

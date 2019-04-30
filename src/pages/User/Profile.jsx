@@ -48,7 +48,7 @@ class Profile extends React.Component {
 
   getData = (id) => {
     callApi('get', {}, 'user', {}).then((result) => {
-      result.data.data.records.forEach((getID) => {
+      result.data.data.documents.forEach((getID) => {
         // eslint-disable-next-line no-underscore-dangle
         if (id === getID._id) {
           this.setState({

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   Divider,
 } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Slider } from '../../components';

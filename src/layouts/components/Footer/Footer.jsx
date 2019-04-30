@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   footer: {
+    backgroundColor: 'gray',
     marginTop: theme.spacing.unit * 8,
     padding: `${theme.spacing.unit * 6}px 0`,
   },
@@ -16,7 +17,7 @@ function Footer(props) {
     <>
       <footer className={classes.footer}>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-        &#169; 2019 Ayush
+        &#169; 2019 CSE-C
         </Typography>
       </footer>
     </>
