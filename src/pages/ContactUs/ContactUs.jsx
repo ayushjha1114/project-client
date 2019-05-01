@@ -23,7 +23,7 @@ const styles = theme => ({
     paddingTop: '56.25%', // 16:9
   },
   footer: {
-    marginTop: theme.spacing.unit * 15,
+    // marginTop: theme.spacing.unit * 15,
     padding: `${theme.spacing.unit * 6}px 0`,
   },
 });

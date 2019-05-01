@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Divider,
-} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Slider } from '../../components';
@@ -79,7 +76,7 @@ function AboutUs(props) {
             We are the provider of solid waste collection, transfer,
             recycling and disposal services in mostly exclusive and
             secondary markets across the Ghaziabad, India.
-              <Divider />
+              <br />
               25% of all items in recycling bins are actually trash.
               That’s a big problem impacting recycling efforts around the world.
               You can help by following three simple rules:

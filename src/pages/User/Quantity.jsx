@@ -34,6 +34,7 @@ const styles = theme => ({
   },
   paper: {
     marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit * 12,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

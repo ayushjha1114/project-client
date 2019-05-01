@@ -169,7 +169,7 @@ class Order extends React.Component {
         </>
       );
     }
-    return <h2><center>OOPS! No More Users</center></h2>;
+    return <h2><center>OOPS! You don't have order yet</center></h2>;
   }
 }
 

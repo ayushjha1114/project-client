@@ -5,9 +5,13 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   footer: {
+
+position: 'fixed',
+bottom: 0,
+width: '100%',
     backgroundColor: 'gray',
-    marginTop: theme.spacing.unit * 8,
-    padding: `${theme.spacing.unit * 6}px 0`,
+    // marginTop: theme.spacing.unit * 8,
+    padding: `${theme.spacing.unit * 2}px 0`,
   },
 });
 

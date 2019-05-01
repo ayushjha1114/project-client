@@ -27,6 +27,7 @@ const styles = theme => ({
   },
   paper: {
     marginTop: theme.spacing.unit * 8,
+    marginBottom: theme.spacing.unit * 10,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -200,15 +201,16 @@ handleSubmit = async (e, values) => {
     loader: true,
   });
   const { confirmPassword, ...rest } = form;
-  const result = await callApi('post', rest, 'user');
+  const result = await callApi('post', { role: 'user', ...rest }, 'user');
   // eslint-disable-next-line react/prop-types
-  const { children } = this.props;
+  const { history } = this.props;
   if (result.status) {
     this.setState({
       loader: false,
     });
     window.localStorage.setItem('token', result.data.data);
-    children.props.history.push('/');
+    values.openSnack('User successfully signup', 'success');
+    history.push('/');
   } else {
     values.openSnack('Not Valid', 'error');
     this.setState({
@@ -237,7 +239,6 @@ render() {
               fullWidth
               id="outlined-name"
               label="Name"
-              error={this.showBooleanError('name')}
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -254,7 +255,6 @@ render() {
               fullWidth
               id="outlined-email-input"
               label="Email"
-              error={this.showBooleanError('email')}
               className={classes.textField}
               type="email"
               name="email"
@@ -276,7 +276,6 @@ render() {
                   fullWidth
                   id="outlined-password-input"
                   label="Password"
-                  error={this.showBooleanError('password')}
                   className={classes.textField}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
@@ -306,7 +305,6 @@ render() {
                   fullWidth
                   id="outlined-password-input1"
                   label="Confirm Password"
-                  error={this.showBooleanError('confirmPassword')}
                   className={classes.textField}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
