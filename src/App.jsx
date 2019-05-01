@@ -27,7 +27,7 @@ const App = () => (
           <PublicRoute exact path="/contactUs" component={ContactUs} />
           <PublicRoute exact path="/signUp" component={SignUp} />
 
-          <UserRoute exact path={userPath} component={User} />
+          <UserRoute path={userPath} component={User} />
 
           <PrivateRoute path={adminPath} component={Admin} />
           <PublicRoute component={NoMatch} />
