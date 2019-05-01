@@ -9,7 +9,7 @@ const styles = theme => ({
 position: 'fixed',
 bottom: 0,
 width: '100%',
-    backgroundColor: 'gray',
+    backgroundColor: '#35e8a6',
     // marginTop: theme.spacing.unit * 8,
     padding: `${theme.spacing.unit * 2}px 0`,
   },

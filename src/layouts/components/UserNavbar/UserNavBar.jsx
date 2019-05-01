@@ -20,7 +20,7 @@ const styles = ({
     flexGrow: 1,
   },
   app: {
-    backgroundColor: 'gray',
+    backgroundColor: '#34C1A5',
   },
 });
 
