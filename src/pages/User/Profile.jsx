@@ -42,15 +42,15 @@ class Profile extends React.Component {
     this.state = {
       data: '',
     };
-    const { match } = this.props;
-    this.getData(match.params.id);
+    this.getData();
   }
 
-  getData = (id) => {
+  getData = () => {
+    const mailId = localStorage.getItem('email');
     callApi('get', {}, 'user', {}).then((result) => {
       result.data.data.documents.forEach((getID) => {
         // eslint-disable-next-line no-underscore-dangle
-        if (id === getID._id) {
+        if (mailId === getID.email) {
           this.setState({
             data: getID,
           });

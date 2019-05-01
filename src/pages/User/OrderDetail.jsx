@@ -7,9 +7,8 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { getDateFormatted } from '../../lib/utils';
-import { adminPath } from '../../configs/constants';
+import { userPath } from '../../configs/constants';
 import { callApi } from '../../lib/utils/api';
-import { SnackbarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = theme => ({
   card: {
@@ -40,20 +39,17 @@ class OrderDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loader: false,
-      snackCheck: false,
-      approved: true,
       data: '',
     };
-    const { match } = this.props;
-    this.getData(match.params.id);
+    this.getData();
   }
 
-  getData = (id) => {
-    callApi('get', {}, 'order', {}).then((result) => {
-      result.data.data.records.forEach((getID) => {
+  getData = () => {
+    const mailId = localStorage.getItem('email');
+    callApi('get', {}, 'user', {}).then((result) => {
+      result.data.data.documents.forEach((getID) => {
         // eslint-disable-next-line no-underscore-dangle
-        if (id === getID._id) {
+        if (mailId === getID.email) {
           this.setState({
             data: getID,
           });
@@ -62,41 +58,10 @@ class OrderDetail extends React.Component {
     });
   }
 
-  handleApproved = (e, values) => {
-    e.preventDefault();
-    const { approved } = this.state;
-    const { match } = this.props;
-    // history.push('/admin');
-    values.openSnack('Successfully approved', 'success');
-    this.setState({
-      loader: true,
-    });
-    callApi(
-      'PUT',
-      {
-        approved, id: match.params.id,
-      },
-      'approved',
-      {},
-    ).then((result) => {
-      if (result.status) {
-        this.setState({
-          loader: false,
-        });
-        values.openSnack('Successfully approved', 'success');
-      } else {
-        values.openSnack(result.message, 'error');
-        this.setState({
-          snackCheck: true,
-          loader: false,
-        });
-      }
-    });
-  }
 
   render() {
     const { classes } = this.props;
-    const { data, loader, snackCheck } = this.state;
+    const { data } = this.state;
     if (!(data)) {
       return (
         <div className={classes.progress}>
@@ -137,34 +102,12 @@ class OrderDetail extends React.Component {
           </div>
         </Card>
         <Typography align="center">
-          <Link underline="none" component={RouterLink} to={adminPath}>
+          <Link underline="none" component={RouterLink} to={userPath}>
             <Button variant="outlined" className={classes.button}>
               BACK
             </Button>
           </Link>
         </Typography>
-        {
-          <SnackbarConsumer>
-            {value => (
-              <Typography>
-                <Link underline="none" component={RouterLink} to={adminPath}>
-                  <Button
-                    variant="outlined"
-                    className={classes.button}
-                    onClick={e => this.handleApproved(e, value)}
-                  >
-                    {
-                      (!loader || snackCheck)
-                        ? <b>APPROVED</b>
-                        : <CircularProgress size={24} thickness={4} />
-                    }
-                  </Button>
-                </Link>
-              </Typography>
-            )}
-          </SnackbarConsumer>
-        }
-
       </>
     );
   }
@@ -172,7 +115,6 @@ class OrderDetail extends React.Component {
 
 OrderDetail.propTypes = {
   classes: PropTypes.objectOf(PropTypes.objectOf).isRequired,
-  match: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(OrderDetail);

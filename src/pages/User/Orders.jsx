@@ -90,7 +90,7 @@ class Order extends React.Component {
   handleSelect = (id) => {
     // eslint-disable-next-line react/prop-types
     const { history } = this.props;
-    history.push(`/order/${id}`);
+    history.push(`/user/orders/${id}`);
   };
 
 
@@ -133,7 +133,7 @@ class Order extends React.Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {(item.data.records).map(row => (
+                  {(item.data.documents).map(row => (
                     <TableRow
                       className={classes.row}
                       key={row.id}

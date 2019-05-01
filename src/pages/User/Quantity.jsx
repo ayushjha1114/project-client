@@ -41,7 +41,7 @@ const styles = theme => ({
     ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
   button: {
-    float: 'right',
+    margin: 'auto',
   },
 });
 
@@ -226,14 +226,15 @@ class Quantity extends React.Component {
     });
     const getID = await callApi('get', {}, 'user', {});
     if (getID.status) {
-      getID.data.data.records.forEach((element) => {
+      getID.data.data.documents.forEach((element) => {
         if (addressform.email === element.email) {
           // eslint-disable-next-line no-underscore-dangle
           id = element._id;
         }
       });
       const { firstName, lastName, ...rest } = addressform;
-      const result = await callApi('put', { rest, id }, 'order');
+      console.log('asdas', getID, id, rest)
+      const result = await callApi('put', { dataToUpdate: rest, id }, 'order');
       // eslint-disable-next-line react/prop-types
       const { history } = this.props;
       console.log('inside quantity ', this.props);
@@ -241,8 +242,8 @@ class Quantity extends React.Component {
         this.setState({
           loader: false,
         });
-        values.openSnack(result.data.message, 'success');
-        history.push('/user');
+        values.openSnack('Your order is placed', 'success');
+        history.push('/user/orders/placed');
       } else {
         values.openSnack(result.message, 'error');
         this.setState({
@@ -428,6 +429,7 @@ class Quantity extends React.Component {
                 {value => (
                   <div className={classes.button}>
                     <Button
+                      variant="contained"
                       color="primary"
                       size="large"
                       disabled={(!this.buttonChecked() || loader)}

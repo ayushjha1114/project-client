@@ -42,15 +42,15 @@ class OrderPlaced extends React.Component {
     this.state = {
       data: '',
     };
-    const { match } = this.props;
-    this.getData(match.params.id);
+    this.getData();
   }
 
-  getData = (id) => {
+  getData = () => {
+    const mailId = localStorage.getItem('email');
     callApi('get', {}, 'order', {}).then((result) => {
-      result.data.data.records.forEach((getID) => {
+      result.data.data.documents.forEach((getID) => {
         // eslint-disable-next-line no-underscore-dangle
-        if (id === getID._id) {
+        if (mailId === getID.email) {
           this.setState({
             data: getID,
           });
@@ -58,6 +58,7 @@ class OrderPlaced extends React.Component {
       });
     });
   }
+
 
   render() {
     const { classes } = this.props;
